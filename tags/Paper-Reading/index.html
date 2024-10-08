@@ -24,26 +24,26 @@
 
   <meta property="og:type" content="website">
 <meta property="og:title" content="Escapist&#39;s Blog">
-<meta property="og:url" content="http://ruoshi.tech/index.html">
+<meta property="og:url" content="http://ruoshi.tech/tags/Paper-Reading/index.html">
 <meta property="og:site_name" content="Escapist&#39;s Blog">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="Escapist">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://ruoshi.tech/">
+<link rel="canonical" href="http://ruoshi.tech/tags/Paper-Reading/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
+    isHome : false,
     isPost : false,
     lang   : 'en'
   };
 </script>
 
-  <title>Escapist's Blog</title>
+  <title>Tag: Paper Reading | Escapist's Blog</title>
   
 
 
@@ -184,174 +184,50 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content tag">
             
-      
+
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://ruoshi.tech/2024/10/08/Paper-Reading/attentions/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/sign.bmp">
-      <meta itemprop="name" content="Escapist">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Escapist's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/10/08/Paper-Reading/attentions/" class="post-title-link" itemprop="url">A Series of Attention Mechanisms</a>
+  
+  <div class="post-block">
+    <div class="posts-collapse">
+      <div class="collection-title">
+        <h2 class="collection-header">Paper Reading
+          <small>Tag</small>
         </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
-
-              <time title="Created: 2024-10-08 11:44:48 / Modified: 12:07:31" itemprop="dateCreated datePublished" datetime="2024-10-08T11:44:48+08:00">2024-10-08</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Paper-Reading/" itemprop="url" rel="index"><span itemprop="name">Paper Reading</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+      </div>
 
       
-          <h1 id="Attention"><a href="#Attention" class="headerlink" title="Attention"></a>Attention</h1><hr>
-<h2 id="Attention-is-all-you-need"><a href="#Attention-is-all-you-need" class="headerlink" title="Attention is all you need"></a>Attention is all you need</h2><h3 id="Intro-Background"><a href="#Intro-Background" class="headerlink" title="Intro &amp; Background"></a>Intro &amp; Background</h3><p>The intro section first talks about RNN-like models and their drawbacks concerning both time and space</p>
-<ul>
-<li>Since RNN-like models have a inherently sequential nature, i.e., $h_t$ is dependent on the hidden state at time $h_{t-1}$, they are not parallelizable and hence time-consuming.</li>
-<li>RNN-like models also have to store the hidden states of all the previous time steps for back-propagation, which is space-consuming and limits the ability of batch processing.</li>
-</ul>
-<p>Then background section also talks about convolutional networks for sequencial modeling</p>
-<ul>
-<li>CNN operation is totally parallelizable and hence faster than RNN-like models, and it’s also space-efficient.</li>
-<li>However, CNN is not good at capturing the dependencies between the output and the input, especially when the distance between the two is large. It has something to do with the concept of receptive field. To capture long-range dependencies, we need to stack multiple layers of CNN, which is not efficient.</li>
-</ul>
-<p>To address the drawbacks mentioned above, the authors propose Transformer, which is based solely on attention mechanisms</p>
-<ul>
-<li>No recurrence is included thus parallelizable</li>
-<li>attention machenism can draw global dependencies between the input and the output no matter how far they are from each other</li>
-</ul>
-<h3 id="Scaled-dot-attention"><a href="#Scaled-dot-attention" class="headerlink" title="Scaled dot attention"></a>Scaled dot attention</h3><p>The core principle of attention is how to map a query and a set of key-value pairs to an output. The output is a weighted sum of the values. The formula is given by<br>$$\operatorname{Attention}(Q,K,V)&#x3D;\operatorname{softmax}({\frac{Q K^{T}}{\sqrt{d_{k}}}})V$$<br>Note that dot-product attention is much faster and more space-efficient in ractice</p>
-<hr>
-<ul>
-<li><p>query $\bf q$: The row of matrix $Q$, and thus $Q$ has the size of $n\times d_k$, in which $n$ is the number of queries. The query vector has a dimension of $d_k$ for each corresponding embedded token. $d_k$ is actually much smaller than the dimension of an embedded vector. The vector $\bf q$ is linear projected from the corresponding embedded vector $\bf e$<br>$$\bf q&#x3D;W_q e$$<br>in which $\bf W_q$ is a learnable matrix. </p>
-</li>
-<li><p>key $\bf k$: The key vector also has a dimension of $d_k$ for each unit and can be calculated by<br>$$\bf k&#x3D;W_k e$$<br>in which $\bf W_k$ is also learnable</p>
-</li>
-<li><p>The dot product of $\bf q$ and $\bf k$: Intuitively, $\bf q$ serves as an active query on behalf of each unit (token, patch…) and $\bf k$ is a key waiting for query from $\bf q$. The scalar value $\bf \langle q, k\rangle$ measures the extent to which the unit represented by $\bf q$ matches that represented by $\bf k$. By backpropagation and optimization, matrices $\bf W_q$ and $\bf W_k$ can capture a proper dependencies between each unit. $\bf \langle q, k\rangle$ is also called attention score</p>
-</li>
-<li><p>Division of $\sqrt d_k$: The author says that for large values of $d_k$, the dot products grow large in magnitude, pushing the softmax function into regions where it has extremely small gradients</p>
-</li>
-<li><p>Softmax: The softmax operation is conducted on $\frac{QK^T}{\sqrt{d_k}}$, which is an $n\times n$ matrix, along the dimension of $\bf k$, i.e., Given one $\bf q_i$， $\sum\nolimits_{j &#x3D; 1}^{ {d_k} } {\left\langle { { {\bf{q} }_i},{ {\bf{k} }_j} } \right\rangle }  &#x3D; 1$</p>
-</li>
-<li><p>Mask operation: $\bf q_i$ should only query keys that locate before it, i.e.<br>[\left\langle { { {\bf{q}}_i},{ {\bf{k}}_j} } \right\rangle  &#x3D; \left{ \begin{array}{l}<br>\left\langle { { {\bf{q} }_i},{ {\bf{k} }_j}} \right\rangle ,i \le j\<br>0,i &gt; j<br>\end{array} \right.]<br>The mask operation should be conducted ahead of softmax</p>
-</li>
-<li><p>value $\bf v$: The value vector has a dimension of $d_v$, which equals to the dimension of embedded vectors, for each unit, $\bf v$ is calculated by<br>$$\bf v&#x3D;W_ve$$<br>Given that $d_k &lt;&lt; d_v$, thus for the three matrices ${\left( { {W_v}} \right)<em>{ {d_v} \times {d_v} } },{\left( { {W_k} } \right)<em>{ {d_k} \times {d_v}}},{\left( { {W_q}} \right)</em>{ {d_k} \times {d_v} } }$<br>$$\operatorname{param}(W_v)&gt;&gt;\operatorname{param}(W_q) + \operatorname{param}(W_k)$$<br>Thus it’s better to decompose $W_v$ into the multiplication of two low-rank matrices. $$ \$$<br>each value $\bf v_i$ is associated with corresponding key $\bf k_i$. The output of attention for each unit is actually the weighted sum of all value vectors, serving as the variation of embedded vectors<br>$$<br>\begin{align*}<br>{\mathop{\rm Attention}\nolimits} (Q,K,V) &#x3D; {\mathop{\rm softmax}\nolimits} (\frac{ {Q{K^T} } }{ {\sqrt { {d_k} } } })V \ \&#x3D; {\left[ { {\mathop{\rm softmax}\nolimits} (\frac{ {Q{K^T} } }{ {\sqrt  } } ) } \right]</em>{n \times n} }{V_{n \times {d_v} } } &#x3D; {\left[ {\begin{array}{c}<br>{\Delta {E_1}}\<br>{\Delta {E_2}}\<br> \vdots \<br>{\Delta {E_n}}<br>\end{array}} \right]_{n \times {d_v}}}<br>\end{align*}<br>$$<br>Calculating $E_i+\Delta E_i$ gives the prediction of word embedding</p>
-</li>
-</ul>
-
-      
+    <div class="collection-year">
+      <span class="collection-header">2024</span>
     </div>
 
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
+  <article itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <div class="post-meta">
+        <time itemprop="dateCreated"
+              datetime="2024-10-08T11:44:48+08:00"
+              content="2024-10-08">
+          10-08
+        </time>
+      </div>
+
+      <div class="post-title">
+          <a class="post-title-link" href="/2024/10/08/Paper-Reading/attentions/" itemprop="url">
+            <span itemprop="name">A Series of Attention Mechanisms</span>
+          </a>
+      </div>
+
+    </header>
   </article>
-  
-  
-  
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://ruoshi.tech/2024/10/06/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/sign.bmp">
-      <meta itemprop="name" content="Escapist">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Escapist's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2024/10/06/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2024-10-06 17:35:34" itemprop="dateCreated datePublished" datetime="2024-10-06T17:35:34+08:00">2024-10-06</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-10-08 11:47:02" itemprop="dateModified" datetime="2024-10-08T11:47:02+08:00">2024-10-08</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>Hi~</p>
-
-      
     </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
+  </div>
   
   
   
-
 
   
 
