@@ -22,12 +22,12 @@
     var CONFIG = {"hostname":"ruoshi.tech","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="# Distributed Training Overview Basically, there are two types of distributed training: data parallelism and model parallelism.  Data Parallelism: the model is replicated on each device and each r">
+  <meta name="description" content="Distributed Training  Overview Basically, there are two types of distributed training: data parallelism and model parallelism.  Data Parallelism: the model is replicated on each device and each r">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Pytorch Distributed Training">
 <meta property="og:url" content="http://ruoshi.tech/2024/10/12/dl-pt-distri/index.html">
 <meta property="og:site_name" content="Escapist&#39;s Blog">
-<meta property="og:description" content="# Distributed Training Overview Basically, there are two types of distributed training: data parallelism and model parallelism.  Data Parallelism: the model is replicated on each device and each r">
+<meta property="og:description" content="Distributed Training  Overview Basically, there are two types of distributed training: data parallelism and model parallelism.  Data Parallelism: the model is replicated on each device and each r">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://ruoshi.tech/2024/10/12/dl-pt-distri/image-6.png">
 <meta property="og:image" content="http://ruoshi.tech/2024/10/12/dl-pt-distri/image-7.png">
@@ -38,7 +38,7 @@
 <meta property="og:image" content="http://ruoshi.tech/2024/10/12/dl-pt-distri/image-12.png">
 <meta property="og:image" content="http://ruoshi.tech/2024/10/12/dl-pt-distri/image-13.png">
 <meta property="article:published_time" content="2024-10-12T11:40:48.000Z">
-<meta property="article:modified_time" content="2024-10-12T11:50:23.376Z">
+<meta property="article:modified_time" content="2024-10-12T12:11:52.930Z">
 <meta property="article:author" content="Escapist">
 <meta property="article:tag" content="Deep Learning">
 <meta property="article:tag" content="Pytorch">
@@ -236,7 +236,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2024-10-12 19:40:48 / Modified: 19:50:23" itemprop="dateCreated datePublished" datetime="2024-10-12T19:40:48+08:00">2024-10-12</time>
+              <time title="Created: 2024-10-12 19:40:48 / Modified: 20:11:52" itemprop="dateCreated datePublished" datetime="2024-10-12T19:40:48+08:00">2024-10-12</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -266,7 +266,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="distributed-training"># Distributed Training</h2>
+        <h1 id="distributed-training">Distributed Training</h1>
+<hr />
 <h2 id="overview">Overview</h2>
 <p>Basically, there are two types of distributed training: data parallelism and model parallelism.</p>
 <ul>
@@ -278,7 +279,23 @@
 <h3 id="data-paralleldp">Data Parallel(DP)</h3>
 <p>DP is the simplest way to use multiple GPUs. Only one extra line of code is needed to implement DP.</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model = torch.nn.DataParallel(model)</span><br></pre></td></tr></table></figure>
-<p>The steps are as follows: * <strong>Forward pass</strong>: * Scatter a batch of input data from one assigned GPU to all GPUs. <img src="image-6.png" alt="alt text" /> * Replicate the model on all GPUs. <img src="image-7.png" alt="alt text" /> * Parallel forward pass on all GPUs. <img src="image-8.png" alt="alt text" /> * Gather the output from all GPUs to the assigned GPU. <img src="image-9.png" alt="alt text" /> * <strong>Backward pass</strong>: * Compute the loss and gradient on the assigned GPU. <img src="image-10.png" alt="alt text" /> * Scatter the gradient from the assigned GPU to all GPUs. <img src="image-11.png" alt="alt text" /> * Parallel backward pass on all GPUs <img src="image-12.png" alt="alt text" /> * Gather the gradient from all GPUs to the assigned GPU and update the model. <img src="image-13.png" alt="alt text" /></p>
+<p>The steps are as follows:</p>
+<ul>
+<li><strong>Forward pass</strong>:
+<ul>
+<li>Scatter a batch of input data from one assigned GPU to all GPUs. <img src="image-6.png" alt="alt text" /></li>
+<li>Replicate the model on all GPUs. <img src="image-7.png" alt="alt text" /></li>
+<li>Parallel forward pass on all GPUs. <img src="image-8.png" alt="alt text" /></li>
+<li>Gather the output from all GPUs to the assigned GPU. <img src="image-9.png" alt="alt text" /></li>
+</ul></li>
+<li><strong>Backward pass</strong>:
+<ul>
+<li>Compute the loss and gradient on the assigned GPU. <img src="image-10.png" alt="alt text" /></li>
+<li>Scatter the gradient from the assigned GPU to all GPUs. <img src="image-11.png" alt="alt text" /></li>
+<li>Parallel backward pass on all GPUs <img src="image-12.png" alt="alt text" /></li>
+<li>Gather the gradient from all GPUs to the assigned GPU and update the model. <img src="image-13.png" alt="alt text" /></li>
+</ul></li>
+</ul>
 <p>Note that the assigned GPU has to accommodate the whole batch of data, and conduct all the work of model updating. Thus the performance of DP is limited concerning both space and time.</p>
 <h3 id="distributed-data-parallelddp">Distributed Data Parallel(DDP)</h3>
 <h4 id="steps">Steps</h4>
@@ -427,7 +444,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#distributed-training"><span class="nav-number">1.</span> <span class="nav-text"># Distributed Training</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#overview"><span class="nav-number">2.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#data-parallelism"><span class="nav-number">3.</span> <span class="nav-text">Data Parallelism</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#data-paralleldp"><span class="nav-number">3.1.</span> <span class="nav-text">Data Parallel(DP)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#distributed-data-parallelddp"><span class="nav-number">3.2.</span> <span class="nav-text">Distributed Data Parallel(DDP)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#steps"><span class="nav-number">3.2.1.</span> <span class="nav-text">Steps</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#backend-communication"><span class="nav-number">3.2.2.</span> <span class="nav-text">Backend Communication</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#initialization"><span class="nav-number">3.2.3.</span> <span class="nav-text">Initialization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#start-up"><span class="nav-number">3.2.4.</span> <span class="nav-text">Start Up</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#program-revisionmp.spawn"><span class="nav-number">3.3.</span> <span class="nav-text">Program Revision(mp.spawn())</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#import"><span class="nav-number">3.3.1.</span> <span class="nav-text">Import</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#key-functions"><span class="nav-number">3.3.2.</span> <span class="nav-text">Key functions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#train-function"><span class="nav-number">3.3.3.</span> <span class="nav-text">train Function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#validation-function"><span class="nav-number">3.3.4.</span> <span class="nav-text">validation Function</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#program-revisiontorchrun"><span class="nav-number">3.4.</span> <span class="nav-text">Program Revision(torchrun)</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#distributed-training"><span class="nav-number">1.</span> <span class="nav-text">Distributed Training</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#overview"><span class="nav-number">1.1.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#data-parallelism"><span class="nav-number">1.2.</span> <span class="nav-text">Data Parallelism</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#data-paralleldp"><span class="nav-number">1.2.1.</span> <span class="nav-text">Data Parallel(DP)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#distributed-data-parallelddp"><span class="nav-number">1.2.2.</span> <span class="nav-text">Distributed Data Parallel(DDP)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#steps"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">Steps</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#backend-communication"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">Backend Communication</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#initialization"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">Initialization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#start-up"><span class="nav-number">1.2.2.4.</span> <span class="nav-text">Start Up</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#program-revisionmp.spawn"><span class="nav-number">1.2.3.</span> <span class="nav-text">Program Revision(mp.spawn())</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#import"><span class="nav-number">1.2.3.1.</span> <span class="nav-text">Import</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#key-functions"><span class="nav-number">1.2.3.2.</span> <span class="nav-text">Key functions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#train-function"><span class="nav-number">1.2.3.3.</span> <span class="nav-text">train Function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#validation-function"><span class="nav-number">1.2.3.4.</span> <span class="nav-text">validation Function</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#program-revisiontorchrun"><span class="nav-number">1.2.4.</span> <span class="nav-text">Program Revision(torchrun)</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
