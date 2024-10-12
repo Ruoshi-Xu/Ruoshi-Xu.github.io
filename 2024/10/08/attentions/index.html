@@ -32,8 +32,8 @@
 <meta property="article:published_time" content="2024-10-08T03:44:48.000Z">
 <meta property="article:modified_time" content="2024-10-12T11:19:19.634Z">
 <meta property="article:author" content="Escapist">
-<meta property="article:tag" content="Deep Learning">
 <meta property="article:tag" content="Paper Reading">
+<meta property="article:tag" content="Deep Learning">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://ruoshi.tech/2024/10/08/attentions/">
@@ -283,7 +283,7 @@
 </ul>
 <h3 id="scaled-dot-attention">Scaled dot attention</h3>
 <p>The core principle of attention is how to map a query and a set of key-value pairs to an output. The output is a weighted sum of the values. The formula is given by <span class="math display">\[\operatorname{Attention}(Q,K,V)=\operatorname{softmax}({\frac{Q K^{T} }{\sqrt{d_{k} } } })V\]</span> Note that dot-product attention is much faster and more space-efficient in ractice</p>
-<hr />
+<hr>
 <ul>
 <li>query <span class="math inline">\(\bf q\)</span>: The row of matrix <span class="math inline">\(Q\)</span>, and thus <span class="math inline">\(Q\)</span> has the size of <span class="math inline">\(n\times d_k\)</span>, in which <span class="math inline">\(n\)</span> is the number of queries. The query vector has a dimension of <span class="math inline">\(d_k\)</span> for each corresponding embedded token. <span class="math inline">\(d_k\)</span> is actually much smaller than the dimension of an embedded vector. The vector <span class="math inline">\(\bf q\)</span> is linear projected from the corresponding embedded vector <span class="math inline">\(\bf e\)</span> <span class="math display">\[\bf q=W_q e\]</span> in which <span class="math inline">\(\bf W_q\)</span> is a learnable matrix.</li>
 <li>key <span class="math inline">\(\bf k\)</span>: The key vector also has a dimension of <span class="math inline">\(d_k\)</span> for each unit and can be calculated by <span class="math display">\[\bf k=W_k e\]</span> in which <span class="math inline">\(\bf W_k\)</span> is also learnable</li>
@@ -327,8 +327,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
               <a href="/tags/Paper-Reading/" rel="tag"># Paper Reading</a>
+              <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
           </div>
 
         

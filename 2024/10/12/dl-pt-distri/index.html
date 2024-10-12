@@ -29,21 +29,21 @@
 <meta property="og:site_name" content="Escapist&#39;s Blog">
 <meta property="og:description" content="Overview Basically, there are two types of distributed training: data parallelism and model parallelism.  Data Parallelism: the model is replicated on each device and each replica processes a diffe">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://ruoshi.tech/2024/10/12/dl-pt-distri/image-6.png">
-<meta property="og:image" content="http://ruoshi.tech/2024/10/12/dl-pt-distri/image-7.png">
-<meta property="og:image" content="http://ruoshi.tech/2024/10/12/dl-pt-distri/image-8.png">
-<meta property="og:image" content="http://ruoshi.tech/2024/10/12/dl-pt-distri/image-9.png">
-<meta property="og:image" content="http://ruoshi.tech/2024/10/12/dl-pt-distri/image-10.png">
-<meta property="og:image" content="http://ruoshi.tech/2024/10/12/dl-pt-distri/image-11.png">
-<meta property="og:image" content="http://ruoshi.tech/2024/10/12/dl-pt-distri/image-12.png">
-<meta property="og:image" content="http://ruoshi.tech/2024/10/12/dl-pt-distri/image-13.png">
+<meta property="og:image" content="http://ruoshi.tech/.tech//image-6.png">
+<meta property="og:image" content="http://ruoshi.tech/.tech//image-7.png">
+<meta property="og:image" content="http://ruoshi.tech/.tech//image-8.png">
+<meta property="og:image" content="http://ruoshi.tech/.tech//image-9.png">
+<meta property="og:image" content="http://ruoshi.tech/.tech//image-10.png">
+<meta property="og:image" content="http://ruoshi.tech/.tech//image-11.png">
+<meta property="og:image" content="http://ruoshi.tech/.tech//image-12.png">
+<meta property="og:image" content="http://ruoshi.tech/.tech//image-13.png">
 <meta property="article:published_time" content="2024-10-12T11:40:48.000Z">
 <meta property="article:modified_time" content="2024-10-12T12:19:52.886Z">
 <meta property="article:author" content="Escapist">
-<meta property="article:tag" content="Pytorch">
 <meta property="article:tag" content="Deep Learning">
+<meta property="article:tag" content="Pytorch">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://ruoshi.tech/2024/10/12/dl-pt-distri/image-6.png">
+<meta name="twitter:image" content="http://ruoshi.tech/.tech//image-6.png">
 
 <link rel="canonical" href="http://ruoshi.tech/2024/10/12/dl-pt-distri/">
 
@@ -281,17 +281,17 @@
 <ul>
 <li><strong>Forward pass</strong>:
 <ul>
-<li>Scatter a batch of input data from one assigned GPU to all GPUs. <img src="image-6.png" /></li>
-<li>Replicate the model on all GPUs. <img src="image-7.png" /></li>
-<li>Parallel forward pass on all GPUs. <img src="image-8.png" /></li>
-<li>Gather the output from all GPUs to the assigned GPU. <img src="image-9.png" /></li>
+<li>Scatter a batch of input data from one assigned GPU to all GPUs. <img src="/.tech//image-6.png"></li>
+<li>Replicate the model on all GPUs. <img src="/.tech//image-7.png"></li>
+<li>Parallel forward pass on all GPUs. <img src="/.tech//image-8.png"></li>
+<li>Gather the output from all GPUs to the assigned GPU. <img src="/.tech//image-9.png"></li>
 </ul></li>
 <li><strong>Backward pass</strong>:
 <ul>
-<li>Compute the loss and gradient on the assigned GPU. <img src="image-10.png" /></li>
-<li>Scatter the gradient from the assigned GPU to all GPUs. <img src="image-11.png" /></li>
-<li>Parallel backward pass on all GPUs <img src="image-12.png" /></li>
-<li>Gather the gradient from all GPUs to the assigned GPU and update the model. <img src="image-13.png" /></li>
+<li>Compute the loss and gradient on the assigned GPU. <img src="/.tech//image-10.png"></li>
+<li>Scatter the gradient from the assigned GPU to all GPUs. <img src="/.tech//image-11.png"></li>
+<li>Parallel backward pass on all GPUs <img src="/.tech//image-12.png"></li>
+<li>Gather the gradient from all GPUs to the assigned GPU and update the model. <img src="/.tech//image-13.png"></li>
 </ul></li>
 </ul>
 <p>Note that the assigned GPU has to accommodate the whole batch of data, and conduct all the work of model updating. Thus the performance of DP is limited concerning both space and time.</p>
@@ -370,8 +370,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Pytorch/" rel="tag"># Pytorch</a>
               <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+              <a href="/tags/Pytorch/" rel="tag"># Pytorch</a>
           </div>
 
         
