@@ -4,7 +4,7 @@
   
     
     <entry>
-      <title>dl-pt-distri</title>
+      <title>Pytorch Distributed Training</title>
       <link href="/2024/10/12/dl-pt-distri/"/>
       <url>/2024/10/12/dl-pt-distri/</url>
       
@@ -13,16 +13,16 @@
       
       <categories>
           
-          <category> Programming </category>
+          <category> Python Programming </category>
           
       </categories>
       
       
         <tags>
             
-            <tag> Python DL </tag>
-            
             <tag> Deep Learning </tag>
+            
+            <tag> Pytorch </tag>
             
         </tags>
       
@@ -47,9 +47,9 @@
       
         <tags>
             
-            <tag> Deep Learning </tag>
-            
             <tag> Paper Reading </tag>
+            
+            <tag> Deep Learning </tag>
             
         </tags>
       
