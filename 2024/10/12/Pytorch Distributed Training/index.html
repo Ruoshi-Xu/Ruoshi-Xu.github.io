@@ -25,27 +25,27 @@
   <meta name="description" content="Overview Basically, there are two types of distributed training: data parallelism and model parallelism.  Data Parallelism: the model is replicated on each device and each replica processes a diffe">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Pytorch Distributed Training">
-<meta property="og:url" content="http://ruoshi.tech/2024/10/12/dl-pt-distri/index.html">
+<meta property="og:url" content="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training/index.html">
 <meta property="og:site_name" content="Escapist&#39;s Blog">
 <meta property="og:description" content="Overview Basically, there are two types of distributed training: data parallelism and model parallelism.  Data Parallelism: the model is replicated on each device and each replica processes a diffe">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://ruoshi.tech/.tech//image-6.png">
-<meta property="og:image" content="http://ruoshi.tech/.tech//image-7.png">
-<meta property="og:image" content="http://ruoshi.tech/.tech//image-8.png">
-<meta property="og:image" content="http://ruoshi.tech/.tech//image-9.png">
-<meta property="og:image" content="http://ruoshi.tech/.tech//image-10.png">
-<meta property="og:image" content="http://ruoshi.tech/.tech//image-11.png">
-<meta property="og:image" content="http://ruoshi.tech/.tech//image-12.png">
-<meta property="og:image" content="http://ruoshi.tech/.tech//image-13.png">
+<meta property="og:image" content="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training/image-6.png">
+<meta property="og:image" content="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training/image-7.png">
+<meta property="og:image" content="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training/image-8.png">
+<meta property="og:image" content="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training/image-9.png">
+<meta property="og:image" content="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training/image-10.png">
+<meta property="og:image" content="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training/image-11.png">
+<meta property="og:image" content="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training/image-12.png">
+<meta property="og:image" content="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training/image-13.png">
 <meta property="article:published_time" content="2024-10-12T11:40:48.000Z">
-<meta property="article:modified_time" content="2024-10-12T12:19:52.886Z">
+<meta property="article:modified_time" content="2024-10-12T12:40:11.045Z">
 <meta property="article:author" content="Escapist">
 <meta property="article:tag" content="Deep Learning">
 <meta property="article:tag" content="Pytorch">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://ruoshi.tech/.tech//image-6.png">
+<meta name="twitter:image" content="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training/image-6.png">
 
-<link rel="canonical" href="http://ruoshi.tech/2024/10/12/dl-pt-distri/">
+<link rel="canonical" href="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training/">
 
 
 <script id="page-configurations">
@@ -210,7 +210,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://ruoshi.tech/2024/10/12/dl-pt-distri/">
+    <link itemprop="mainEntityOfPage" href="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/sign.bmp">
@@ -236,7 +236,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2024-10-12 19:40:48 / Modified: 20:19:52" itemprop="dateCreated datePublished" datetime="2024-10-12T19:40:48+08:00">2024-10-12</time>
+              <time title="Created: 2024-10-12 19:40:48 / Modified: 20:40:11" itemprop="dateCreated datePublished" datetime="2024-10-12T19:40:48+08:00">2024-10-12</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -281,17 +281,17 @@
 <ul>
 <li><strong>Forward pass</strong>:
 <ul>
-<li>Scatter a batch of input data from one assigned GPU to all GPUs. <img src="/.tech//image-6.png"></li>
-<li>Replicate the model on all GPUs. <img src="/.tech//image-7.png"></li>
-<li>Parallel forward pass on all GPUs. <img src="/.tech//image-8.png"></li>
-<li>Gather the output from all GPUs to the assigned GPU. <img src="/.tech//image-9.png"></li>
+<li>Scatter a batch of input data from one assigned GPU to all GPUs. <img src="/2024/10/12/Pytorch%20Distributed%20Training/image-6.png" class=""></li>
+<li>Replicate the model on all GPUs. <img src="/2024/10/12/Pytorch%20Distributed%20Training/image-7.png" class=""></li>
+<li>Parallel forward pass on all GPUs. <img src="/2024/10/12/Pytorch%20Distributed%20Training/image-8.png" class=""></li>
+<li>Gather the output from all GPUs to the assigned GPU. <img src="/2024/10/12/Pytorch%20Distributed%20Training/image-9.png" class=""></li>
 </ul></li>
 <li><strong>Backward pass</strong>:
 <ul>
-<li>Compute the loss and gradient on the assigned GPU. <img src="/.tech//image-10.png"></li>
-<li>Scatter the gradient from the assigned GPU to all GPUs. <img src="/.tech//image-11.png"></li>
-<li>Parallel backward pass on all GPUs <img src="/.tech//image-12.png"></li>
-<li>Gather the gradient from all GPUs to the assigned GPU and update the model. <img src="/.tech//image-13.png"></li>
+<li>Compute the loss and gradient on the assigned GPU. <img src="/2024/10/12/Pytorch%20Distributed%20Training/image-10.png" class=""></li>
+<li>Scatter the gradient from the assigned GPU to all GPUs. <img src="/2024/10/12/Pytorch%20Distributed%20Training/image-11.png" class=""></li>
+<li>Parallel backward pass on all GPUs <img src="/2024/10/12/Pytorch%20Distributed%20Training/image-12.png" class=""></li>
+<li>Gather the gradient from all GPUs to the assigned GPU and update the model. <img src="/2024/10/12/Pytorch%20Distributed%20Training/image-13.png" class=""></li>
 </ul></li>
 </ul>
 <p>Note that the assigned GPU has to accommodate the whole batch of data, and conduct all the work of model updating. Thus the performance of DP is limited concerning both space and time.</p>
@@ -359,7 +359,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>Post link: </strong>
-    <a href="http://ruoshi.tech/2024/10/12/dl-pt-distri/" title="Pytorch Distributed Training">http://ruoshi.tech/2024/10/12/dl-pt-distri/</a>
+    <a href="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training/" title="Pytorch Distributed Training">http://ruoshi.tech/2024/10/12/Pytorch Distributed Training/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/en" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
@@ -380,7 +380,7 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2024/10/08/attentions/" rel="prev" title="A Series of Attention Mechanisms">
+    <a href="/2024/10/08/A%20Series%20of%20Attention%20Mechanisms/" rel="prev" title="A Series of Attention Mechanisms">
       <i class="fa fa-chevron-left"></i> A Series of Attention Mechanisms
     </a></div>
       <div class="post-nav-item"></div>

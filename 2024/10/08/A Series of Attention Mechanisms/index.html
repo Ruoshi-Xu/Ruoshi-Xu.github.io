@@ -25,7 +25,7 @@
   <meta name="description" content="Attention Attention is all you need Intro &amp; Background The intro section first talks about RNN-like models and their drawbacks concerning both time and space  Since RNN-like models have a inh">
 <meta property="og:type" content="article">
 <meta property="og:title" content="A Series of Attention Mechanisms">
-<meta property="og:url" content="http://ruoshi.tech/2024/10/08/attentions/index.html">
+<meta property="og:url" content="http://ruoshi.tech/2024/10/08/A%20Series%20of%20Attention%20Mechanisms/index.html">
 <meta property="og:site_name" content="Escapist&#39;s Blog">
 <meta property="og:description" content="Attention Attention is all you need Intro &amp; Background The intro section first talks about RNN-like models and their drawbacks concerning both time and space  Since RNN-like models have a inh">
 <meta property="og:locale" content="en_US">
@@ -36,7 +36,7 @@
 <meta property="article:tag" content="Deep Learning">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://ruoshi.tech/2024/10/08/attentions/">
+<link rel="canonical" href="http://ruoshi.tech/2024/10/08/A%20Series%20of%20Attention%20Mechanisms/">
 
 
 <script id="page-configurations">
@@ -201,7 +201,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://ruoshi.tech/2024/10/08/attentions/">
+    <link itemprop="mainEntityOfPage" href="http://ruoshi.tech/2024/10/08/A%20Series%20of%20Attention%20Mechanisms/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/sign.bmp">
@@ -283,7 +283,7 @@
 </ul>
 <h3 id="scaled-dot-attention">Scaled dot attention</h3>
 <p>The core principle of attention is how to map a query and a set of key-value pairs to an output. The output is a weighted sum of the values. The formula is given by <span class="math display">\[\operatorname{Attention}(Q,K,V)=\operatorname{softmax}({\frac{Q K^{T} }{\sqrt{d_{k} } } })V\]</span> Note that dot-product attention is much faster and more space-efficient in ractice</p>
-<hr>
+<hr />
 <ul>
 <li>query <span class="math inline">\(\bf q\)</span>: The row of matrix <span class="math inline">\(Q\)</span>, and thus <span class="math inline">\(Q\)</span> has the size of <span class="math inline">\(n\times d_k\)</span>, in which <span class="math inline">\(n\)</span> is the number of queries. The query vector has a dimension of <span class="math inline">\(d_k\)</span> for each corresponding embedded token. <span class="math inline">\(d_k\)</span> is actually much smaller than the dimension of an embedded vector. The vector <span class="math inline">\(\bf q\)</span> is linear projected from the corresponding embedded vector <span class="math inline">\(\bf e\)</span> <span class="math display">\[\bf q=W_q e\]</span> in which <span class="math inline">\(\bf W_q\)</span> is a learnable matrix.</li>
 <li>key <span class="math inline">\(\bf k\)</span>: The key vector also has a dimension of <span class="math inline">\(d_k\)</span> for each unit and can be calculated by <span class="math display">\[\bf k=W_k e\]</span> in which <span class="math inline">\(\bf W_k\)</span> is also learnable</li>
@@ -316,7 +316,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>Post link: </strong>
-    <a href="http://ruoshi.tech/2024/10/08/attentions/" title="A Series of Attention Mechanisms">http://ruoshi.tech/2024/10/08/attentions/</a>
+    <a href="http://ruoshi.tech/2024/10/08/A%20Series%20of%20Attention%20Mechanisms/" title="A Series of Attention Mechanisms">http://ruoshi.tech/2024/10/08/A Series of Attention Mechanisms/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/en" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
@@ -341,7 +341,7 @@
       <i class="fa fa-chevron-left"></i> Hello World
     </a></div>
       <div class="post-nav-item">
-    <a href="/2024/10/12/dl-pt-distri/" rel="next" title="Pytorch Distributed Training">
+    <a href="/2024/10/12/Pytorch%20Distributed%20Training/" rel="next" title="Pytorch Distributed Training">
       Pytorch Distributed Training <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
