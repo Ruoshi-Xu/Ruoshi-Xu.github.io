@@ -25,27 +25,27 @@
   <meta name="description" content="Overview Basically, there are two types of distributed training: data parallelism and model parallelism.  Data Parallelism: the model is replicated on each device and each replica processes a diffe">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Pytorch Distributed Training(1)--DP&#x2F;DDP">
-<meta property="og:url" content="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training(1)%20DP_DDP/index.html">
+<meta property="og:url" content="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training(1)--DP_DDP/index.html">
 <meta property="og:site_name" content="Escapist&#39;s Blog">
 <meta property="og:description" content="Overview Basically, there are two types of distributed training: data parallelism and model parallelism.  Data Parallelism: the model is replicated on each device and each replica processes a diffe">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training(1)%20DP_DDP/Pytorch%20Distributed%20Training/image-6.png">
-<meta property="og:image" content="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training(1)%20DP_DDP/Pytorch%20Distributed%20Training/image-7.png">
-<meta property="og:image" content="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training(1)%20DP_DDP/Pytorch%20Distributed%20Training/image-8.png">
-<meta property="og:image" content="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training(1)%20DP_DDP/Pytorch%20Distributed%20Training/image-9.png">
-<meta property="og:image" content="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training(1)%20DP_DDP/Pytorch%20Distributed%20Training/image-10.png">
-<meta property="og:image" content="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training(1)%20DP_DDP/Pytorch%20Distributed%20Training/image-11.png">
-<meta property="og:image" content="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training(1)%20DP_DDP/Pytorch%20Distributed%20Training/image-12.png">
-<meta property="og:image" content="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training(1)%20DP_DDP/Pytorch%20Distributed%20Training/image-13.png">
+<meta property="og:image" content="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training(1)--DP_DDP/image-6.png">
+<meta property="og:image" content="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training(1)--DP_DDP/image-7.png">
+<meta property="og:image" content="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training(1)--DP_DDP/image-8.png">
+<meta property="og:image" content="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training(1)--DP_DDP/image-9.png">
+<meta property="og:image" content="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training(1)--DP_DDP/image-10.png">
+<meta property="og:image" content="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training(1)--DP_DDP/image-11.png">
+<meta property="og:image" content="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training(1)--DP_DDP/image-12.png">
+<meta property="og:image" content="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training(1)--DP_DDP/image-13.png">
 <meta property="article:published_time" content="2024-10-12T11:40:48.000Z">
-<meta property="article:modified_time" content="2024-10-16T10:23:30.097Z">
+<meta property="article:modified_time" content="2024-10-16T10:59:48.002Z">
 <meta property="article:author" content="Escapist">
 <meta property="article:tag" content="Deep Learning">
 <meta property="article:tag" content="Pytorch">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training(1)%20DP_DDP/Pytorch%20Distributed%20Training/image-6.png">
+<meta name="twitter:image" content="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training(1)--DP_DDP/image-6.png">
 
-<link rel="canonical" href="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training(1)%20DP_DDP/">
+<link rel="canonical" href="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training(1)--DP_DDP/">
 
 
 <script id="page-configurations">
@@ -210,7 +210,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training(1)%20DP_DDP/">
+    <link itemprop="mainEntityOfPage" href="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training(1)--DP_DDP/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/sign.bmp">
@@ -242,7 +242,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-10-16 18:23:30" itemprop="dateModified" datetime="2024-10-16T18:23:30+08:00">2024-10-16</time>
+                <time title="Modified: 2024-10-16 18:59:48" itemprop="dateModified" datetime="2024-10-16T18:59:48+08:00">2024-10-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -283,23 +283,7 @@
 <h3 id="data-paralleldp">Data Parallel(DP)</h3>
 <p>DP is the simplest way to use multiple GPUs. Only one extra line of code is needed to implement DP.</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model = torch.nn.DataParallel(model)</span><br></pre></td></tr></table></figure>
-<p>The steps are as follows:</p>
-<ul>
-<li><strong>Forward pass</strong>:
-<ul>
-<li>Scatter a batch of input data from one assigned GPU to all GPUs. <img src="Pytorch%20Distributed%20Training/image-6.png" /></li>
-<li>Replicate the model on all GPUs. <img src="Pytorch%20Distributed%20Training/image-7.png" /></li>
-<li>Parallel forward pass on all GPUs. <img src="Pytorch%20Distributed%20Training/image-8.png" /></li>
-<li>Gather the output from all GPUs to the assigned GPU. <img src="Pytorch%20Distributed%20Training/image-9.png" /></li>
-</ul></li>
-<li><strong>Backward pass</strong>:
-<ul>
-<li>Compute the loss and gradient on the assigned GPU. <img src="Pytorch%20Distributed%20Training/image-10.png" /></li>
-<li>Scatter the gradient from the assigned GPU to all GPUs. <img src="Pytorch%20Distributed%20Training/image-11.png" /></li>
-<li>Parallel backward pass on all GPUs <img src="Pytorch%20Distributed%20Training/image-12.png" /></li>
-<li>Gather the gradient from all GPUs to the assigned GPU and update the model. <img src="Pytorch%20Distributed%20Training/image-13.png" /></li>
-</ul></li>
-</ul>
+<p>The steps are as follows: * <strong>Forward pass</strong>: * Scatter a batch of input data from one assigned GPU to all GPUs. <img src="image-6.png" alt="alt text" /> * Replicate the model on all GPUs. <img src="image-7.png" alt="alt text" /> * Parallel forward pass on all GPUs. <img src="image-8.png" alt="alt text" /> * Gather the output from all GPUs to the assigned GPU. <img src="image-9.png" alt="alt text" /> * <strong>Backward pass</strong>: * Compute the loss and gradient on the assigned GPU. <img src="image-10.png" alt="alt text" /> * Scatter the gradient from the assigned GPU to all GPUs. <img src="image-11.png" alt="alt text" /> * Parallel backward pass on all GPUs <img src="image-12.png" alt="alt text" /> * Gather the gradient from all GPUs to the assigned GPU and update the model. <img src="image-13.png" alt="alt text" /></p>
 <p>Note that the assigned GPU has to accommodate the whole batch of data, and conduct all the work of model updating. Thus the performance of DP is limited concerning both space and time.</p>
 <h3 id="distributed-data-parallelddp">Distributed Data Parallel(DDP)</h3>
 <h4 id="steps">Steps</h4>
@@ -319,17 +303,8 @@
 <li><code>torchrun</code>: Automatically set the configuration of env variables. Only need to set <code>os.environ['CUDA_VISIBLE_DEVICES']</code> manually</li>
 <li><code>torch.distributed.launch</code>: To be deprecated</li>
 </ul>
-<p>Parameters used in the last two ways of startup * <code>--nproc_per_node</code>: number of processes per machine * <code>--nnodes</code>: number of machines * <code>--node_rank</code>: the idx of this machine * <code>--master_addr</code>: the IP of idx-0 machine * <code>--master_port</code>: the available port of idx-0 machine</p>
-<h3 id="program-revisionmp.spawn">Program Revision(mp.spawn())</h3>
-<h4 id="import">Import</h4>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import torch.distributed as dist</span><br><span class="line">import torch.multiprocessing as mp</span><br><span class="line">from torch.cuda.amp import GradScaler</span><br><span class="line">from torch.utils.data.distributed import DistributedSampler</span><br><span class="line">from torch.nn.parallel import DistributedDataParallel as DDP</span><br></pre></td></tr></table></figure>
-<ul>
-<li><strong>dist</strong>: communication between GPUs</li>
-<li><strong>mp</strong>: DDP startup</li>
-<li><strong>GradScaler</strong>: automatic mixed precision</li>
-<li><strong>DistributedSampler</strong>: Data sampler in a distributed setting</li>
-<li><strong>DDP</strong>: model capsulation and passing</li>
-</ul>
+<p>Parameters used in the last two ways of startup(i.e., parameters passed through the startup command) * <code>--nproc_per_node</code>: number of processes per machine * <code>--nnodes</code>: number of machines/nodes * <code>--node_rank</code>: the idx of this machine * <code>--master_addr</code>: the IP of idx-0 machine * <code>--master_port</code>: the available port of idx-0 machine</p>
+<p>Other parameters and concepts that may be used in the program * <code>node</code>: a machine, which may contain multiple GPUs * <code>world_size</code>: number of processes in all nodes, ranging from 1 to <code>world_size</code><span class="math inline">\(-1\)</span> * <code>local_rank</code>: the rank of the process in the current node. If there are 4 GPUs in one node, the <code>local_rank</code> ranges from 0 to 3 * <code>rank</code>: the rank of the process in all nodes ### Program Revision(mp.spawn()) #### Import <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import torch.distributed as dist</span><br><span class="line">import torch.multiprocessing as mp</span><br><span class="line">from torch.cuda.amp import GradScaler</span><br><span class="line">from torch.utils.data.distributed import DistributedSampler</span><br><span class="line">from torch.nn.parallel import DistributedDataParallel as DDP</span><br></pre></td></tr></table></figure> * <code>dist</code>: communication between GPUs * <code>mp</code>: DDP startup * <code>GradScaler</code>: automatic mixed precision * <code>DistributedSampler</code>: Data sampler in a distributed setting * <code>DDP</code>: model capsulation and passing</p>
 <h4 id="key-functions">Key functions</h4>
 <ul>
 <li>Function <code>init_ddp</code> for initialization <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">def init_ddp(local_rank):</span><br><span class="line">    torch.cuda.set_device(local_rank）</span><br><span class="line">    os.environ[&#x27;RANK&#x27;] = str(local_rank)</span><br><span class="line">    dist.init_processgroup(backend=&#x27;nccl&#x27;,init_method=&#x27;env://&#x27;)</span><br></pre></td></tr></table></figure> Initialize the process using <code>nccl</code> as communication protocal and ENV mode for initialization. After initializing with <code>init_ddp</code>, we can get <code>local_rank</code> and <code>world_size</code> in following code easily. <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">local_rank = dist.get_rank() # rank of current process</span><br><span class="line">world_size = dist.get_world_size() # number of processes in current server</span><br></pre></td></tr></table></figure> Given that all processes have the same model, Only one processes is responsible for printing log and saving checkpoint. <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if local_rank == 0:</span><br><span class="line">    print(f&#x27;Begin validating&#x27;)</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure></li>
@@ -365,7 +340,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>Post link: </strong>
-    <a href="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training(1)%20DP_DDP/" title="Pytorch Distributed Training(1)--DP&#x2F;DDP">http://ruoshi.tech/2024/10/12/Pytorch Distributed Training(1) DP_DDP/</a>
+    <a href="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training(1)--DP_DDP/" title="Pytorch Distributed Training(1)--DP&#x2F;DDP">http://ruoshi.tech/2024/10/12/Pytorch Distributed Training(1)--DP_DDP/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/en" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
@@ -448,7 +423,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#overview"><span class="nav-number">1.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#data-parallelism"><span class="nav-number">2.</span> <span class="nav-text">Data Parallelism</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#data-paralleldp"><span class="nav-number">2.1.</span> <span class="nav-text">Data Parallel(DP)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#distributed-data-parallelddp"><span class="nav-number">2.2.</span> <span class="nav-text">Distributed Data Parallel(DDP)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#steps"><span class="nav-number">2.2.1.</span> <span class="nav-text">Steps</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#backend-communication"><span class="nav-number">2.2.2.</span> <span class="nav-text">Backend Communication</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#initialization"><span class="nav-number">2.2.3.</span> <span class="nav-text">Initialization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#start-up"><span class="nav-number">2.2.4.</span> <span class="nav-text">Start Up</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#program-revisionmp.spawn"><span class="nav-number">2.3.</span> <span class="nav-text">Program Revision(mp.spawn())</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#import"><span class="nav-number">2.3.1.</span> <span class="nav-text">Import</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#key-functions"><span class="nav-number">2.3.2.</span> <span class="nav-text">Key functions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#train-function"><span class="nav-number">2.3.3.</span> <span class="nav-text">train Function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#validation-function"><span class="nav-number">2.3.4.</span> <span class="nav-text">validation Function</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#program-revisiontorchrun"><span class="nav-number">2.4.</span> <span class="nav-text">Program Revision(torchrun)</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#overview"><span class="nav-number">1.</span> <span class="nav-text">Overview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#data-parallelism"><span class="nav-number">2.</span> <span class="nav-text">Data Parallelism</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#data-paralleldp"><span class="nav-number">2.1.</span> <span class="nav-text">Data Parallel(DP)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#distributed-data-parallelddp"><span class="nav-number">2.2.</span> <span class="nav-text">Distributed Data Parallel(DDP)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#steps"><span class="nav-number">2.2.1.</span> <span class="nav-text">Steps</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#backend-communication"><span class="nav-number">2.2.2.</span> <span class="nav-text">Backend Communication</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#initialization"><span class="nav-number">2.2.3.</span> <span class="nav-text">Initialization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#start-up"><span class="nav-number">2.2.4.</span> <span class="nav-text">Start Up</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#key-functions"><span class="nav-number">2.2.5.</span> <span class="nav-text">Key functions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#train-function"><span class="nav-number">2.2.6.</span> <span class="nav-text">train Function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#validation-function"><span class="nav-number">2.2.7.</span> <span class="nav-text">validation Function</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#program-revisiontorchrun"><span class="nav-number">2.3.</span> <span class="nav-text">Program Revision(torchrun)</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
