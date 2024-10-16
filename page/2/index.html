@@ -194,7 +194,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://ruoshi.tech/2024/10/12/Pytorch%20Distributed%20Training/">
+    <link itemprop="mainEntityOfPage" href="http://ruoshi.tech/2024/10/08/A%20Series%20of%20Attention%20Mechanisms/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/sign.bmp">
@@ -208,7 +208,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/10/12/Pytorch%20Distributed%20Training/" class="post-title-link" itemprop="url">Pytorch Distributed Training</a>
+            <a href="/2024/10/08/A%20Series%20of%20Attention%20Mechanisms/" class="post-title-link" itemprop="url">A Series of Attention Mechanisms</a>
         </h2>
 
         <div class="post-meta">
@@ -219,17 +219,23 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2024-10-12 19:40:48 / Modified: 20:40:11" itemprop="dateCreated datePublished" datetime="2024-10-12T19:40:48+08:00">2024-10-12</time>
+              <time title="Created: 2024-10-08 11:44:48" itemprop="dateCreated datePublished" datetime="2024-10-08T11:44:48+08:00">2024-10-08</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-10-12 19:19:19" itemprop="dateModified" datetime="2024-10-12T19:19:19+08:00">2024-10-12</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python-Programming/" itemprop="url" rel="index"><span itemprop="name">Python Programming</span></a>
+                  <a href="/categories/Paper-Reading/" itemprop="url" rel="index"><span itemprop="name">Paper Reading</span></a>
                 </span>
             </span>
 
@@ -244,83 +250,43 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="overview">Overview</h2>
-<p>Basically, there are two types of distributed training: data parallelism and model parallelism.</p>
+          <h1 id="attention">Attention</h1>
+<h2 id="attention-is-all-you-need">Attention is all you need</h2>
+<h3 id="intro-background">Intro &amp; Background</h3>
+<p>The intro section first talks about RNN-like models and their drawbacks concerning both time and space</p>
 <ul>
-<li>Data Parallelism: the model is replicated on each device and each replica processes a different portion of the input data. The gradients are then aggregated across all devices and the model is updated.</li>
-<li>Model Parallelism: different parts of the model are placed on different devices and the forward and backward passes are executed in parallel.</li>
+<li>Since RNN-like models have a inherently sequential nature, i.e., <span class="math inline">\(h_t\)</span> is dependent on the hidden state at time <span class="math inline">\(h_{t-1}\)</span>, they are not parallelizable and hence time-consuming.</li>
+<li>RNN-like models also have to store the hidden states of all the previous time steps for back-propagation, which is space-consuming and limits the ability of batch processing.</li>
 </ul>
-<p>Note that the parallelism in PyTorch is only supported on Linux.</p>
-<h2 id="data-parallelism">Data Parallelism</h2>
-<h3 id="data-paralleldp">Data Parallel(DP)</h3>
-<p>DP is the simplest way to use multiple GPUs. Only one extra line of code is needed to implement DP.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model = torch.nn.DataParallel(model)</span><br></pre></td></tr></table></figure>
-<p>The steps are as follows:</p>
+<p>Then background section also talks about convolutional networks for sequencial modeling</p>
 <ul>
-<li><strong>Forward pass</strong>:
-<ul>
-<li>Scatter a batch of input data from one assigned GPU to all GPUs. <img src="/2024/10/12/Pytorch%20Distributed%20Training/image-6.png" class=""></li>
-<li>Replicate the model on all GPUs. <img src="/2024/10/12/Pytorch%20Distributed%20Training/image-7.png" class=""></li>
-<li>Parallel forward pass on all GPUs. <img src="/2024/10/12/Pytorch%20Distributed%20Training/image-8.png" class=""></li>
-<li>Gather the output from all GPUs to the assigned GPU. <img src="/2024/10/12/Pytorch%20Distributed%20Training/image-9.png" class=""></li>
-</ul></li>
-<li><strong>Backward pass</strong>:
-<ul>
-<li>Compute the loss and gradient on the assigned GPU. <img src="/2024/10/12/Pytorch%20Distributed%20Training/image-10.png" class=""></li>
-<li>Scatter the gradient from the assigned GPU to all GPUs. <img src="/2024/10/12/Pytorch%20Distributed%20Training/image-11.png" class=""></li>
-<li>Parallel backward pass on all GPUs <img src="/2024/10/12/Pytorch%20Distributed%20Training/image-12.png" class=""></li>
-<li>Gather the gradient from all GPUs to the assigned GPU and update the model. <img src="/2024/10/12/Pytorch%20Distributed%20Training/image-13.png" class=""></li>
-</ul></li>
+<li>CNN operation is totally parallelizable and hence faster than RNN-like models, and it's also space-efficient.</li>
+<li>However, CNN is not good at capturing the dependencies between the output and the input, especially when the distance between the two is large. It has something to do with the concept of receptive field. To capture long-range dependencies, we need to stack multiple layers of CNN, which is not efficient.</li>
 </ul>
-<p>Note that the assigned GPU has to accommodate the whole batch of data, and conduct all the work of model updating. Thus the performance of DP is limited concerning both space and time.</p>
-<h3 id="distributed-data-parallelddp">Distributed Data Parallel(DDP)</h3>
-<h4 id="steps">Steps</h4>
-<p>DDP is a more advanced way to use multiple GPUs. It is more flexible and efficient than DP. The steps are as follows: * <strong>Preparation</strong> * Replicate the model on all GPUs and divide the input data among all GPUs equally and randomly. Each GPU load its own data from the disk. * <strong>Training</strong> * Forward: The computation of loss function is done on each GPU without gathering the results on one assigned GPU. * Backward: Each process communicates with each other by All-Reduce operation to exchange the gradients and compute the average gradient. The model is updated on each GPU using the same average gradient. * Updating: Each process has its own optimizer and updates the model on its own GPU. Since the initial value and the gradient are the same, the model on each GPU is also the same.</p>
-<p>To further improve the performance, DDP uses a further optimized version of All-Reduce. Obviously, it is not efficient to communicate after finishing all the computation of gradient. Therefore, the model parameters are partitioned into a lot of buckets, Once the gradient computation in bucket <span class="math inline">\(h-1\)</span> is finished, the communication of gradient in bucket <span class="math inline">\(h-1\)</span> and the gradient computation of bucket <span class="math inline">\(h\)</span> begin simultaneously</p>
-<h4 id="backend-communication">Backend Communication</h4>
-<p>The backend communication of DDP supports diffenrent protocals. The choice of protocals are determined by the factors below * <strong>Network Environment</strong> * Ethernet: <code>nccl</code> has a better performance, <code>gloo</code> is for spare use * InfiniBand: <code>nccl</code> only * <strong>Operators</strong>: <code>nccl</code> supports more diverse operators than <code>gloo</code></p>
-<p>In practical use, <code>nccl</code> is the prior choice.</p>
-<h4 id="initialization">Initialization</h4>
+<p>To address the drawbacks mentioned above, the authors propose Transformer, which is based solely on attention mechanisms</p>
 <ul>
-<li><strong>TCP mode</strong>: Independently start each process in bash and allocate rank.</li>
-<li><strong>ENV mode</strong>: The program can search for required values in required variables</li>
+<li>No recurrence is included thus parallelizable</li>
+<li>attention machenism can draw global dependencies between the input and the output no matter how far they are from each other</li>
 </ul>
-<h4 id="start-up">Start Up</h4>
+<h3 id="scaled-dot-attention">Scaled dot attention</h3>
+<p>The core principle of attention is how to map a query and a set of key-value pairs to an output. The output is a weighted sum of the values. The formula is given by <span class="math display">\[\operatorname{Attention}(Q,K,V)=\operatorname{softmax}({\frac{Q K^{T} }{\sqrt{d_{k} } } })V\]</span> Note that dot-product attention is much faster and more space-efficient in ractice</p>
+<hr />
 <ul>
-<li><code>mp.spawn()</code>: The module <code>mp</code> capsulates the package <code>multiprocessing</code>, not specifically designed for DDP</li>
-<li><code>torchrun</code>: Automatically set the configuration of env variables. Only need to set <code>os.environ['CUDA_VISIBLE_DEVICES']</code> manually</li>
-<li><code>torch.distributed.launch</code>: To be deprecated</li>
-</ul>
-<p>Parameters used in the last two ways of startup * <code>--nproc_per_node</code>: number of processes per machine * <code>--nnodes</code>: number of machines * <code>--node_rank</code>: the idx of this machine * <code>--master_addr</code>: the IP of idx-0 machine * <code>--master_port</code>: the available port of idx-0 machine</p>
-<h3 id="program-revisionmp.spawn">Program Revision(mp.spawn())</h3>
-<h4 id="import">Import</h4>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import torch.distributed as dist</span><br><span class="line">import torch.multiprocessing as mp</span><br><span class="line">from torch.cuda.amp import GradScaler</span><br><span class="line">from torch.utils.data.distributed import DistributedSampler</span><br><span class="line">from torch.nn.parallel import DistributedDataParallel as DDP</span><br></pre></td></tr></table></figure>
-<ul>
-<li><strong>dist</strong>: communication between GPUs</li>
-<li><strong>mp</strong>: DDP startup</li>
-<li><strong>GradScaler</strong>: automatic mixed precision</li>
-<li><strong>DistributedSampler</strong>: Data sampler in a distributed setting</li>
-<li><strong>DDP</strong>: model capsulation and passing</li>
-</ul>
-<h4 id="key-functions">Key functions</h4>
-<ul>
-<li>Function <code>init_ddp</code> for initialization <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">def init_ddp(local_rank):</span><br><span class="line">    torch.cuda.set_device(local_rank）</span><br><span class="line">    os.environ[&#x27;RANK&#x27;] = str(local_rank)</span><br><span class="line">    dist.init_processgroup(backend=&#x27;nccl&#x27;,init_method=&#x27;env://&#x27;)</span><br></pre></td></tr></table></figure> Initialize the process using <code>nccl</code> as communication protocal and ENV mode for initialization. After initializing with <code>init_ddp</code>, we can get <code>local_rank</code> and <code>world_size</code> in following code easily. <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">local_rank = dist.get_rank() # rank of current process</span><br><span class="line">world_size = dist.get_world_size() # number of processes in current server</span><br></pre></td></tr></table></figure> Given that all processes have the same model, Only one processes is responsible for printing log and saving checkpoint. <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if local_rank == 0:</span><br><span class="line">    print(f&#x27;Begin validating&#x27;)</span><br><span class="line">    ...</span><br></pre></td></tr></table></figure></li>
-<li>Function <code>reduce_tensor</code> to gather data from different processes <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def reduce_tensor(tensor: torch.Tensor):</span><br><span class="line">    rt = tensor.clone()</span><br><span class="line">    dist.all_reduce(rt, op=dist.reduce_op.SUM)</span><br><span class="line">    rt /= dist.get_worldsize)</span><br><span class="line">    return rt</span><br></pre></td></tr></table></figure></li>
-<li>Function <code>get_ddp_generator</code> to enhance the randomness <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def get_ddp_generator(seed=3407):</span><br><span class="line">  local_rank = dist.get_rank()</span><br><span class="line">  g = torch.Generator()</span><br><span class="line">  g.manual_seed(seed + local_rank)                       </span><br><span class="line">  return g</span><br></pre></td></tr></table></figure> #### Program Entry</li>
-<li>The parameter <code>nprocs</code> should be equal to <code>worldsize</code> otherwise will cause dead lock <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">if __name__ == &#x27;__main__&#x27;:</span><br><span class="line">    parser = argparse.ArgumentParser()</span><br><span class="line">    parser.add_argument(&#x27;-gpu&#x27;, default=&#x27;0,1,2,3&#x27;, type=str)</span><br><span class="line">    ...</span><br><span class="line">    os.environ[&#x27;MASTER_ADDR&#x27;] = &#x27;localhost&#x27;</span><br><span class="line">    os.environ[&#x27;MASTER_PORT&#x27;] = &#x27;19198&#x27; [&#x27;CUDA_VISIBLE_DEVICES&#x27;] = args.gpu</span><br><span class="line">    world_size = torch.cuda.device_count() </span><br><span class="line">    os.environ[&#x27;WORLD_SIZE&#x27;] = str(world_size)</span><br><span class="line">    os.environ[&#x27;PYTORCH_CUDA_ALLOC_CONF&#x27;] = &quot;max_split_size_mb:128&quot;</span><br><span class="line"></span><br><span class="line">    if args.mode == &#x27;train&#x27;:</span><br><span class="line">        mp.spawn(fn=train, nprocs=world_size, args=(args,))</span><br></pre></td></tr></table></figure> #### Main function</li>
-<li>The argument <code>local_rank</code> is automatically allocated by <code>mp.spawn()</code></li>
-<li>The function <code>init_ddp()</code> is needed for the initialization of every process <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">def main(local_rank, args):</span><br><span class="line">    ...</span><br><span class="line">    init_ddp(local_rank)</span><br><span class="line">    ...</span><br><span class="line">    model.cuda()</span><br><span class="line">    model = nn.SyncBatchnorm.convert_sync_batchnorm(model)</span><br><span class="line">    ...</span><br><span class="line">    num_gpus = torch.cuda.device_count()</span><br><span class="line">    if num_gpus &gt; 1: </span><br><span class="line">        model = nn.parallel.DistributedDataParallel(model, device_id=[local_rank], output_device=local_rank)</span><br><span class="line">    ...</span><br><span class="line">    scaler = GradScaler()</span><br><span class="line">    ...</span><br><span class="line">    for epoch in range(epochs):</span><br><span class="line">        if local_rank == 0:</span><br><span class="line">            ....</span><br><span class="line">        train_dataloader.sampler.set_epoch(epoch)</span><br><span class="line">        train(model, ..., scaler, args)</span><br><span class="line">    dist.destroy_process_group()</span><br></pre></td></tr></table></figure> #### get_dataloader Function <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">def get_dataloader(path, args, ..., train: bool):</span><br><span class="line">    ...</span><br><span class="line">    if train:</span><br><span class="line">        train_sampler = DistributedSampler(data, shuffle=True)  </span><br><span class="line">        g = get_ddp_generator()</span><br><span class="line">        dataloader = DataLoader(dataset=data,</span><br><span class="line">                                batch_size=args[&#x27;batch_size&#x27;],</span><br><span class="line">                                num_workers=args[&#x27;num_workers&#x27;],</span><br><span class="line">                                pin_memory=True,</span><br><span class="line">                                shuffle=False, </span><br><span class="line">                                sampler=train_sampler,</span><br><span class="line">                                generator=g)</span><br><span class="line">    else:</span><br><span class="line">        test_sampler = DistributedSampler(data, shuffle=False)  </span><br><span class="line">        dataloader = DataLoader(dataset=data,</span><br><span class="line">                                batch_size=args[&#x27;batch_size&#x27;],</span><br><span class="line">                                num_workers=args[&#x27;num_workers&#x27;],</span><br><span class="line">                                pin_memory=True,</span><br><span class="line">                                shuffle=False,  # 采用顺序采样器</span><br><span class="line">                                sampler=test_sampler)</span><br><span class="line">    </span><br><span class="line">    return dataloader</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h4 id="train-function">train Function</h4>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">def train(...):</span><br><span class="line">    model.train()</span><br><span class="line">    ...</span><br><span class="line">    for step, batch in enumerate(train_dataloader):</span><br><span class="line">        ...</span><br><span class="line">        with torch.cuda.amp.autocast():  </span><br><span class="line">            output = ...</span><br><span class="line">            loss = ...</span><br><span class="line">        ...</span><br><span class="line">        reduced_loss = reduce_tensor(loss.data)  </span><br><span class="line">        if dist.get_rank() == 0:  </span><br><span class="line">            print(...)</span><br><span class="line">        train_loss += reduced_loss.item()</span><br><span class="line"></span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        scaler.scale(loss).backward()  </span><br><span class="line">        scaler.step(optimizer)  </span><br><span class="line">        scheduler.step()  </span><br><span class="line">        scaler.update()  </span><br><span class="line">        ...</span><br><span class="line">        torch.cuda.empty_cache()  </span><br><span class="line"></span><br><span class="line">    if dist.get_rank() == 0:</span><br><span class="line">        print(...)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h4 id="validation-function">validation Function</h4>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">@torch.no_grad()</span><br><span class="line">def validate(...):</span><br><span class="line">    model.eval()</span><br><span class="line">    ...</span><br><span class="line">    with torch.cuda.amp.autocast():</span><br><span class="line">        output = ...</span><br><span class="line">        </span><br><span class="line">    loss = ...</span><br><span class="line">    reduced_loss = reduce_tensor(loss.data)</span><br><span class="line">    eval_loss += reduced_loss.item()</span><br><span class="line"></span><br><span class="line">    if dist.get_rank() == 0:</span><br><span class="line">        print(...)</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    pred_labels = ...</span><br><span class="line">    true_labels = ...</span><br><span class="line">    pred_bools = ...</span><br><span class="line">    macro = ...</span><br><span class="line"></span><br><span class="line">    macro = reduce_tensor(torch.tensor(macro)).cuda()</span><br><span class="line"></span><br><span class="line">return macro</span><br></pre></td></tr></table></figure>
-<h3 id="program-revisiontorchrun">Program Revision(torchrun)</h3>
-<ul>
-<li>Similar to the previous section</li>
-<li>No need to import <code>mp</code> and use the capsulation of <code>mp.spawn()</code></li>
-<li>Only one env variable needs to be configured in the program</li>
-<li><code>local_rank</code> no more serves as an argument in <code>main</code> function. Call <code>os.environ['LOCAL_RANK']</code> to use the variable</li>
+<li>query <span class="math inline">\(\bf q\)</span>: The row of matrix <span class="math inline">\(Q\)</span>, and thus <span class="math inline">\(Q\)</span> has the size of <span class="math inline">\(n\times d_k\)</span>, in which <span class="math inline">\(n\)</span> is the number of queries. The query vector has a dimension of <span class="math inline">\(d_k\)</span> for each corresponding embedded token. <span class="math inline">\(d_k\)</span> is actually much smaller than the dimension of an embedded vector. The vector <span class="math inline">\(\bf q\)</span> is linear projected from the corresponding embedded vector <span class="math inline">\(\bf e\)</span> <span class="math display">\[\bf q=W_q e\]</span> in which <span class="math inline">\(\bf W_q\)</span> is a learnable matrix.</li>
+<li>key <span class="math inline">\(\bf k\)</span>: The key vector also has a dimension of <span class="math inline">\(d_k\)</span> for each unit and can be calculated by <span class="math display">\[\bf k=W_k e\]</span> in which <span class="math inline">\(\bf W_k\)</span> is also learnable</li>
+<li>The dot product of <span class="math inline">\(\bf q\)</span> and <span class="math inline">\(\bf k\)</span>: Intuitively, <span class="math inline">\(\bf q\)</span> serves as an active query on behalf of each unit (token, patch...) and <span class="math inline">\(\bf k\)</span> is a key waiting for query from <span class="math inline">\(\bf q\)</span>. The scalar value <span class="math inline">\(\bf \langle q, k\rangle\)</span> measures the extent to which the unit represented by <span class="math inline">\(\bf q\)</span> matches that represented by <span class="math inline">\(\bf k\)</span>. By backpropagation and optimization, matrices <span class="math inline">\(\bf W_q\)</span> and <span class="math inline">\(\bf W_k\)</span> can capture a proper dependencies between each unit. <span class="math inline">\(\bf \langle q, k\rangle\)</span> is also called attention score</li>
+<li><p>Division of <span class="math inline">\(\sqrt d_k\)</span>: The author says that for large values of <span class="math inline">\(d_k\)</span>, the dot products grow large in magnitude, pushing the softmax function into regions where it has extremely small gradients</p></li>
+<li>Softmax: The softmax operation is conducted on <span class="math inline">\(\frac{QK^T}{\sqrt{d_k}}\)</span>, which is an <span class="math inline">\(n\times n\)</span> matrix, along the dimension of <span class="math inline">\(\bf k\)</span>, i.e., Given one <span class="math inline">\(\bf q_i\)</span>， <span class="math inline">\(\sum\nolimits_{j = 1}^{ {d_k} } {\left\langle { { {\bf{q}}_i},{ {\bf{k} }_j} } \right\rangle } = 1\)</span></li>
+<li>Mask operation: <span class="math inline">\(\bf q_i\)</span> should only query keys that locate before it, i.e. <span class="math display">\[\left\langle { { {\bf{q} }_i},{ {\bf{k} }_j} } \right\rangle  = \left\{ \begin{array}{l}
+\left\langle { { {\bf{q} }_i},{ {\bf{k} }_j} } \right\rangle ,i \le j\\
+0,i &gt; j
+\end{array} \right.\]</span> The mask operation should be conducted ahead of softmax</li>
+<li><p>value <span class="math inline">\(\bf v\)</span>: The value vector has a dimension of <span class="math inline">\(d_v\)</span>, which equals to the dimension of embedded vectors, for each unit, <span class="math inline">\(\bf v\)</span> is calculated by <span class="math display">\[\bf v=W_ve\]</span> Given that <span class="math inline">\(d_k &lt;&lt; d_v\)</span>, thus for the three matrices <span class="math inline">\({\left( { {W_v}} \right)_{ {d_v} \times {d_v} } },{\left( { {W_k} } \right)_{ {d_k} \times {d_v}}},{\left( { {W_q} } \right)_{ {d_k} \times {d_v} } }\)</span> <span class="math display">\[\operatorname{param}(W_v)&gt;&gt;\operatorname{param}(W_q) + \operatorname{param}(W_k)\]</span> Thus it's better to decompose <span class="math inline">\(W_v\)</span> into the multiplication of two low-rank matrices. Each value <span class="math inline">\(\bf v_i\)</span> is associated with corresponding key <span class="math inline">\(\bf k_i\)</span>. The output of attention for each unit is actually the weighted sum of all value vectors, serving as the variation of embedded vectors <span class="math display">\[{\mathop{\rm Attention}\nolimits} (Q,K,V) = {\mathop{\rm softmax}\nolimits} (\frac{ {Q{K^T} } }{ {\sqrt { {d_k} } } })V = {\left[ { {\mathop{\rm softmax}\nolimits} (\frac{ {Q{K^T} } }{ \sqrt {d_k}  })} \right]_{n \times n} }{V_{n \times {d_v} } } = {\left[ {\begin{array}{c}
+{\Delta {E_1} }\\
+{\Delta {E_2} }\\
+\vdots \\
+{\Delta {E_n} }
+\end{array} } \right]_{n \times {d_v} } }\]</span> Calculating <span class="math inline">\(E_i+\Delta E_i\)</span> gives the prediction of word embedding</p></li>
 </ul>
 
       
@@ -340,7 +306,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
   </nav>
 
 
@@ -408,20 +374,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">2</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">1</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
