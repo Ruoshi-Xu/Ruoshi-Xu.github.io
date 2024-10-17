@@ -24,26 +24,26 @@
 
   <meta property="og:type" content="website">
 <meta property="og:title" content="Escapist&#39;s Blog">
-<meta property="og:url" content="http://ruoshi.tech/categories/Python-Programming/index.html">
+<meta property="og:url" content="http://ruoshi.tech/page/4/index.html">
 <meta property="og:site_name" content="Escapist&#39;s Blog">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="Escapist">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://ruoshi.tech/categories/Python-Programming/">
+<link rel="canonical" href="http://ruoshi.tech/page/4/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : false,
+    isHome : true,
     isPost : false,
     lang   : 'en'
   };
 </script>
 
-  <title>Category: Python Programming | Escapist's Blog</title>
+  <title>Escapist's Blog</title>
   
 
 
@@ -188,52 +188,126 @@
         <div class="content-wrap">
           
 
-          <div class="content category">
+          <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://ruoshi.tech/2024/10/08/A%20Series%20of%20Attention%20Mechanisms/">
 
-  
-  
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">Python Programming
-          <small>Category</small>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/sign.bmp">
+      <meta itemprop="name" content="Escapist">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Escapist's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2024/10/08/A%20Series%20of%20Attention%20Mechanisms/" class="post-title-link" itemprop="url">A Series of Attention Mechanisms</a>
         </h2>
-      </div>
+
+        <div class="post-meta">
+		
+		  
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-10-08 11:44:48" itemprop="dateCreated datePublished" datetime="2024-10-08T11:44:48+08:00">2024-10-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-10-12 19:19:19" itemprop="dateModified" datetime="2024-10-12T19:19:19+08:00">2024-10-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Paper-Reading/" itemprop="url" rel="index"><span itemprop="name">Paper Reading</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2024</span>
+          <h1 id="attention">Attention</h1>
+<h2 id="attention-is-all-you-need">Attention is all you need</h2>
+<h3 id="intro-background">Intro &amp; Background</h3>
+<p>The intro section first talks about RNN-like models and their drawbacks concerning both time and space</p>
+<ul>
+<li>Since RNN-like models have a inherently sequential nature, i.e., <span class="math inline">\(h_t\)</span> is dependent on the hidden state at time <span class="math inline">\(h_{t-1}\)</span>, they are not parallelizable and hence time-consuming.</li>
+<li>RNN-like models also have to store the hidden states of all the previous time steps for back-propagation, which is space-consuming and limits the ability of batch processing.</li>
+</ul>
+<p>Then background section also talks about convolutional networks for sequencial modeling</p>
+<ul>
+<li>CNN operation is totally parallelizable and hence faster than RNN-like models, and it's also space-efficient.</li>
+<li>However, CNN is not good at capturing the dependencies between the output and the input, especially when the distance between the two is large. It has something to do with the concept of receptive field. To capture long-range dependencies, we need to stack multiple layers of CNN, which is not efficient.</li>
+</ul>
+<p>To address the drawbacks mentioned above, the authors propose Transformer, which is based solely on attention mechanisms</p>
+<ul>
+<li>No recurrence is included thus parallelizable</li>
+<li>attention machenism can draw global dependencies between the input and the output no matter how far they are from each other</li>
+</ul>
+<h3 id="scaled-dot-attention">Scaled dot attention</h3>
+<p>The core principle of attention is how to map a query and a set of key-value pairs to an output. The output is a weighted sum of the values. The formula is given by <span class="math display">\[\operatorname{Attention}(Q,K,V)=\operatorname{softmax}({\frac{Q K^{T} }{\sqrt{d_{k} } } })V\]</span> Note that dot-product attention is much faster and more space-efficient in ractice</p>
+<hr />
+<ul>
+<li>query <span class="math inline">\(\bf q\)</span>: The row of matrix <span class="math inline">\(Q\)</span>, and thus <span class="math inline">\(Q\)</span> has the size of <span class="math inline">\(n\times d_k\)</span>, in which <span class="math inline">\(n\)</span> is the number of queries. The query vector has a dimension of <span class="math inline">\(d_k\)</span> for each corresponding embedded token. <span class="math inline">\(d_k\)</span> is actually much smaller than the dimension of an embedded vector. The vector <span class="math inline">\(\bf q\)</span> is linear projected from the corresponding embedded vector <span class="math inline">\(\bf e\)</span> <span class="math display">\[\bf q=W_q e\]</span> in which <span class="math inline">\(\bf W_q\)</span> is a learnable matrix.</li>
+<li>key <span class="math inline">\(\bf k\)</span>: The key vector also has a dimension of <span class="math inline">\(d_k\)</span> for each unit and can be calculated by <span class="math display">\[\bf k=W_k e\]</span> in which <span class="math inline">\(\bf W_k\)</span> is also learnable</li>
+<li>The dot product of <span class="math inline">\(\bf q\)</span> and <span class="math inline">\(\bf k\)</span>: Intuitively, <span class="math inline">\(\bf q\)</span> serves as an active query on behalf of each unit (token, patch...) and <span class="math inline">\(\bf k\)</span> is a key waiting for query from <span class="math inline">\(\bf q\)</span>. The scalar value <span class="math inline">\(\bf \langle q, k\rangle\)</span> measures the extent to which the unit represented by <span class="math inline">\(\bf q\)</span> matches that represented by <span class="math inline">\(\bf k\)</span>. By backpropagation and optimization, matrices <span class="math inline">\(\bf W_q\)</span> and <span class="math inline">\(\bf W_k\)</span> can capture a proper dependencies between each unit. <span class="math inline">\(\bf \langle q, k\rangle\)</span> is also called attention score</li>
+<li><p>Division of <span class="math inline">\(\sqrt d_k\)</span>: The author says that for large values of <span class="math inline">\(d_k\)</span>, the dot products grow large in magnitude, pushing the softmax function into regions where it has extremely small gradients</p></li>
+<li>Softmax: The softmax operation is conducted on <span class="math inline">\(\frac{QK^T}{\sqrt{d_k}}\)</span>, which is an <span class="math inline">\(n\times n\)</span> matrix, along the dimension of <span class="math inline">\(\bf k\)</span>, i.e., Given one <span class="math inline">\(\bf q_i\)</span>， <span class="math inline">\(\sum\nolimits_{j = 1}^{ {d_k} } {\left\langle { { {\bf{q}}_i},{ {\bf{k} }_j} } \right\rangle } = 1\)</span></li>
+<li>Mask operation: <span class="math inline">\(\bf q_i\)</span> should only query keys that locate before it, i.e. <span class="math display">\[\left\langle { { {\bf{q} }_i},{ {\bf{k} }_j} } \right\rangle  = \left\{ \begin{array}{l}
+\left\langle { { {\bf{q} }_i},{ {\bf{k} }_j} } \right\rangle ,i \le j\\
+0,i &gt; j
+\end{array} \right.\]</span> The mask operation should be conducted ahead of softmax</li>
+<li><p>value <span class="math inline">\(\bf v\)</span>: The value vector has a dimension of <span class="math inline">\(d_v\)</span>, which equals to the dimension of embedded vectors, for each unit, <span class="math inline">\(\bf v\)</span> is calculated by <span class="math display">\[\bf v=W_ve\]</span> Given that <span class="math inline">\(d_k &lt;&lt; d_v\)</span>, thus for the three matrices <span class="math inline">\({\left( { {W_v}} \right)_{ {d_v} \times {d_v} } },{\left( { {W_k} } \right)_{ {d_k} \times {d_v}}},{\left( { {W_q} } \right)_{ {d_k} \times {d_v} } }\)</span> <span class="math display">\[\operatorname{param}(W_v)&gt;&gt;\operatorname{param}(W_q) + \operatorname{param}(W_k)\]</span> Thus it's better to decompose <span class="math inline">\(W_v\)</span> into the multiplication of two low-rank matrices. Each value <span class="math inline">\(\bf v_i\)</span> is associated with corresponding key <span class="math inline">\(\bf k_i\)</span>. The output of attention for each unit is actually the weighted sum of all value vectors, serving as the variation of embedded vectors <span class="math display">\[{\mathop{\rm Attention}\nolimits} (Q,K,V) = {\mathop{\rm softmax}\nolimits} (\frac{ {Q{K^T} } }{ {\sqrt { {d_k} } } })V = {\left[ { {\mathop{\rm softmax}\nolimits} (\frac{ {Q{K^T} } }{ \sqrt {d_k}  })} \right]_{n \times n} }{V_{n \times {d_v} } } = {\left[ {\begin{array}{c}
+{\Delta {E_1} }\\
+{\Delta {E_2} }\\
+\vdots \\
+{\Delta {E_n} }
+\end{array} } \right]_{n \times {d_v} } }\]</span> Calculating <span class="math inline">\(E_i+\Delta E_i\)</span> gives the prediction of word embedding</p></li>
+</ul>
+
+      
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2024-10-12T19:40:48+08:00"
-              content="2024-10-12">
-          10-12
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/2024/10/12/Pytorch%20Distributed%20Training(1)--DP_DDP/" itemprop="url">
-            <span itemprop="name">Pytorch Distributed Training(1)--DP/DDP</span>
-          </a>
-      </div>
-
-    </header>
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
   </article>
-
-    </div>
-  </div>
   
   
   
 
+
   
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+  </nav>
 
 
 
