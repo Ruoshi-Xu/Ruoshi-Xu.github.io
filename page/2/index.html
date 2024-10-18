@@ -219,10 +219,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2024-10-17 14:35:59 / Modified: 14:56:38" itemprop="dateCreated datePublished" datetime="2024-10-17T14:35:59+08:00">2024-10-17</time>
+              <time title="Created: 2024-10-17 14:35:59" itemprop="dateCreated datePublished" datetime="2024-10-17T14:35:59+08:00">2024-10-17</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-10-18 20:17:29" itemprop="dateModified" datetime="2024-10-18T20:17:29+08:00">2024-10-18</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -461,6 +467,84 @@ E[{x_a} - {\mu _a}|{x_b}] &amp;= E[A({x_b} - {\mu _b}) + w|{x_b}]\\
 \end{aligned}
  \]</span> Thus the maximum likelihood estimation of the covariance matrix is biased. The unbiased estimation is</p></li>
 </ul>
+<p><span class="math display">\[{\tilde \Sigma}={\frac{1}{N-1} }\sum_{n=1}^{N}(\mathbf{x}_{n}-\mu_{\mathrm{ML} })(\mathbf{x}_{n}-\mu_{\mathrm{ML} })^{T}\]</span> * Sequential Estimation: When the data is given sequentially, we don't need to traverse through all data to calculate the mean value [<span class="math display">\[\begin{align*}
+\mu _{ML}^{(N)} &amp;= \frac{1}{N}\sum\limits_{n = 1}^N { { x_n} } \\
+ &amp;= \frac{1}{N}{x_N} + \frac{1}{N}\sum\limits_{n = 1}^{N - 1} { { x_n} } \\
+ &amp;= \frac{1}{N}{x_N} + \frac{ { N - 1} }{N}\mu _{ML}^{(N - 1)}\\
+ &amp;= \mu _{ML}^{(N - 1)} + \frac{1}{N}({x_N} - \mu _{ML}^{(N - 1)})
+\end{align*}\]</span>] This recursive update rule allows you to efficiently compute the mean as new data points arrive, without needing to recalculate the entire sum each time. It's particularly useful in online learning scenarios where data is processed incrementally</p>
+<h2 id="robbins-monro-algorithm">Robbins-Monro Algorithm</h2>
+<ul>
+<li><p>Background: The Robbins-Monro algorithm is a stochastic approximation algorithm that can be used to solve an equation when only noisy measurements of the function are available.</p></li>
+<li><p>Problem: Consider <span class="math inline">\(\theta\)</span> and <span class="math inline">\(z\)</span> which is an r.v. Define a function <span class="math display">\[f(\theta)={E}[z]\theta]=\int z p(z|\theta)\,\mathrm{d}z\]</span> we wanna find the root of <span class="math inline">\(f(\theta^*)=0\)</span>. The query of <span class="math inline">\(z\)</span> is given, one at a time. <img src="image-5.png" alt="alt text" /></p></li>
+<li>Step
+<ul>
+<li>Initialize <span class="math inline">\(\theta_0\)</span></li>
+<li>For <span class="math inline">\(n=1,2,\cdot\cdot\cdot\)</span>
+<ul>
+<li>Get <span class="math inline">\(z_n\)</span></li>
+<li>Update <span class="math inline">\(\theta_n=\theta_{n-1}-a_nz_n\)</span> here <span class="math inline">\(z_n\)</span> is a noisy measurement, <span class="math inline">\(z_n=h(\theta)+\epsilon _n\)</span></li>
+</ul></li>
+<li>Learning rate: The learning rate <span class="math inline">\(a_n\)</span> decreases over time, ensuring that the step size reduces as the number of iterations increases. This helps the algorithm converge towards the root <span class="math inline">\(𝜃\)</span>. Frequently used learning rate is[{a_n} = ;,(0.5,1]]</li>
+<li>The learning rate should satisfy the three conditions below to ensure the convergence of the algorithm <span class="math display">\[\operatorname*{lim}_{N\rightarrow\infty}a_{N}=0\qquad\sum_{N=1}^{\infty}a_{N}=\infty\qquad\sum_{N=1}^{\infty}a_{N}^{2}\lt \infty\]</span></li>
+</ul></li>
+<li>Use Robins-Monro algorithm in maximum likelihood estimation
+<ul>
+<li>We wanna find <span class="math inline">\(\theta^*\)</span> s.t. [f() = - <em>{N } </em>{n = 1}^N {} p({x_n}|) = {E_x}= 0] This is the objective function</li>
+<li>Thus, the update step is <span class="math display">\[\theta^{(N)}=\theta^{(N-1)}-a_{N-1}\frac{\partial}{\partial\theta^{(N-1)} }\left[-\ln p(x_{N}|\theta^{(N-1)})\right]\]</span></li>
+</ul></li>
+<li>Example: Use Robin-Monro Algorithm to estimate the mean value of Gaussion.
+<ul>
+<li>The gradient in the update equation is <span class="math display">\[z=\frac{\partial}{\partial\mu_{M L} }\left[-\ln p(x|\mu_{M L},\sigma^{2})\right]=-\frac{1}{\sigma^{2} }(x-\mu_{M L})\]</span></li>
+<li>The dynamic learning rate is set to be <span class="math inline">\(a_{N}=\,\sigma^{2}/N\)</span></li>
+<li>Substitute the parameters into the update equation, we have<span class="math display">\[\mu_{ML}^{(N)} = \mu_{ML}^{(N-1)} + \frac{\sigma^2}{N} \cdot (x_N - \mu_{ML}^{(N-1)})\]</span></li>
+<li>As shown in the graph, if the <span class="math inline">\(\mu_{ML}\)</span> deviate from the true value, the update will be larger. <img src="image-6.png" alt="alt text" /></li>
+</ul></li>
+</ul>
+<h2 id="bayesian-inference-for-gaussian">Bayesian Inference for Gaussian</h2>
+<ul>
+<li>Here assume that <span class="math inline">\(\sigma^2\)</span> is known, and we need to estimate <span class="math inline">\(\mu\)</span>. The prior distribution is <span class="math inline">\(\mu\sim\mathcal{N}(\mu_0,\sigma_0^2)\)</span>, the likelihood function is <span class="math display">\[p({\bf x}|\mu)=\prod_{n=1}^{N}p(x_{n}|\mu)=\frac{1}{(2\pi\sigma^{2})^{N/2} }\exp\left\{-\frac{1}{2\sigma^{2} }\sum_{n=1}^{N}(x_{n}-\mu)^{2}\right\}\]</span> Apply Bayes' theorem, and assume a distribution for the posterior distribution, we have[<span class="math display">\[\begin{align*}
+&amp;p(\mu |{\bf{x} }) \propto p({\bf{x} }|\mu )p(\mu )\\
+&amp;p(\mu |{\bf{x} })\sim \mathcal{N}\left( {\mu |{\mu _N},{\mkern 1mu} \sigma _N^2} \right)
+\end{align*}\]</span>] By comparing the corresponding terms, we can get the parameters in posterior distribution [<span class="math display">\[\begin{align*}
+&amp;{\mu _N} = \frac{ { {\sigma ^2} }}{ { N\sigma _0^2 + {\sigma ^2} }}{\mu _0} + \frac{ { N\sigma _0^2} }{ { N\sigma _0^2 + {\sigma ^2} }}{\mu _{ { \rm{ML} }} }\\
+&amp;\frac{1}{ { \sigma _N^2} }\;\; = \;\;\frac{1}{ { \sigma _0^2} } + \frac{N}{ { {\sigma ^2} }}
+\end{align*}\]</span>] As <span class="math inline">\(N\)</span>, the number of samples vary, the posterior distribution will converge to the maximum likelihood estimation. The prior distribution will have less influence on the posterior distribution.</li>
+</ul>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>N = 0</th>
+<th>N → ∞</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>( _N )</td>
+<td>( _0 )</td>
+<td>( _{ML} )</td>
+</tr>
+<tr class="even">
+<td>( ^2_N )</td>
+<td>( ^2_0 )</td>
+<td>0</td>
+</tr>
+<tr class="odd">
+<td>* Sequential Estimation Using Bayesian Inference: The core principle is to use the posterior distribution of the previous <span class="math inline">\(N-1\)</span> step as the prior distribution of the <span class="math inline">\(N\)</span>'th step. The original form is still about Bayes' theorem. <span class="math inline">\(p(\mu)\)</span> is the prior, the consecutive multiplication is likelihood[p(</td>
+<td>x) p()p({x_N}</td>
+<td>)_{n = 1}^{N - 1} p ({x_n}</td>
+</tr>
+</tbody>
+</table>
+<p>Since the posterior of previous <span class="math inline">\(N-1\)</span> step satisfies <span class="math display">\[
+p(\mu |{x_1},{x_2}, \ldots ,{x_{N - 1} })\propto p(\mu )\prod\limits_{n = 1}^{N - 1} p ({x_n}|\mu )
+\]</span> and the posterior of previous <span class="math inline">\(N-1\)</span> steps are used as the prior of step <span class="math inline">\(N\)</span>, thus the formula above can be simplified as [p(|{x_1},{x_2}, ,{x_N}) p({x_N}|) p(|{x_1},{x_2}, ,{x_{N - 1} })]</p>
 
       
     </div>
