@@ -227,7 +227,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-10-18 20:17:29" itemprop="dateModified" datetime="2024-10-18T20:17:29+08:00">2024-10-18</time>
+                <time title="Modified: 2024-10-19 14:15:07" itemprop="dateModified" datetime="2024-10-19T14:15:07+08:00">2024-10-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -442,7 +442,7 @@ E[{x_a} - {\mu _a}|{x_b}] &amp;= E[A({x_b} - {\mu _b}) + w|{x_b}]\\
 &amp;\frac{\partial }{ {\partial \mu } }\ln p({\bf{X} }|\mu ,\Sigma ) = \sum\limits_{n = 1}^N { {\Sigma ^{ - 1} } } ({ {\bf{x} }_n} - \mu ) = 0\\
  &amp;\Rightarrow {\mu _{ {\rm{ML} } } } = \frac{1}{N}\sum\limits_{n = 1}^N { { {\bf{x} }_n} } 
 \end{aligned} \]</span> and similar for <span class="math inline">\(\Sigma\)</span> <span class="math display">\[{\Sigma _{ {\rm{ML} } } } = \frac{1}{N}\sum\limits_{n = 1}^N {({ {\bf{x} }_n} - {\mu _{ {\rm{ML} } } }){ {({ {\bf{x} }_n} - {\mu _{ {\rm{ML} } } })}^{\rm{T} } } }  \]</span></p></li>
-<li><p>The maximum likelihood estimation of the covariance matrix is biased. Assume that <span class="math display">\[
+<li>The maximum likelihood estimation of the covariance matrix is biased. Assume that <span class="math display">\[
 \mathbf{x}_n=\mu + \epsilon_n
 \]</span> in which <span class="math display">\[
 \epsilon_n\sim\mathcal{N}(0,\Sigma)
@@ -465,14 +465,14 @@ E[{x_a} - {\mu _a}|{x_b}] &amp;= E[A({x_b} - {\mu _b}) + w|{x_b}]\\
   &amp;= \frac{1}{N} \left( (N - 1)\Sigma \right) \\
   &amp;= \frac{N - 1}{N} \Sigma
 \end{aligned}
- \]</span> Thus the maximum likelihood estimation of the covariance matrix is biased. The unbiased estimation is</p></li>
-</ul>
-<p><span class="math display">\[{\tilde \Sigma}={\frac{1}{N-1} }\sum_{n=1}^{N}(\mathbf{x}_{n}-\mu_{\mathrm{ML} })(\mathbf{x}_{n}-\mu_{\mathrm{ML} })^{T}\]</span> * Sequential Estimation: When the data is given sequentially, we don't need to traverse through all data to calculate the mean value [<span class="math display">\[\begin{align*}
+ \]</span> Thus the maximum likelihood estimation of the covariance matrix is biased. The unbiased estimation is <span class="math display">\[{\tilde \Sigma}={\frac{1}{N-1} }\sum_{n=1}^{N}(\mathbf{x}_{n}-\mu_{\mathrm{ML} })(\mathbf{x}_{n}-\mu_{\mathrm{ML} })^{T}\]</span></li>
+<li><p>Sequential Estimation: When the data is given sequentially, we don't need to traverse through all data to calculate the mean value <span class="math display">\[\begin{align*}
 \mu _{ML}^{(N)} &amp;= \frac{1}{N}\sum\limits_{n = 1}^N { { x_n} } \\
  &amp;= \frac{1}{N}{x_N} + \frac{1}{N}\sum\limits_{n = 1}^{N - 1} { { x_n} } \\
  &amp;= \frac{1}{N}{x_N} + \frac{ { N - 1} }{N}\mu _{ML}^{(N - 1)}\\
  &amp;= \mu _{ML}^{(N - 1)} + \frac{1}{N}({x_N} - \mu _{ML}^{(N - 1)})
-\end{align*}\]</span>] This recursive update rule allows you to efficiently compute the mean as new data points arrive, without needing to recalculate the entire sum each time. It's particularly useful in online learning scenarios where data is processed incrementally</p>
+\end{align*}\]</span> This recursive update rule allows you to efficiently compute the mean as new data points arrive, without needing to recalculate the entire sum each time. It's particularly useful in online learning scenarios where data is processed incrementally</p></li>
+</ul>
 <h2 id="robbins-monro-algorithm">Robbins-Monro Algorithm</h2>
 <ul>
 <li><p>Background: The Robbins-Monro algorithm is a stochastic approximation algorithm that can be used to solve an equation when only noisy measurements of the function are available.</p></li>
@@ -485,12 +485,12 @@ E[{x_a} - {\mu _a}|{x_b}] &amp;= E[A({x_b} - {\mu _b}) + w|{x_b}]\\
 <li>Get <span class="math inline">\(z_n\)</span></li>
 <li>Update <span class="math inline">\(\theta_n=\theta_{n-1}-a_nz_n\)</span> here <span class="math inline">\(z_n\)</span> is a noisy measurement, <span class="math inline">\(z_n=h(\theta)+\epsilon _n\)</span></li>
 </ul></li>
-<li>Learning rate: The learning rate <span class="math inline">\(a_n\)</span> decreases over time, ensuring that the step size reduces as the number of iterations increases. This helps the algorithm converge towards the root <span class="math inline">\(𝜃\)</span>. Frequently used learning rate is[{a_n} = ;,(0.5,1]]</li>
+<li>Learning rate: The learning rate <span class="math inline">\(a_n\)</span> decreases over time, ensuring that the step size reduces as the number of iterations increases. This helps the algorithm converge towards the root <span class="math inline">\(𝜃\)</span>. Frequently used learning rate is<span class="math display">\[{a_n} = \;\frac{1}{ { {n^\gamma } } },\gamma  \in (0.5,1]\]</span></li>
 <li>The learning rate should satisfy the three conditions below to ensure the convergence of the algorithm <span class="math display">\[\operatorname*{lim}_{N\rightarrow\infty}a_{N}=0\qquad\sum_{N=1}^{\infty}a_{N}=\infty\qquad\sum_{N=1}^{\infty}a_{N}^{2}\lt \infty\]</span></li>
 </ul></li>
 <li>Use Robins-Monro algorithm in maximum likelihood estimation
 <ul>
-<li>We wanna find <span class="math inline">\(\theta^*\)</span> s.t. [f() = - <em>{N } </em>{n = 1}^N {} p({x_n}|) = {E_x}= 0] This is the objective function</li>
+<li>We wanna find <span class="math inline">\(\theta^*\)</span> s.t. <span class="math display">\[f(\theta ) =  - \mathop {\lim }\limits_{N \to \infty } \frac{1}{N}\sum\limits_{n = 1}^N {\frac{\partial }{ { \partial \theta } } } \ln p({x_n}|\theta ) = {E_x}\left[ { - \frac{\partial }{ { \partial \theta } }\ln p(x|\theta )} \right] = 0\]</span> This is the objective function</li>
 <li>Thus, the update step is <span class="math display">\[\theta^{(N)}=\theta^{(N-1)}-a_{N-1}\frac{\partial}{\partial\theta^{(N-1)} }\left[-\ln p(x_{N}|\theta^{(N-1)})\right]\]</span></li>
 </ul></li>
 <li>Example: Use Robin-Monro Algorithm to estimate the mean value of Gaussion.
@@ -503,20 +503,15 @@ E[{x_a} - {\mu _a}|{x_b}] &amp;= E[A({x_b} - {\mu _b}) + w|{x_b}]\\
 </ul>
 <h2 id="bayesian-inference-for-gaussian">Bayesian Inference for Gaussian</h2>
 <ul>
-<li>Here assume that <span class="math inline">\(\sigma^2\)</span> is known, and we need to estimate <span class="math inline">\(\mu\)</span>. The prior distribution is <span class="math inline">\(\mu\sim\mathcal{N}(\mu_0,\sigma_0^2)\)</span>, the likelihood function is <span class="math display">\[p({\bf x}|\mu)=\prod_{n=1}^{N}p(x_{n}|\mu)=\frac{1}{(2\pi\sigma^{2})^{N/2} }\exp\left\{-\frac{1}{2\sigma^{2} }\sum_{n=1}^{N}(x_{n}-\mu)^{2}\right\}\]</span> Apply Bayes' theorem, and assume a distribution for the posterior distribution, we have[<span class="math display">\[\begin{align*}
+<li>Here assume that <span class="math inline">\(\sigma^2\)</span> is known, and we need to estimate <span class="math inline">\(\mu\)</span>. The prior distribution is <span class="math inline">\(\mu\sim\mathcal{N}(\mu_0,\sigma_0^2)\)</span>, the likelihood function is <span class="math display">\[p({\bf x}|\mu)=\prod_{n=1}^{N}p(x_{n}|\mu)=\frac{1}{(2\pi\sigma^{2})^{N/2} }\exp\left\{-\frac{1}{2\sigma^{2} }\sum_{n=1}^{N}(x_{n}-\mu)^{2}\right\}\]</span> Apply Bayes' theorem, and assume a distribution for the posterior distribution, we have<span class="math display">\[\begin{align*}
 &amp;p(\mu |{\bf{x} }) \propto p({\bf{x} }|\mu )p(\mu )\\
 &amp;p(\mu |{\bf{x} })\sim \mathcal{N}\left( {\mu |{\mu _N},{\mkern 1mu} \sigma _N^2} \right)
-\end{align*}\]</span>] By comparing the corresponding terms, we can get the parameters in posterior distribution [<span class="math display">\[\begin{align*}
-&amp;{\mu _N} = \frac{ { {\sigma ^2} }}{ { N\sigma _0^2 + {\sigma ^2} }}{\mu _0} + \frac{ { N\sigma _0^2} }{ { N\sigma _0^2 + {\sigma ^2} }}{\mu _{ { \rm{ML} }} }\\
-&amp;\frac{1}{ { \sigma _N^2} }\;\; = \;\;\frac{1}{ { \sigma _0^2} } + \frac{N}{ { {\sigma ^2} }}
-\end{align*}\]</span>] As <span class="math inline">\(N\)</span>, the number of samples vary, the posterior distribution will converge to the maximum likelihood estimation. The prior distribution will have less influence on the posterior distribution.</li>
+\end{align*}\]</span> By comparing the corresponding terms, we can get the parameters in posterior distribution <span class="math display">\[\begin{align*}
+&amp;{\mu _N} = \frac{ { {\sigma ^2} } }{ { N\sigma _0^2 + {\sigma ^2} } }{\mu _0} + \frac{ { N\sigma _0^2} }{ { N\sigma _0^2 + {\sigma ^2} } }{\mu _{ { \rm{ML} } } }\\
+&amp;\frac{1}{ { \sigma _N^2} }\;\; = \;\;\frac{1}{ { \sigma _0^2} } + \frac{N}{ { {\sigma ^2} } }
+\end{align*}\]</span> As <span class="math inline">\(N\)</span>, the number of samples vary, the posterior distribution will converge to the maximum likelihood estimation. The prior distribution will have less influence on the posterior distribution.</li>
 </ul>
 <table>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
 <thead>
 <tr class="header">
 <th></th>
@@ -535,16 +530,59 @@ E[{x_a} - {\mu _a}|{x_b}] &amp;= E[A({x_b} - {\mu _b}) + w|{x_b}]\\
 <td>( ^2_0 )</td>
 <td>0</td>
 </tr>
-<tr class="odd">
-<td>* Sequential Estimation Using Bayesian Inference: The core principle is to use the posterior distribution of the previous <span class="math inline">\(N-1\)</span> step as the prior distribution of the <span class="math inline">\(N\)</span>'th step. The original form is still about Bayes' theorem. <span class="math inline">\(p(\mu)\)</span> is the prior, the consecutive multiplication is likelihood[p(</td>
-<td>x) p()p({x_N}</td>
-<td>)_{n = 1}^{N - 1} p ({x_n}</td>
-</tr>
 </tbody>
 </table>
-<p>Since the posterior of previous <span class="math inline">\(N-1\)</span> step satisfies <span class="math display">\[
+<ul>
+<li>Sequential Estimation Using Bayesian Inference: The core principle is to use the posterior distribution of the previous <span class="math inline">\(N-1\)</span> step as the prior distribution of the <span class="math inline">\(N\)</span>'th step. The original form is still about Bayes' theorem. <span class="math inline">\(p(\mu)\)</span> is the prior, the consecutive multiplication is likelihood<span class="math display">\[p(\mu |x) \propto p(\mu )p({x_N}|\mu )\prod\limits_{n = 1}^{N - 1} p ({x_n}|\mu )\]</span> Since the posterior of previous <span class="math inline">\(N-1\)</span> step satisfies <span class="math display">\[
 p(\mu |{x_1},{x_2}, \ldots ,{x_{N - 1} })\propto p(\mu )\prod\limits_{n = 1}^{N - 1} p ({x_n}|\mu )
-\]</span> and the posterior of previous <span class="math inline">\(N-1\)</span> steps are used as the prior of step <span class="math inline">\(N\)</span>, thus the formula above can be simplified as [p(|{x_1},{x_2}, ,{x_N}) p({x_N}|) p(|{x_1},{x_2}, ,{x_{N - 1} })]</p>
+\]</span> and the posterior of previous <span class="math inline">\(N-1\)</span> steps are used as the prior of step <span class="math inline">\(N\)</span>, thus the formula above can be simplified as <span class="math display">\[\begin{align*}
+p(\mu |{x_1},{x_2}, \ldots ,{x_N}) &amp;\propto p({x_N}|\mu ) \cdot p(\mu |{x_1},{x_2}, \ldots ,{x_{N - 1} })\\
+ &amp;\propto {\cal N}\left( {\mu |{\mu _{N - 1} },\sigma _{N - 1}^2} \right)p({x_N}|\mu )
+\end{align*}\]</span></li>
+<li>Here assume that <span class="math inline">\(\mu\)</span> is known and we wanna estimate the precision <span class="math inline">\(\lambda = \frac{1}{\sigma^2}\)</span>. The likelihood function is given by <span class="math display">\[p(\mathbf{x}|\lambda)=\prod_{n=1}^{N}{\mathcal{N} }(x_{n}|\mu,\lambda^{-1})\propto\lambda^{N/2}\exp\left\{-{\frac{\lambda}{2} }\sum_{n=1}^{N}(x_{n}-\mu)^{2}\right\}\]</span> Actually the likelihood function is a Gamma distribution of <span class="math inline">\(\lambda\)</span>, which is defined as <span class="math display">\[\mathrm{Gam}(\lambda|a,b)=\frac{1}{\Gamma(a)}b^{a}\lambda^{a-1}\exp(-b\lambda)\]</span> the expectation and variance of the Gamma distribution are <span class="math display">\[E[\lambda ] = \frac{a}{b},{\mathop{\rm var} } [\lambda ] = \frac{a}{ { {b^2} } }\]</span> Now assume a prior distribution for <span class="math inline">\(\lambda\)</span> is <span class="math inline">\(\lambda\sim\mathrm{Gam}(\lambda|a_0,b_0)\)</span>, the posterior distribution is <span class="math display">\[p(\lambda|{\bf x})\propto\lambda^{a_{0}-1}\lambda^{N/2}\exp\left\{-b_{0}\lambda-\frac{\lambda}{2}\sum_{n=1}^{N}(x_{n}-\mu)^{2}\right\}\]</span> The paremeters are <span class="math display">\[\begin{align*}
+&amp;{a_N} = {a_0} + \frac{N}{2}\\
+&amp;{b_N} = {b_0} + \frac{1}{2}\sum\limits_{n = 1}^N { { {({x_n} - \mu )}^2} }  = {b_0} + \frac{N}{2}\sigma _{ {\rm{ML} } }^2
+\end{align*}\]</span></li>
+<li>If both <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\lambda\)</span> are unknown, the likelihood function is</li>
+</ul>
+<p><span class="math display">\[\begin{align*}
+p({\bf{x} }|\mu ,\lambda ) &amp;= \prod\limits_{n = 1}^N { { {\left( {\frac{\lambda }{ {2\pi } } } \right)}^{1/2} } } \exp \left\{ { - \frac{\lambda }{2}{ {({x_n} - \mu )}^2} } \right\}\\
+ &amp;\propto {\left[ { {\lambda ^{1/2} }\exp \left( { - \frac{ {\lambda {\mu ^2} } }{2} } \right)} \right]^N}\exp \left\{ {\lambda \mu \sum\limits_{n = 1}^N { {x_n} }  - \frac{\lambda }{2}\sum\limits_{n = 1}^N {x_n^2} } \right\}
+\end{align*}\]</span> To have a conjugate prior of the likelihood function, we introduce Gaussian-gamma distribution here. The definition is derived from the product of Gaussian and Gamma distribution <span class="math display">\[\begin{align*}
+\mu |\lambda &amp;\sim {\cal N}({\mu _0},{\mkern 1mu} {(\beta \lambda )^{ - 1} }) \Rightarrow p(\mu |\lambda ) = \sqrt {\frac{\lambda }{ {2\pi \beta } } } \exp \left( { - \frac{ {\lambda { {(\mu  - {\mu _0})}^2} } }{ {2\beta } } } \right)\\ \lambda &amp;\sim Gamma(\alpha ,\beta ) \Rightarrow p(\lambda ) = \frac{ { {\beta ^\alpha } } }{ {\Gamma (\alpha )} }{\lambda ^{\alpha  - 1} }\exp ( - \beta \lambda )
+\end{align*}\]</span> which eventually defined as <span class="math display">\[p(\mu,\lambda)=\sqrt{\frac{\lambda}{2\pi\beta} }\exp\left(-\frac{\lambda(\mu-\mu_{0})^{2} }{2\beta}\right)\cdot\frac{\beta^{\alpha} }{\Gamma(\alpha)}\lambda^{\alpha-1}\exp(-\beta\lambda)\]</span> This distribution combines both the prior distribution of <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\lambda\)</span>. * If <span class="math inline">\(\mu\)</span> is known, <span class="math inline">\(\lambda\)</span> follows a Gamma distribution * If <span class="math inline">\(\lambda\)</span> is known, <span class="math inline">\(\mu\)</span> follows a Gaussian distribution</p>
+<p>Thus the prior distribution we use here is <span class="math display">\[p(\mu ,\lambda ) \propto {\left[ { {\lambda ^{1/2} }\exp \left( { - \frac{ {\lambda {\mu ^2} } }{2} } \right)} \right]^\beta }\exp \left\{ {c\lambda \mu  - d\lambda } \right\}\]</span> which has a similar form as the likelihood function. The process below is to show that the prior has an aligned form with the Gaussian-Gamma distribution <span class="math display">\[
+\begin{align*}
+p(\mu ,\lambda ) &amp;\propto { {\left[ { {\lambda ^{1/2} }\exp \left( { - \frac{ {\lambda {\mu ^2} } }{2} } \right)} \right]}^\beta }\exp \left\{ {c\lambda \mu  - d\lambda } \right\}\\
+&amp;\Rightarrow p(\mu ,\lambda ) \propto {\lambda ^{\beta /2} }\exp \left( { - \frac{ {\beta \lambda {\mu ^2} } }{2} + c\lambda \mu  - d\lambda } \right)\\
+&amp;\Rightarrow p(\mu ,\lambda ) \propto {\lambda ^{\beta /2} }\exp \left( { - \frac{ {\beta \lambda } }{2}\left( { {\mu ^2} - \frac{ {2c\mu } }{\beta } } \right) - d\lambda } \right)\\
+&amp;\Rightarrow p(\mu ,\lambda ) \propto {\lambda ^{\beta /2} }\exp \left( { - \frac{ {\beta \lambda } }{2}\left( { { {\left( {\mu  - \frac{c}{\beta } } \right)}^2} - \frac{ { {c^2} } }{ { {\beta ^2} } } } \right) - d\lambda } \right)\\
+&amp;\Rightarrow p(\mu ,\lambda ) \propto {\lambda ^{\beta /2} }\exp \left( { - \frac{ {\beta \lambda } }{2}{ {\left( {\mu  - \frac{c}{\beta } } \right)}^2} + \frac{ {\lambda {c^2} } }{ {2\beta } } - d\lambda } \right)\\
+&amp;\Rightarrow p(\mu ,\lambda ) \propto {\lambda ^{\beta /2} }\exp \left( { - \frac{ {\beta \lambda } }{2}{ {\left( {\mu  - \frac{c}{\beta } } \right)}^2} } \right)\exp \left( { - \left( {d - \frac{ { {c^2} } }{ {2\beta } } } \right)\lambda } \right)\\
+&amp;\Rightarrow p(\mu ,\lambda ) = \exp \left\{ { - \frac{ {\beta \lambda } }{2}{ {(\mu  - c/\beta )}^2} } \right\}{\lambda ^{\beta /2} }\exp \left\{ { - \left( {d - \frac{ { {c^2} } }{ {2\beta } } } \right)\lambda } \right\}
+\end{align*}
+\]</span> The posterior distribution is still a Gaussian-gamma distribution with parameters <span class="math display">\[
+{\beta _N} = \beta  + N,\quad {c_N} = c + \sum\limits_{n = 1}^N { {x_N} } ,\quad {d_N} = d + \frac{1}{2}\sum\limits_{n = 1}^N {x_N^2}
+\]</span> * In terms of maltivariate Gaussian, there is some difference * <strong>μ unknown, Λ known</strong>: ( p() ) Gaussian.</p>
+<ul>
+<li><p><strong>Λ unknown, μ known</strong>: ( p() ) Wishart,<br />
+<span class="math display">\[
+  \mathcal{W}(\Lambda | \mathbf{W}, \nu) = B |\Lambda|^{(\nu - D - 1)/2} \exp\left( -\frac{1}{2} \text{Tr}(\mathbf{W}^{-1} \Lambda) \right)
+  \]</span></p></li>
+<li><p><strong>Λ and μ unknown</strong>: ( p(, ) ) Gaussian-Wishart,<br />
+<span class="math display">\[
+  p(\mu, \Lambda | \mu_0, \beta, \mathbf{W}, \nu) = \mathcal{N}(\mu | \mu_0, (\beta \Lambda)^{-1}) \mathcal{W}(\Lambda | \mathbf{W}, \nu)
+  \]</span></p></li>
+</ul>
+<h2 id="gaussian-mixture-modelgmm">Gaussian Mixture Model(GMM)</h2>
+<p><img src="image-7.png" alt="alt text" /> The left plot shows a single Gaussian model where all the data points (green dots) are modeled using one Gaussian distribution. The blue contours represent the levels of the Gaussian distribution. This model works well if the data forms one concentrated group, but it's limited when there are multiple groups within the data.</p>
+<p>The right plot shows a mixture of two Gaussian distributions, where the data is assumed to come from two different Gaussians. The contours represent the two Gaussian components, and the data points form two distinct clusters. This mixture model can capture the underlying structure of more complex datasets with multiple groups.</p>
+<p>The probability density function of a GMM is defined as <span class="math display">\[p({\bf x})\equiv\sum_{k=1}^{K}\pi_{k}\mathcal{N}({\bf x}|\mu_{k},\Sigma_{k})\]</span> where <span class="math inline">\(K\)</span> is the number of Gaussian clusters, <span class="math inline">\(\pi_{k}\)</span> is the mixing coefficient, <span class="math inline">\(\mu_{k}\)</span> is the mean, and <span class="math inline">\(\Sigma_{k}\)</span> is the covariance matrix of the <span class="math inline">\(k\)</span>'th Gaussian component. The sum of the mixing coefficients is equal to one, <span class="math inline">\(\sum_{k=1}^{K}\pi_{k}=1\)</span>, and <span class="math inline">\(\pi_k\)</span> is non-negative. To estimate the parameters of the GMM, we can use the Expectation-Maximization (EM) algorithm.</p>
+<p>This posterior is referred to as the responsibility <span class="math inline">\(\gamma_{k}\left(\mathbf{x}\right)\)</span>, and is calculated as <span class="math display">\[\begin{align*}
+{\gamma _k}({\bf{x} }) &amp;= p(k|{\bf{x} })\\
+ &amp;= \frac{ {p(k)p({\bf{x} }|k)} }{ {\sum\nolimits_l {p(l)p({\bf{x} }|l)} } }\\
+ &amp;= \frac{ { {\pi _k}N({\bf{x} }|{\mu _k},{\Sigma _k})} }{ {\sum\nolimits_l { {\pi _l}N({\bf{x} }|{\mu _l},{\Sigma _l})} } }
+\end{align*}\]</span></p>
 
       
     </div>
