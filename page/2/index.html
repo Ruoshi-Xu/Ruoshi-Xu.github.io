@@ -227,7 +227,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-10-19 14:15:07" itemprop="dateModified" datetime="2024-10-19T14:15:07+08:00">2024-10-19</time>
+                <time title="Modified: 2024-10-19 14:33:54" itemprop="dateModified" datetime="2024-10-19T14:33:54+08:00">2024-10-19</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -250,8 +250,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="prml-chap2"># PRML Chap2</h2>
-<h2 id="beta-distribution">Beta Distribution</h2>
+          <h2 id="beta-distribution">Beta Distribution</h2>
 <ul>
 <li>Beta distribution is a continuous probability distribution defined on the interval $[0, 1] $</li>
 <li>Two positive parameters, denoted by <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span></li>
@@ -322,15 +321,15 @@ p(\boldsymbol{\mu} \mid {D}, \boldsymbol{\alpha})
 <h2 id="gaussian-distribution">Gaussian Distribution</h2>
 <ul>
 <li><p>The Gaussian distribution is defined as <span class="math display">\[\mathcal{N}(x|\mu,\sigma^{2})=\frac{1}{(2\pi\sigma^{2})^{1/2} }\exp\left\{-\frac{1}{2\sigma^{2} }(x-\mu)^{2}\right\}\]</span> while multivariate Gaussian distribution is a little bit different <span class="math display">\[{\mathcal N}({\bf x}|\mu,{\bf\Sigma})=\frac{1}{(2\pi)^{D/2} }\frac{1}{|{\bf\Sigma}|^{1/2} }\exp\left\{-\frac{1}{2}({\bf x}-\mu)^{\mathrm{T} }{\bf\Sigma}^{-1}({\bf x}-\mu)\right\}\]</span> The level graph diagram of multivariate Gaussian is shown below <img src="image-2.png" alt="alt text" /></p></li>
-<li><p>Geometry of Multivariate Gaussian<img src="image-3.png" alt="alt text" /> The Mahalanobis Distance <span class="math inline">\(Δ^2\)</span> is defined as <span class="math display">\[\Delta^{2}=(\mathbf{x}-{\boldsymbol{\mu} })^{\mathrm{T} }\Sigma^{-1}(\mathbf{x}-{\boldsymbol{\mu} })\]</span> This equation represents the Mahalanobis distance between a point <span class="math inline">\(x\)</span> and the mean <span class="math inline">\(μ\)</span> of the distribution. It measures the distance accounting for the distribution's covariance structure. The inverse of the covariance matrix can be acquired through the eigendecomposition of the covariance matrix <span class="math display">\[\Sigma^{-1}=\sum_{i=1}^{D}\frac{1}{\lambda_{i} }\mathbf{u}_{i}\mathbf{u}_{i}^{\mathrm{ {T} } }\]</span> where <span class="math inline">\(\bm u_i\)</span> is the eigenvalue of both <span class="math inline">\(\Sigma\)</span> and <span class="math inline">\(\Sigma^{-1}\)</span>. The Mahalanobis distance can be rewritten as <span class="math display">\[\begin{aligned}
+<li><p>Geometry of Multivariate Gaussian<img src="image-3.png" alt="alt text" /> The Mahalanobis Distance <span class="math inline">\(Δ^2\)</span> is defined as <span class="math display">\[\Delta^{2}=(\mathbf{x}-{\boldsymbol{\mu} })^{\mathrm{T} }\Sigma^{-1}(\mathbf{x}-{\boldsymbol{\mu} })\]</span> This equation represents the Mahalanobis distance between a point <span class="math inline">\(x\)</span> and the mean <span class="math inline">\(μ\)</span> of the distribution. It measures the distance accounting for the distribution's covariance structure. The inverse of the covariance matrix can be acquired through the eigendecomposition of the covariance matrix <span class="math display">\[\Sigma^{-1}=\sum_{i=1}^{D}\frac{1}{\lambda_{i} }\mathbf{u}_{i}\mathbf{u}_{i}^{\mathrm{ {T} } }\]</span> where $ u_i$ is the eigenvalue of both <span class="math inline">\(\Sigma\)</span> and <span class="math inline">\(\Sigma^{-1}\)</span>. The Mahalanobis distance can be rewritten as <span class="math display">\[\begin{aligned}
 {\Delta ^2} &amp;= {(x - \mu )^T}{\mkern 1mu} {\Sigma ^{ - 1} }(x - \mu )\\
  &amp;= {(x - \mu )^T}{\mkern 1mu} U{\Lambda ^{ - 1} }{U^T}(x - \mu )\\
  &amp;= {y^T}{\Lambda ^{ - 1} }y\\
  &amp;= \sum\limits_{i = 1}^D {\frac{ {y_i^2} }{ { {\lambda _i} } } } 
-\end{aligned} \]</span> in which <span class="math display">\[{y_i} = \bm{u_i^T(x - \mu )} \]</span></p></li>
+\end{aligned} \]</span> in which <span class="math display">\[{y_i} =  {u_i^T(x - \mu )} \]</span></p></li>
 <li><p>Calculate the expectation: Change the variable, then split the original integration into an odd one and a normal Gaussian <span class="math display">\[
 \begin{aligned}
-\mathbb{E}[\mathbf{x}] &amp;= \frac{1}{(2\pi)^{D/2} |\Sigma|^{1/2} } \int \mathbf{x} \exp \left( -\frac{1}{2} (\mathbf{x} - \mu)^\top \Sigma^{-1} (\mathbf{x} - \mu) \right) d\mathbf{x} \\
+ E[\mathbf{x}] &amp;= \frac{1}{(2\pi)^{D/2} |\Sigma|^{1/2} } \int \mathbf{x} \exp \left( -\frac{1}{2} (\mathbf{x} - \mu)^\top \Sigma^{-1} (\mathbf{x} - \mu) \right) d\mathbf{x} \\
 &amp;= \frac{1}{(2\pi)^{D/2} |\Sigma|^{1/2} } \int (\mathbf{z} + \mu) \exp \left( -\frac{1}{2} \mathbf{z}^\top \Sigma^{-1} \mathbf{z} \right) d\mathbf{z} \\
 &amp;= \frac{1}{(2\pi)^{D/2} |\Sigma|^{1/2} } \int \mathbf{z} \exp \left( -\frac{1}{2} \mathbf{z}^\top \Sigma^{-1} \mathbf{z} \right) d\mathbf{z} + \mu \frac{1}{(2\pi)^{D/2} |\Sigma|^{1/2} } \int \exp \left( -\frac{1}{2} \mathbf{z}^\top \Sigma^{-1} \mathbf{z} \right) d\mathbf{z} \\
 &amp;= 0 + \mu \cdot 1 \\
@@ -339,7 +338,7 @@ p(\boldsymbol{\mu} \mid {D}, \boldsymbol{\alpha})
 \]</span></p></li>
 <li>There some other properties
 <ul>
-<li><p>$[ ^T] =  ^T +  $ <strong>proof</strong>: <span class="math display">\[\begin{aligned}
+<li><p>$ E[ ^T] =  ^T +  $ <strong>proof</strong>: <span class="math display">\[\begin{aligned}
 E\left[ { {\bf{x} }{ {\bf{x} }^T} } \right] &amp;= E{\mkern 1mu} \left[ {({\bf{x} } - \mu  + \mu ){ {({\bf{x} } - \mu  + \mu )}^T} } \right]\\
  &amp;= E\left[ {({\bf{x} } - \mu ){ {({\bf{x} } - \mu )}^T} } \right] + E\left[ {({\bf{x} } - \mu ){\mu ^T} } \right] + E\left[ {\mu { {({\bf{x} } - \mu )}^T} } \right] + E\left[ {\mu {\mu ^T} } \right]\\
  &amp;= \Sigma  + 0 + 0 + \mu {\mu ^T}\\
@@ -417,7 +416,9 @@ E[{x_a} - {\mu _a}|{x_b}] &amp;= E[A({x_b} - {\mu _b}) + w|{x_b}]\\
  &amp;= A({x_b} - {\mu _b})\\
  &amp;\Rightarrow E[{x_a}|{x_b}] - {\mu _a} = A({x_b} - {\mu _b})\\
  &amp;\Rightarrow {\mu _{ {x_a}|{x_b} } } = A({x_b} - {\mu _b}) + {\mu _a}
-\end{aligned} \]</span> * Relations of the covariance matrix <span class="math display">\[\begin{aligned}
+\end{aligned} \]</span></p>
+<ul>
+<li><p>Relations of the covariance matrix <span class="math display">\[\begin{aligned}
 {\Sigma _{ab} }{\mkern 1mu}  &amp;= \text{Cov}({ {\bf{x} }_a},{ {\bf{x} }_b})\\
  &amp;= {\mkern 1mu} \text{Cov}(A{ {\bf{x} }_b} + w,{ {\bf{x} }_b})\\
  &amp;= {\mkern 1mu} A\text{Cov}({ {\bf{x} }_b},{ {\bf{x} }_b}) + \text{Cov}(w,{ {\bf{x} }_b})\\
@@ -430,10 +431,13 @@ E[{x_a} - {\mu _a}|{x_b}] &amp;= E[A({x_b} - {\mu _b}) + w|{x_b}]\\
  &amp;= {\rm{Cov} }(A{ {\bf{x} }_b},A{ {\bf{x} }_b}) + {\rm{Cov} }(w,w)\\
  &amp;= A{\rm{Cov} }({ {\bf{x} }_b},{ {\bf{x} }_b}){A^T} + {\rm{Cov} }(w,w)\\
  &amp;= A{\Sigma _{bb} }{A^T} + {\Sigma _w}
-\end{aligned} \]</span> Substitute <span class="math inline">\(A = {\Sigma _{ab} }{\Sigma_{bb}^{ - 1} }\)</span> into the equation above, we have <span class="math display">\[{\Sigma _{aa} } = {\Sigma _{ab} }{\Sigma_{bb}^{ - 1} }{\Sigma _{bb} }{\Sigma_{bb}^{ - 1} }{\Sigma _{ba} } + {\Sigma _w} = {\Sigma _{ab} }{\Sigma_{bb}^{ - 1} }{\Sigma _{ba} } + {\Sigma _{a|b} }\]</span> * From the results above, we can get the conditional distribution of <span class="math inline">\(\mathbf{x}_a\)</span> given <span class="math inline">\(\mathbf{x}_b\)</span> <span class="math display">\[\left\{ \begin{array}{l}
+\end{aligned} \]</span> Substitute <span class="math inline">\(A = {\Sigma _{ab} }{\Sigma_{bb}^{ - 1} }\)</span> into the equation above, we have <span class="math display">\[{\Sigma _{aa} } = {\Sigma _{ab} }{\Sigma_{bb}^{ - 1} }{\Sigma _{bb} }{\Sigma_{bb}^{ - 1} }{\Sigma _{ba} } + {\Sigma _w} = {\Sigma _{ab} }{\Sigma_{bb}^{ - 1} }{\Sigma _{ba} } + {\Sigma _{a|b} }\]</span></p></li>
+<li><p>From the results above, we can get the conditional distribution of <span class="math inline">\(\mathbf{x}_a\)</span> given <span class="math inline">\(\mathbf{x}_b\)</span> <span class="math display">\[\left\{ \begin{array}{l}
 {\mu _{a|b} } = {\Sigma _{ab} }\Sigma _{bb}^{ - 1}({x_b} - {\mu _b}) + {\mu _a}\\
 {\Sigma _{a|b} } = {\Sigma _{aa} } - {\Sigma _{ab} }\Sigma _{bb}^{ - 1}{\Sigma _{ba} }
-\end{array} \right. \]</span> * Illustration of the partitioned Gaussian distribution. The green line level graph is the joint distribution, while the red line level graph is the conditional distribution and the blue line marginal distribution <img src="image-4.png" alt="alt text" /></p>
+\end{array} \right. \]</span></p></li>
+<li><p>Illustration of the partitioned Gaussian distribution. The green line level graph is the joint distribution, while the red line level graph is the conditional distribution and the blue line marginal distribution <img src="image-4.png" alt="alt text" /></p></li>
+</ul>
 <h2 id="maximum-likelihood-for-gaussian">Maximum Likelihood for Gaussian</h2>
 <ul>
 <li><p>Given i.i.d data <span class="math display">\[\mathbf{X}=\left(\mathbf{x}_{1},\cdot\cdot\cdot,\mathbf{x}_{N}\right)^{\mathrm{T} }\]</span> where <span class="math inline">\(\mathbf{x}_{n}\)</span> is a vector. The likelihood function is <span class="math display">\[
@@ -521,13 +525,13 @@ E[{x_a} - {\mu _a}|{x_b}] &amp;= E[A({x_b} - {\mu _b}) + w|{x_b}]\\
 </thead>
 <tbody>
 <tr class="odd">
-<td>( _N )</td>
-<td>( _0 )</td>
-<td>( _{ML} )</td>
+<td>$ _N $</td>
+<td>$ _0 $</td>
+<td>$ _{ML} $</td>
 </tr>
 <tr class="even">
-<td>( ^2_N )</td>
-<td>( ^2_0 )</td>
+<td>$ ^2_N $</td>
+<td>$ ^2_0 $</td>
 <td>0</td>
 </tr>
 </tbody>
@@ -563,16 +567,20 @@ p(\mu ,\lambda ) &amp;\propto { {\left[ { {\lambda ^{1/2} }\exp \left( { - \frac
 \end{align*}
 \]</span> The posterior distribution is still a Gaussian-gamma distribution with parameters <span class="math display">\[
 {\beta _N} = \beta  + N,\quad {c_N} = c + \sum\limits_{n = 1}^N { {x_N} } ,\quad {d_N} = d + \frac{1}{2}\sum\limits_{n = 1}^N {x_N^2}
-\]</span> * In terms of maltivariate Gaussian, there is some difference * <strong>μ unknown, Λ known</strong>: ( p() ) Gaussian.</p>
+\]</span></p>
 <ul>
-<li><p><strong>Λ unknown, μ known</strong>: ( p() ) Wishart,<br />
+<li>In terms of maltivariate Gaussian, there is some difference
+<ul>
+<li><p><strong>μ unknown, Λ known</strong>: $ p() $ Gaussian.</p></li>
+<li><p><strong>Λ unknown, μ known</strong>: $ p() $ Wishart,<br />
 <span class="math display">\[
-  \mathcal{W}(\Lambda | \mathbf{W}, \nu) = B |\Lambda|^{(\nu - D - 1)/2} \exp\left( -\frac{1}{2} \text{Tr}(\mathbf{W}^{-1} \Lambda) \right)
-  \]</span></p></li>
-<li><p><strong>Λ and μ unknown</strong>: ( p(, ) ) Gaussian-Wishart,<br />
+\mathcal{W}(\Lambda | \mathbf{W}, \nu) = B |\Lambda|^{(\nu - D - 1)/2} \exp\left( -\frac{1}{2} \text{Tr}(\mathbf{W}^{-1} \Lambda) \right)
+\]</span></p></li>
+<li><p><strong>Λ and μ unknown</strong>: $ p(, ) $ Gaussian-Wishart,<br />
 <span class="math display">\[
-  p(\mu, \Lambda | \mu_0, \beta, \mathbf{W}, \nu) = \mathcal{N}(\mu | \mu_0, (\beta \Lambda)^{-1}) \mathcal{W}(\Lambda | \mathbf{W}, \nu)
-  \]</span></p></li>
+p(\mu, \Lambda | \mu_0, \beta, \mathbf{W}, \nu) = \mathcal{N}(\mu | \mu_0, (\beta \Lambda)^{-1}) \mathcal{W}(\Lambda | \mathbf{W}, \nu)
+\]</span></p></li>
+</ul></li>
 </ul>
 <h2 id="gaussian-mixture-modelgmm">Gaussian Mixture Model(GMM)</h2>
 <p><img src="image-7.png" alt="alt text" /> The left plot shows a single Gaussian model where all the data points (green dots) are modeled using one Gaussian distribution. The blue contours represent the levels of the Gaussian distribution. This model works well if the data forms one concentrated group, but it's limited when there are multiple groups within the data.</p>
