@@ -227,7 +227,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-10-19 14:36:11" itemprop="dateModified" datetime="2024-10-19T14:36:11+08:00">2024-10-19</time>
+                <time title="Modified: 2024-11-02 16:05:18" itemprop="dateModified" datetime="2024-11-02T16:05:18+08:00">2024-11-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -281,7 +281,19 @@
 <p>Note that the assigned GPU has to accommodate the whole batch of data, and conduct all the work of model updating. Thus the performance of DP is limited concerning both space and time.</p>
 <h3 id="distributed-data-parallelddp">Distributed Data Parallel(DDP)</h3>
 <h4 id="steps">Steps</h4>
-<p>DDP is a more advanced way to use multiple GPUs. It is more flexible and efficient than DP. The steps are as follows: * <strong>Preparation</strong> * Replicate the model on all GPUs and divide the input data among all GPUs equally and randomly. Each GPU load its own data from the disk. * <strong>Training</strong> * Forward: The computation of loss function is done on each GPU without gathering the results on one assigned GPU. * Backward: Each process communicates with each other by All-Reduce operation to exchange the gradients and compute the average gradient. The model is updated on each GPU using the same average gradient. * Updating: Each process has its own optimizer and updates the model on its own GPU. Since the initial value and the gradient are the same, the model on each GPU is also the same.</p>
+<p>DDP is a more advanced way to use multiple GPUs. It is more flexible and efficient than DP. The steps are as follows:</p>
+<ul>
+<li><strong>Preparation</strong>
+<ul>
+<li>Replicate the model on all GPUs and divide the input data among all GPUs equally and randomly. Each GPU load its own data from the disk.</li>
+</ul></li>
+<li><strong>Training</strong>
+<ul>
+<li>Forward: The computation of loss function is done on each GPU without gathering the results on one assigned GPU.</li>
+<li>Backward: Each process communicates with each other by All-Reduce operation to exchange the gradients and compute the average gradient. The model is updated on each GPU using the same average gradient.</li>
+<li>Updating: Each process has its own optimizer and updates the model on its own GPU. Since the initial value and the gradient are the same, the model on each GPU is also the same.</li>
+</ul></li>
+</ul>
 <p>To further improve the performance, DDP uses a further optimized version of All-Reduce. Obviously, it is not efficient to communicate after finishing all the computation of gradient. Therefore, the model parameters are partitioned into a lot of buckets, Once the gradient computation in bucket <span class="math inline">\(h-1\)</span> is finished, the communication of gradient in bucket <span class="math inline">\(h-1\)</span> and the gradient computation of bucket <span class="math inline">\(h\)</span> begin simultaneously</p>
 <h4 id="backend-communication">Backend Communication</h4>
 <p>The backend communication of DDP supports diffenrent protocals. The choice of protocals are determined by the factors below</p>
