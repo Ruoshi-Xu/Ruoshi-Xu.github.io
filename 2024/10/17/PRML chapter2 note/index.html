@@ -37,8 +37,11 @@
 <meta property="og:image" content="http://ruoshi.tech/2024/10/17/PRML%20chapter2%20note/image-5.png">
 <meta property="og:image" content="http://ruoshi.tech/2024/10/17/PRML%20chapter2%20note/image-6.png">
 <meta property="og:image" content="http://ruoshi.tech/2024/10/17/PRML%20chapter2%20note/image-7.png">
+<meta property="og:image" content="http://ruoshi.tech/2024/10/17/PRML%20chapter2%20note/image-8.png">
+<meta property="og:image" content="http://ruoshi.tech/2024/10/17/PRML%20chapter2%20note/image-9.png">
+<meta property="og:image" content="http://ruoshi.tech/2024/10/17/PRML%20chapter2%20note/image-10.png">
 <meta property="article:published_time" content="2024-10-17T06:35:59.609Z">
-<meta property="article:modified_time" content="2024-10-19T06:33:54.215Z">
+<meta property="article:modified_time" content="2024-11-02T06:06:48.370Z">
 <meta property="article:author" content="Escapist">
 <meta property="article:tag" content="Machine Learning">
 <meta name="twitter:card" content="summary">
@@ -241,7 +244,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-10-19 14:33:54" itemprop="dateModified" datetime="2024-10-19T14:33:54+08:00">2024-10-19</time>
+                <time title="Modified: 2024-11-02 14:06:48" itemprop="dateModified" datetime="2024-11-02T14:06:48+08:00">2024-11-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -342,15 +345,15 @@ p(\boldsymbol{\mu} \mid {D}, \boldsymbol{\alpha})
 <h2 id="gaussian-distribution">Gaussian Distribution</h2>
 <ul>
 <li><p>The Gaussian distribution is defined as <span class="math display">\[\mathcal{N}(x|\mu,\sigma^{2})=\frac{1}{(2\pi\sigma^{2})^{1/2} }\exp\left\{-\frac{1}{2\sigma^{2} }(x-\mu)^{2}\right\}\]</span> while multivariate Gaussian distribution is a little bit different <span class="math display">\[{\mathcal N}({\bf x}|\mu,{\bf\Sigma})=\frac{1}{(2\pi)^{D/2} }\frac{1}{|{\bf\Sigma}|^{1/2} }\exp\left\{-\frac{1}{2}({\bf x}-\mu)^{\mathrm{T} }{\bf\Sigma}^{-1}({\bf x}-\mu)\right\}\]</span> The level graph diagram of multivariate Gaussian is shown below <img src="image-2.png" alt="alt text" /></p></li>
-<li><p>Geometry of Multivariate Gaussian<img src="image-3.png" alt="alt text" /> The Mahalanobis Distance <span class="math inline">\(Δ^2\)</span> is defined as <span class="math display">\[\Delta^{2}=(\mathbf{x}-{\boldsymbol{\mu} })^{\mathrm{T} }\Sigma^{-1}(\mathbf{x}-{\boldsymbol{\mu} })\]</span> This equation represents the Mahalanobis distance between a point <span class="math inline">\(x\)</span> and the mean <span class="math inline">\(μ\)</span> of the distribution. It measures the distance accounting for the distribution's covariance structure. The inverse of the covariance matrix can be acquired through the eigendecomposition of the covariance matrix <span class="math display">\[\Sigma^{-1}=\sum_{i=1}^{D}\frac{1}{\lambda_{i} }\mathbf{u}_{i}\mathbf{u}_{i}^{\mathrm{ {T} } }\]</span> where $ u_i$ is the eigenvalue of both <span class="math inline">\(\Sigma\)</span> and <span class="math inline">\(\Sigma^{-1}\)</span>. The Mahalanobis distance can be rewritten as <span class="math display">\[\begin{aligned}
+<li><p>Geometry of Multivariate Gaussian<img src="image-3.png" alt="alt text" /> The Mahalanobis Distance <span class="math inline">\(Δ^2\)</span> is defined as <span class="math display">\[\Delta^{2}=(\mathbf{x}-{\boldsymbol{\mu} })^{\mathrm{T} }\Sigma^{-1}(\mathbf{x}-{\boldsymbol{\mu} })\]</span> This equation represents the Mahalanobis distance between a point <span class="math inline">\(x\)</span> and the mean <span class="math inline">\(μ\)</span> of the distribution. It measures the distance accounting for the distribution's covariance structure. The inverse of the covariance matrix can be acquired through the eigendecomposition of the covariance matrix <span class="math display">\[\Sigma^{-1}=\sum_{i=1}^{D}\frac{1}{\lambda_{i} }\mathbf{u}_{i}\mathbf{u}_{i}^{\mathrm{ {T} } }\]</span> where <span class="math inline">\(\bm u_i\)</span> is the eigenvalue of both <span class="math inline">\(\Sigma\)</span> and <span class="math inline">\(\Sigma^{-1}\)</span>. The Mahalanobis distance can be rewritten as <span class="math display">\[\begin{aligned}
 {\Delta ^2} &amp;= {(x - \mu )^T}{\mkern 1mu} {\Sigma ^{ - 1} }(x - \mu )\\
  &amp;= {(x - \mu )^T}{\mkern 1mu} U{\Lambda ^{ - 1} }{U^T}(x - \mu )\\
  &amp;= {y^T}{\Lambda ^{ - 1} }y\\
  &amp;= \sum\limits_{i = 1}^D {\frac{ {y_i^2} }{ { {\lambda _i} } } } 
-\end{aligned} \]</span> in which <span class="math display">\[{y_i} =  {u_i^T(x - \mu )} \]</span></p></li>
+\end{aligned} \]</span> in which <span class="math display">\[{y_i} = \bm{u_i^T(x - \mu )} \]</span></p></li>
 <li><p>Calculate the expectation: Change the variable, then split the original integration into an odd one and a normal Gaussian <span class="math display">\[
 \begin{aligned}
- E[\mathbf{x}] &amp;= \frac{1}{(2\pi)^{D/2} |\Sigma|^{1/2} } \int \mathbf{x} \exp \left( -\frac{1}{2} (\mathbf{x} - \mu)^\top \Sigma^{-1} (\mathbf{x} - \mu) \right) d\mathbf{x} \\
+\mathbb{E}[\mathbf{x}] &amp;= \frac{1}{(2\pi)^{D/2} |\Sigma|^{1/2} } \int \mathbf{x} \exp \left( -\frac{1}{2} (\mathbf{x} - \mu)^\top \Sigma^{-1} (\mathbf{x} - \mu) \right) d\mathbf{x} \\
 &amp;= \frac{1}{(2\pi)^{D/2} |\Sigma|^{1/2} } \int (\mathbf{z} + \mu) \exp \left( -\frac{1}{2} \mathbf{z}^\top \Sigma^{-1} \mathbf{z} \right) d\mathbf{z} \\
 &amp;= \frac{1}{(2\pi)^{D/2} |\Sigma|^{1/2} } \int \mathbf{z} \exp \left( -\frac{1}{2} \mathbf{z}^\top \Sigma^{-1} \mathbf{z} \right) d\mathbf{z} + \mu \frac{1}{(2\pi)^{D/2} |\Sigma|^{1/2} } \int \exp \left( -\frac{1}{2} \mathbf{z}^\top \Sigma^{-1} \mathbf{z} \right) d\mathbf{z} \\
 &amp;= 0 + \mu \cdot 1 \\
@@ -359,7 +362,7 @@ p(\boldsymbol{\mu} \mid {D}, \boldsymbol{\alpha})
 \]</span></p></li>
 <li>There some other properties
 <ul>
-<li><p>$ E[ ^T] =  ^T +  $ <strong>proof</strong>: <span class="math display">\[\begin{aligned}
+<li><p>$[ ^T] =  ^T +  $ <strong>proof</strong>: <span class="math display">\[\begin{aligned}
 E\left[ { {\bf{x} }{ {\bf{x} }^T} } \right] &amp;= E{\mkern 1mu} \left[ {({\bf{x} } - \mu  + \mu ){ {({\bf{x} } - \mu  + \mu )}^T} } \right]\\
  &amp;= E\left[ {({\bf{x} } - \mu ){ {({\bf{x} } - \mu )}^T} } \right] + E\left[ {({\bf{x} } - \mu ){\mu ^T} } \right] + E\left[ {\mu { {({\bf{x} } - \mu )}^T} } \right] + E\left[ {\mu {\mu ^T} } \right]\\
  &amp;= \Sigma  + 0 + 0 + \mu {\mu ^T}\\
@@ -437,9 +440,7 @@ E[{x_a} - {\mu _a}|{x_b}] &amp;= E[A({x_b} - {\mu _b}) + w|{x_b}]\\
  &amp;= A({x_b} - {\mu _b})\\
  &amp;\Rightarrow E[{x_a}|{x_b}] - {\mu _a} = A({x_b} - {\mu _b})\\
  &amp;\Rightarrow {\mu _{ {x_a}|{x_b} } } = A({x_b} - {\mu _b}) + {\mu _a}
-\end{aligned} \]</span></p>
-<ul>
-<li><p>Relations of the covariance matrix <span class="math display">\[\begin{aligned}
+\end{aligned} \]</span> * Relations of the covariance matrix <span class="math display">\[\begin{aligned}
 {\Sigma _{ab} }{\mkern 1mu}  &amp;= \text{Cov}({ {\bf{x} }_a},{ {\bf{x} }_b})\\
  &amp;= {\mkern 1mu} \text{Cov}(A{ {\bf{x} }_b} + w,{ {\bf{x} }_b})\\
  &amp;= {\mkern 1mu} A\text{Cov}({ {\bf{x} }_b},{ {\bf{x} }_b}) + \text{Cov}(w,{ {\bf{x} }_b})\\
@@ -452,13 +453,10 @@ E[{x_a} - {\mu _a}|{x_b}] &amp;= E[A({x_b} - {\mu _b}) + w|{x_b}]\\
  &amp;= {\rm{Cov} }(A{ {\bf{x} }_b},A{ {\bf{x} }_b}) + {\rm{Cov} }(w,w)\\
  &amp;= A{\rm{Cov} }({ {\bf{x} }_b},{ {\bf{x} }_b}){A^T} + {\rm{Cov} }(w,w)\\
  &amp;= A{\Sigma _{bb} }{A^T} + {\Sigma _w}
-\end{aligned} \]</span> Substitute <span class="math inline">\(A = {\Sigma _{ab} }{\Sigma_{bb}^{ - 1} }\)</span> into the equation above, we have <span class="math display">\[{\Sigma _{aa} } = {\Sigma _{ab} }{\Sigma_{bb}^{ - 1} }{\Sigma _{bb} }{\Sigma_{bb}^{ - 1} }{\Sigma _{ba} } + {\Sigma _w} = {\Sigma _{ab} }{\Sigma_{bb}^{ - 1} }{\Sigma _{ba} } + {\Sigma _{a|b} }\]</span></p></li>
-<li><p>From the results above, we can get the conditional distribution of <span class="math inline">\(\mathbf{x}_a\)</span> given <span class="math inline">\(\mathbf{x}_b\)</span> <span class="math display">\[\left\{ \begin{array}{l}
+\end{aligned} \]</span> Substitute <span class="math inline">\(A = {\Sigma _{ab} }{\Sigma_{bb}^{ - 1} }\)</span> into the equation above, we have <span class="math display">\[{\Sigma _{aa} } = {\Sigma _{ab} }{\Sigma_{bb}^{ - 1} }{\Sigma _{bb} }{\Sigma_{bb}^{ - 1} }{\Sigma _{ba} } + {\Sigma _w} = {\Sigma _{ab} }{\Sigma_{bb}^{ - 1} }{\Sigma _{ba} } + {\Sigma _{a|b} }\]</span> * From the results above, we can get the conditional distribution of <span class="math inline">\(\mathbf{x}_a\)</span> given <span class="math inline">\(\mathbf{x}_b\)</span> <span class="math display">\[\left\{ \begin{array}{l}
 {\mu _{a|b} } = {\Sigma _{ab} }\Sigma _{bb}^{ - 1}({x_b} - {\mu _b}) + {\mu _a}\\
 {\Sigma _{a|b} } = {\Sigma _{aa} } - {\Sigma _{ab} }\Sigma _{bb}^{ - 1}{\Sigma _{ba} }
-\end{array} \right. \]</span></p></li>
-<li><p>Illustration of the partitioned Gaussian distribution. The green line level graph is the joint distribution, while the red line level graph is the conditional distribution and the blue line marginal distribution <img src="image-4.png" alt="alt text" /></p></li>
-</ul>
+\end{array} \right. \]</span> * Illustration of the partitioned Gaussian distribution. The green line level graph is the joint distribution, while the red line level graph is the conditional distribution and the blue line marginal distribution <img src="image-4.png" alt="alt text" /></p>
 <h2 id="maximum-likelihood-for-gaussian">Maximum Likelihood for Gaussian</h2>
 <ul>
 <li><p>Given i.i.d data <span class="math display">\[\mathbf{X}=\left(\mathbf{x}_{1},\cdot\cdot\cdot,\mathbf{x}_{N}\right)^{\mathrm{T} }\]</span> where <span class="math inline">\(\mathbf{x}_{n}\)</span> is a vector. The likelihood function is <span class="math display">\[
@@ -546,13 +544,13 @@ E[{x_a} - {\mu _a}|{x_b}] &amp;= E[A({x_b} - {\mu _b}) + w|{x_b}]\\
 </thead>
 <tbody>
 <tr class="odd">
-<td>$ _N $</td>
-<td>$ _0 $</td>
-<td>$ _{ML} $</td>
+<td>( _N )</td>
+<td>( _0 )</td>
+<td>( _{ML} )</td>
 </tr>
 <tr class="even">
-<td>$ ^2_N $</td>
-<td>$ ^2_0 $</td>
+<td>( ^2_N )</td>
+<td>( ^2_0 )</td>
 <td>0</td>
 </tr>
 </tbody>
@@ -588,20 +586,16 @@ p(\mu ,\lambda ) &amp;\propto { {\left[ { {\lambda ^{1/2} }\exp \left( { - \frac
 \end{align*}
 \]</span> The posterior distribution is still a Gaussian-gamma distribution with parameters <span class="math display">\[
 {\beta _N} = \beta  + N,\quad {c_N} = c + \sum\limits_{n = 1}^N { {x_N} } ,\quad {d_N} = d + \frac{1}{2}\sum\limits_{n = 1}^N {x_N^2}
-\]</span></p>
+\]</span> * In terms of maltivariate Gaussian, there is some difference * <strong>μ unknown, Λ known</strong>: ( p() ) Gaussian.</p>
 <ul>
-<li>In terms of maltivariate Gaussian, there is some difference
-<ul>
-<li><p><strong>μ unknown, Λ known</strong>: $ p() $ Gaussian.</p></li>
-<li><p><strong>Λ unknown, μ known</strong>: $ p() $ Wishart,<br />
+<li><p><strong>Λ unknown, μ known</strong>: ( p() ) Wishart,<br />
 <span class="math display">\[
-\mathcal{W}(\Lambda | \mathbf{W}, \nu) = B |\Lambda|^{(\nu - D - 1)/2} \exp\left( -\frac{1}{2} \text{Tr}(\mathbf{W}^{-1} \Lambda) \right)
-\]</span></p></li>
-<li><p><strong>Λ and μ unknown</strong>: $ p(, ) $ Gaussian-Wishart,<br />
+  \mathcal{W}(\Lambda | \mathbf{W}, \nu) = B |\Lambda|^{(\nu - D - 1)/2} \exp\left( -\frac{1}{2} \text{Tr}(\mathbf{W}^{-1} \Lambda) \right)
+  \]</span></p></li>
+<li><p><strong>Λ and μ unknown</strong>: ( p(, ) ) Gaussian-Wishart,<br />
 <span class="math display">\[
-p(\mu, \Lambda | \mu_0, \beta, \mathbf{W}, \nu) = \mathcal{N}(\mu | \mu_0, (\beta \Lambda)^{-1}) \mathcal{W}(\Lambda | \mathbf{W}, \nu)
-\]</span></p></li>
-</ul></li>
+  p(\mu, \Lambda | \mu_0, \beta, \mathbf{W}, \nu) = \mathcal{N}(\mu | \mu_0, (\beta \Lambda)^{-1}) \mathcal{W}(\Lambda | \mathbf{W}, \nu)
+  \]</span></p></li>
 </ul>
 <h2 id="gaussian-mixture-modelgmm">Gaussian Mixture Model(GMM)</h2>
 <p><img src="image-7.png" alt="alt text" /> The left plot shows a single Gaussian model where all the data points (green dots) are modeled using one Gaussian distribution. The blue contours represent the levels of the Gaussian distribution. This model works well if the data forms one concentrated group, but it's limited when there are multiple groups within the data.</p>
@@ -612,6 +606,52 @@ p(\mu, \Lambda | \mu_0, \beta, \mathbf{W}, \nu) = \mathcal{N}(\mu | \mu_0, (\bet
  &amp;= \frac{ {p(k)p({\bf{x} }|k)} }{ {\sum\nolimits_l {p(l)p({\bf{x} }|l)} } }\\
  &amp;= \frac{ { {\pi _k}N({\bf{x} }|{\mu _k},{\Sigma _k})} }{ {\sum\nolimits_l { {\pi _l}N({\bf{x} }|{\mu _l},{\Sigma _l})} } }
 \end{align*}\]</span></p>
+<h2 id="students-t-distribution">Student's t-distribution</h2>
+<p>The Student's t-distribution is a probability distribution that is symmetric and bell-shaped, similar to the Gaussian distribution, but has heavier tails. It is defined as <span class="math display">\[
+\begin{align*}
+p(x | \mu, a, b) &amp;= \int_{0}^{\infty} \mathcal{N}(x | \mu, \tau^{-1}) \, \text{Gam}(\tau | a, b) \, d\tau \\
+&amp;= \int_{0}^{\infty} \mathcal{N}(x | \mu, (\eta \lambda)^{-1}) \, \text{Gam}(\eta | \nu/2, \nu/2) \, d\eta \\
+&amp;= \frac{\Gamma(\nu/2 + 1/2)}{\Gamma(\nu/2)} \left( \frac{\lambda}{\pi \nu} \right)^{1/2} \left[ 1 + \frac{\lambda (x - \mu)^2}{\nu} \right]^{-\nu/2 - 1/2} \\
+&amp;= \text{St}(x | \mu, \lambda, \nu)
+\end{align*}
+\]</span> The paremeters are defined as <span class="math display">\[
+\begin{align*}
+\lambda &amp;= \frac{a}{b} \\
+\eta &amp;= \frac{\tau b}{a} \\
+\nu &amp;= 2a
+\end{align*}
+\]</span> The Student's t-distribution is infinite mixture of Gaussians, with the same mean but different variances. The shape of this distribution and its connection with other distributions are shown in the graph below. <img src="image-8.png" alt="alt text" /> When fitting a distribution, the Student's t-distribution, which is infinite mixture of Gaussian, is more robust to outliers than a single Gaussian distribution. Student's t-distribution has heavier tails, which means that it assigns more probability to data points further away from the mean. This property makes it more suitable for modeling data with outliers or heavy tails. <img src="image-9.png" alt="alt text" /> The multivariate Student's t-distribution is defined as <span class="math display">\[\begin{align*}
+\text{St}(\mathbf{x} | \mu, \mathbf{\Lambda}, \nu) &amp;= \int_{0}^{\infty} \mathcal{N}(\mathbf{x} | \mu, (\eta \mathbf{\Lambda})^{-1}) \, \text{Gam}(\eta | \nu / 2, \nu / 2) \, d\eta \\
+&amp;= \frac{\Gamma(D / 2 + \nu / 2)}{\Gamma(\nu / 2)} \frac{|\mathbf{\Lambda}|^{1/2} }{(\pi \nu)^{D / 2} } \left[ 1 + \frac{\Delta^2}{\nu} \right]^{-D / 2 - \nu / 2}
+\end{align*}\]</span> in which <span class="math display">\[\Delta^2 = (\mathbf{x} - \mu)^\top \mathbf{\Lambda} (\mathbf{x} - \mu)\]</span> The properties <span class="math display">\[
+\begin{align*}
+\mathbb{E}[\mathbf{x}] &amp;= \mu, \quad \text{if } \nu &gt; 1 \\
+\text{cov}[\mathbf{x}] &amp;= \frac{\nu}{\nu - 2} \mathbf{\Lambda}^{-1}, \quad \text{if } \nu &gt; 2 \\
+\text{mode}[\mathbf{x}] &amp;= \mu
+\end{align*}
+\]</span></p>
+<h2 id="von-mises-distribution">Von Mises Distribution</h2>
+<ul>
+<li>Periodic random variable is a random variable whose values repeat at regular intervals, formally satisfying <span class="math display">\[
+  \begin{align*}
+      p(\theta) &amp;\geq 0 \\
+      \int_{0}^{2\pi} p(\theta) \, d\theta &amp;= 1 \\
+      p(\theta + 2\pi) &amp;= p(\theta).
+  \end{align*}
+\]</span></li>
+<li><p>The Von Mises distribution is a circular version of the Gaussian distribution, defined as <span class="math display">\[
+\begin{align*}
+  p(\theta | \theta_0, m) &amp;= \frac{1}{2\pi I_0(m)} \exp \{ m \cos(\theta - \theta_0) \} \\
+  \text{where} \quad I_0(m) &amp;= \frac{1}{2\pi} \int_{0}^{2\pi} \exp \{ m \cos \theta \} \, d\theta
+\end{align*}
+\]</span> <span class="math inline">\(\theta_0\)</span> here is the expectation of the distribution, and <span class="math inline">\(m\)</span> is the concentration parameter. The concentration parameter <span class="math inline">\(m\)</span> controls the spread of the distribution, with higher values of <span class="math inline">\(m\)</span> leading to a more concentrated distribution. <img src="image-10.png" alt="alt text" /></p></li>
+<li><p>The likelihood function of the Von Mises distribution is <span class="math display">\[
+\ln p(\mathcal{D} | \theta_0, m) = -N \ln(2\pi) - N \ln I_0(m) + m \sum_{n=1}^{N} \cos(\theta_n - \theta_0).
+\]</span> maximize the likelihood function to estimate the parameters <span class="math inline">\(\theta_0\)</span> and <span class="math inline">\(m\)</span> <span class="math display">\[\begin{align*}
+\theta _0^{ML} &amp;= {\tan ^{ - 1} }\left( {\frac{ {\sum\limits_n {\sin } {\theta _n} } }{ {\sum\limits_n {\cos } {\theta _n} } } } \right)\\
+\frac{ { {I_1}({m_{ML} })} }{ { {I_0}({m_{ML} })} } &amp;= \frac{1}{N}\sum\limits_{n = 1}^N {\cos } ({\theta _n} - \theta _0^{ML}),
+\end{align*}\]</span> <span class="math inline">\(m_{ML}\)</span> can be obtained through numerical methods.</p></li>
+</ul>
 
     </div>
 
@@ -650,7 +690,10 @@ p(\mu, \Lambda | \mu_0, \beta, \mathbf{W}, \nu) = \mathcal{N}(\mu | \mu_0, (\bet
     <a href="/2024/10/12/Pytorch%20Distributed%20Training(1)--DP_DDP/" rel="prev" title="Pytorch Distributed Training(1)--DP/DDP">
       <i class="fa fa-chevron-left"></i> Pytorch Distributed Training(1)--DP/DDP
     </a></div>
-      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2024/11/02/PRML%20chapter2%20note%20cont/" rel="next" title="PRML Chapter2 Note Cont.">
+      PRML Chapter2 Note Cont. <i class="fa fa-chevron-right"></i>
+    </a></div>
     </div>
       </footer>
     
@@ -709,7 +752,7 @@ p(\mu, \Lambda | \mu_0, \beta, \mathbf{W}, \nu) = \mathcal{N}(\mu | \mu_0, (\bet
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#beta-distribution"><span class="nav-number">1.</span> <span class="nav-text">Beta Distribution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#multinoimal-distribution"><span class="nav-number">2.</span> <span class="nav-text">Multinoimal Distribution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dirichlet-distribution"><span class="nav-number">3.</span> <span class="nav-text">Dirichlet Distribution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gaussian-distribution"><span class="nav-number">4.</span> <span class="nav-text">Gaussian Distribution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bayesian-for-gaussion"><span class="nav-number">5.</span> <span class="nav-text">Bayesian for Gaussion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#partition-multivariate-gaussian"><span class="nav-number">6.</span> <span class="nav-text">Partition Multivariate Gaussian</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#maximum-likelihood-for-gaussian"><span class="nav-number">7.</span> <span class="nav-text">Maximum Likelihood for Gaussian</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#robbins-monro-algorithm"><span class="nav-number">8.</span> <span class="nav-text">Robbins-Monro Algorithm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bayesian-inference-for-gaussian"><span class="nav-number">9.</span> <span class="nav-text">Bayesian Inference for Gaussian</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gaussian-mixture-modelgmm"><span class="nav-number">10.</span> <span class="nav-text">Gaussian Mixture Model(GMM)</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#beta-distribution"><span class="nav-number">1.</span> <span class="nav-text">Beta Distribution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#multinoimal-distribution"><span class="nav-number">2.</span> <span class="nav-text">Multinoimal Distribution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dirichlet-distribution"><span class="nav-number">3.</span> <span class="nav-text">Dirichlet Distribution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gaussian-distribution"><span class="nav-number">4.</span> <span class="nav-text">Gaussian Distribution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bayesian-for-gaussion"><span class="nav-number">5.</span> <span class="nav-text">Bayesian for Gaussion</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#partition-multivariate-gaussian"><span class="nav-number">6.</span> <span class="nav-text">Partition Multivariate Gaussian</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#maximum-likelihood-for-gaussian"><span class="nav-number">7.</span> <span class="nav-text">Maximum Likelihood for Gaussian</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#robbins-monro-algorithm"><span class="nav-number">8.</span> <span class="nav-text">Robbins-Monro Algorithm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bayesian-inference-for-gaussian"><span class="nav-number">9.</span> <span class="nav-text">Bayesian Inference for Gaussian</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gaussian-mixture-modelgmm"><span class="nav-number">10.</span> <span class="nav-text">Gaussian Mixture Model(GMM)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#students-t-distribution"><span class="nav-number">11.</span> <span class="nav-text">Student&#39;s t-distribution</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#von-mises-distribution"><span class="nav-number">12.</span> <span class="nav-text">Von Mises Distribution</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -725,7 +768,7 @@ p(\mu, \Lambda | \mu_0, \beta, \mathbf{W}, \nu) = \mathcal{N}(\mu | \mu_0, (\bet
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

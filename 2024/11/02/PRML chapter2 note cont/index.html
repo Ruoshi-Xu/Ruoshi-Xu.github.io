@@ -22,21 +22,20 @@
     var CONFIG = {"hostname":"ruoshi.tech","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Attention is all you need Intro &amp; Background The intro section first talks about RNN-like models and their drawbacks concerning both time and space  Since RNN-like models have a inherently seq">
+  <meta name="description" content="Exponential Family  Definition: A family of probability distributions is said to be in the exponential family if it can be expressed in the form \[  p(x | \eta) &#x3D; h(x) g(\eta) \exp \left\{ \eta^\top">
 <meta property="og:type" content="article">
-<meta property="og:title" content="A Series of Attention Mechanisms">
-<meta property="og:url" content="http://ruoshi.tech/2024/10/08/A%20Series%20of%20Attention%20Mechanisms/index.html">
+<meta property="og:title" content="PRML Chapter2 Note Cont.">
+<meta property="og:url" content="http://ruoshi.tech/2024/11/02/PRML%20chapter2%20note%20cont/index.html">
 <meta property="og:site_name" content="Escapist&#39;s Blog">
-<meta property="og:description" content="Attention is all you need Intro &amp; Background The intro section first talks about RNN-like models and their drawbacks concerning both time and space  Since RNN-like models have a inherently seq">
+<meta property="og:description" content="Exponential Family  Definition: A family of probability distributions is said to be in the exponential family if it can be expressed in the form \[  p(x | \eta) &#x3D; h(x) g(\eta) \exp \left\{ \eta^\top">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2024-10-08T03:44:48.000Z">
-<meta property="article:modified_time" content="2024-10-19T06:36:41.034Z">
+<meta property="article:published_time" content="2024-11-02T06:07:15.189Z">
+<meta property="article:modified_time" content="2024-11-02T06:08:14.899Z">
 <meta property="article:author" content="Escapist">
-<meta property="article:tag" content="Paper Reading">
-<meta property="article:tag" content="Deep Learning">
+<meta property="article:tag" content="Machine Learning">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://ruoshi.tech/2024/10/08/A%20Series%20of%20Attention%20Mechanisms/">
+<link rel="canonical" href="http://ruoshi.tech/2024/11/02/PRML%20chapter2%20note%20cont/">
 
 
 <script id="page-configurations">
@@ -49,7 +48,7 @@
   };
 </script>
 
-  <title>A Series of Attention Mechanisms | Escapist's Blog</title>
+  <title>PRML Chapter2 Note Cont. | Escapist's Blog</title>
   
 
 
@@ -201,7 +200,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://ruoshi.tech/2024/10/08/A%20Series%20of%20Attention%20Mechanisms/">
+    <link itemprop="mainEntityOfPage" href="http://ruoshi.tech/2024/11/02/PRML%20chapter2%20note%20cont/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/sign.bmp">
@@ -214,7 +213,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          A Series of Attention Mechanisms
+          PRML Chapter2 Note Cont.
         </h1>
 
         <div class="post-meta">
@@ -225,23 +224,17 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2024-10-08 11:44:48" itemprop="dateCreated datePublished" datetime="2024-10-08T11:44:48+08:00">2024-10-08</time>
+              <time title="Created: 2024-11-02 14:07:15 / Modified: 14:08:14" itemprop="dateCreated datePublished" datetime="2024-11-02T14:07:15+08:00">2024-11-02</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-10-19 14:36:41" itemprop="dateModified" datetime="2024-10-19T14:36:41+08:00">2024-10-19</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Paper-Reading/" itemprop="url" rel="index"><span itemprop="name">Paper Reading</span></a>
+                  <a href="/categories/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
                 </span>
             </span>
 
@@ -263,43 +256,93 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="attention-is-all-you-need">Attention is all you need</h2>
-<h3 id="intro-background">Intro &amp; Background</h3>
-<p>The intro section first talks about RNN-like models and their drawbacks concerning both time and space</p>
+        <h2 id="exponential-family">Exponential Family</h2>
 <ul>
-<li>Since RNN-like models have a inherently sequential nature, i.e., <span class="math inline">\(h_t\)</span> is dependent on the hidden state at time <span class="math inline">\(h_{t-1}\)</span>, they are not parallelizable and hence time-consuming.</li>
-<li>RNN-like models also have to store the hidden states of all the previous time steps for back-propagation, which is space-consuming and limits the ability of batch processing.</li>
-</ul>
-<p>Then background section also talks about convolutional networks for sequencial modeling</p>
+<li>Definition: A family of probability distributions is said to be in the exponential family if it can be expressed in the form <span class="math display">\[  p(x | \eta) = h(x) g(\eta) \exp \left\{ \eta^\top u(x) \right\}\]</span> in which
 <ul>
-<li>CNN operation is totally parallelizable and hence faster than RNN-like models, and it's also space-efficient.</li>
-<li>However, CNN is not good at capturing the dependencies between the output and the input, especially when the distance between the two is large. It has something to do with the concept of receptive field. To capture long-range dependencies, we need to stack multiple layers of CNN, which is not efficient.</li>
+<li><span class="math inline">\(\eta\)</span> is the natural parameter of the distribution, determining its position and shape</li>
+<li><span class="math inline">\(u(x)\)</span> is the sufficient statistics, which is a function of the data <span class="math inline">\(x\)</span> that captures all the information in the data relevant to the parameter <span class="math inline">\(\eta\)</span></li>
+<li><span class="math inline">\(h(x)\)</span> is the base measure. It is usually a constant or a simple function of <span class="math inline">\(x\)</span></li>
+<li><span class="math inline">\(g(\eta)\)</span> is the normalization factor ensuring the distribution integrates to 1</li>
+</ul></li>
+<li><p>For Bernoulli distribution, we have <span class="math display">\[  \begin{align*}
+  p(x | \mu) &amp;= \text{Bern}(x | \mu) = \mu^x (1 - \mu)^{1 - x} \\
+  &amp;= \exp \{ x \ln \mu + (1 - x) \ln (1 - \mu) \} \\
+  &amp;= (1 - \mu) \exp \left\{ \ln \left( \frac{\mu}{1 - \mu} \right) x \right\}
+\end{align*}\]</span> where <span class="math display">\[
+\begin{align*}
+   \eta  &amp;= \ln \left( {\frac{\mu }{ {1 - \mu } } } \right) \Leftrightarrow \mu  = \sigma (\eta ) = \frac{1}{ {1 + \exp ( - \eta )} }\\
+  u(x) &amp;= x \\h(x)&amp;  = 1 \\ g(\eta) &amp;= 1-\mu =\frac{1}{1+\exp(\eta)} =\sigma(-\eta)
+\end{align*}
+\]</span> Thus, Bernoulli distribution can also be expressed in the form of exponential family <span class="math display">\[p(x|\eta)=\sigma(-\eta)\exp(\eta x)\]</span></p></li>
+<li><p>Multinomial distribution <span class="math display">\[  \begin{align*}
+  p(\mathbf{x} | \mathbf{\mu}) &amp;= \text{Mult}(\mathbf{x} | \mathbf{\mu}) = \prod_{k = 1}^M \mu_k^{x_k} \\
+  &amp;= \exp \left\{ \sum_{k = 1}^M x_k \ln \mu_k \right\} \\
+\end{align*}\]</span> The parameters are respectively <span class="math display">\[\eta_k =\ln \mu_k,u(\mathbf{x}) = \mathbf{x},h(\mathbf{x}) = 1,g(\mathbf{\eta}) = 1\]</span> Note that <span class="math inline">\(\eta_k\)</span> is not independent, since <span class="math inline">\(\sum_{k=1}^M \mu_k = 1\)</span>, so we have only <span class="math inline">\(M-1\)</span> independent parameters and <span class="math inline">\(\mu_M\)</span> can be expressed by previous <span class="math inline">\(M-1\)</span> parameters. Redifine <span class="math display">\[\begin{align*}
+{\mu _M} &amp;= 1 - \sum\limits_{k = 1}^{M - 1} { {\mu _k} } \\
+{\eta _k} &amp;= \ln \frac{ { {\mu _k} } }{1 - \sum_{j = 1}^{M - 1} { {\mu _j} } } \Leftrightarrow {\mu _k} = \frac{ {\exp ({\eta _k})} }{ {1 + \sum_{j = 1}^{M - 1} {\exp } ({\eta _j})} }
+\end{align*}\]</span> Thus, the multinomial distribution can also be expressed in the form of exponential family <span class="math display">\[p(\mathbf{x}|\mathbf{\eta})=\exp(\mathbf{\eta}^\top \mathbf{x})\frac{1}{1+\sum_{j=1}^{M-1}\exp(\eta_j)}\]</span> The paremeters are respectively <span class="math display">\[
+\begin{align*}
+\eta_k &amp;= \ln \frac{\mu_k}{1-\sum_{j=1}^{M-1}\mu_j}, \eta  = {({\eta _1}, \ldots ,{\eta _{M - 1} },0)^{\rm{T} } }
+\\u(\mathbf{x}) &amp;= \mathbf{x}\\h(\mathbf{x}) &amp;= 1\\g(\mathbf{\eta}) &amp;= \frac{1}{1+\sum_{j=1}^{M-1}\exp(\eta_j)}
+\end{align*}
+\]</span></p></li>
+<li><p>Gaussian distribution <span class="math display">\[
+\begin{align*}
+  p(x | \mu, \sigma^2) &amp;= \frac{1}{(2 \pi \sigma^2)^{1/2} } \exp \left\{ -\frac{1}{2 \sigma^2} (x - \mu)^2 \right\} \\
+  &amp;= \frac{1}{(2 \pi \sigma^2)^{1/2} } \exp \left\{ -\frac{1}{2 \sigma^2} x^2 + \frac{\mu}{\sigma^2} x - \frac{1}{2 \sigma^2} \mu^2 \right\} \\
+  &amp;= h(x) g(\eta) \exp \left\{ \eta^T u(x) \right\}
+\end{align*}
+\]</span> where the parameters are respectively <span class="math display">\[
+\begin{align*}
+  \eta = \begin{bmatrix} \frac{\mu}{\sigma^2} \\ -\frac{1}{2 \sigma^2} \end{bmatrix}, 
+  u(x) = \begin{bmatrix} x \\ x^2 \end{bmatrix}, 
+  h(x) = (2 \pi)^{-1/2}, 
+  g(\eta) = (-2 \eta_2)^{-1/2} \exp \left( \frac{\eta_1^2}{4 \eta_2} \right)
+\end{align*}
+\]</span></p></li>
 </ul>
-<p>To address the drawbacks mentioned above, the authors propose Transformer, which is based solely on attention mechanisms</p>
-<ul>
-<li>No recurrence is included thus parallelizable</li>
-<li>attention machenism can draw global dependencies between the input and the output no matter how far they are from each other</li>
-</ul>
-<h3 id="scaled-dot-attention">Scaled dot attention</h3>
-<p>The core principle of attention is how to map a query and a set of key-value pairs to an output. The output is a weighted sum of the values. The formula is given by <span class="math display">\[\operatorname{Attention}(Q,K,V)=\operatorname{softmax}({\frac{Q K^{T} }{\sqrt{d_{k} } } })V\]</span> Note that dot-product attention is much faster and more space-efficient in ractice</p>
-<hr />
-<ul>
-<li>query <span class="math inline">\(\bf q\)</span>: The row of matrix <span class="math inline">\(Q\)</span>, and thus <span class="math inline">\(Q\)</span> has the size of <span class="math inline">\(n\times d_k\)</span>, in which <span class="math inline">\(n\)</span> is the number of queries. The query vector has a dimension of <span class="math inline">\(d_k\)</span> for each corresponding embedded token. <span class="math inline">\(d_k\)</span> is actually much smaller than the dimension of an embedded vector. The vector <span class="math inline">\(\bf q\)</span> is linear projected from the corresponding embedded vector <span class="math inline">\(\bf e\)</span> <span class="math display">\[\bf q=W_q e\]</span> in which <span class="math inline">\(\bf W_q\)</span> is a learnable matrix.</li>
-<li>key <span class="math inline">\(\bf k\)</span>: The key vector also has a dimension of <span class="math inline">\(d_k\)</span> for each unit and can be calculated by <span class="math display">\[\bf k=W_k e\]</span> in which <span class="math inline">\(\bf W_k\)</span> is also learnable</li>
-<li>The dot product of <span class="math inline">\(\bf q\)</span> and <span class="math inline">\(\bf k\)</span>: Intuitively, <span class="math inline">\(\bf q\)</span> serves as an active query on behalf of each unit (token, patch...) and <span class="math inline">\(\bf k\)</span> is a key waiting for query from <span class="math inline">\(\bf q\)</span>. The scalar value <span class="math inline">\(\bf \langle q, k\rangle\)</span> measures the extent to which the unit represented by <span class="math inline">\(\bf q\)</span> matches that represented by <span class="math inline">\(\bf k\)</span>. By backpropagation and optimization, matrices <span class="math inline">\(\bf W_q\)</span> and <span class="math inline">\(\bf W_k\)</span> can capture a proper dependencies between each unit. <span class="math inline">\(\bf \langle q, k\rangle\)</span> is also called attention score</li>
-<li><p>Division of <span class="math inline">\(\sqrt d_k\)</span>: The author says that for large values of <span class="math inline">\(d_k\)</span>, the dot products grow large in magnitude, pushing the softmax function into regions where it has extremely small gradients</p></li>
-<li>Softmax: The softmax operation is conducted on <span class="math inline">\(\frac{QK^T}{\sqrt{d_k} }\)</span>, which is an <span class="math inline">\(n\times n\)</span> matrix, along the dimension of <span class="math inline">\(\bf k\)</span>, i.e., Given one <span class="math inline">\(\bf q_i\)</span>， <span class="math inline">\(\sum\nolimits_{j = 1}^{ {d_k} } {\left\langle { { {\bf{q} }_i},{ {\bf{k} }_j} } \right\rangle } = 1\)</span></li>
-<li>Mask operation: <span class="math inline">\(\bf q_i\)</span> should only query keys that locate before it, i.e. <span class="math display">\[\left\langle { { {\bf{q} }_i},{ {\bf{k} }_j} } \right\rangle  = \left\{ \begin{array}{l}
-\left\langle { { {\bf{q} }_i},{ {\bf{k} }_j} } \right\rangle ,i \le j\\
-0,i &gt; j
-\end{array} \right.\]</span> The mask operation should be conducted ahead of softmax</li>
-<li><p>value <span class="math inline">\(\bf v\)</span>: The value vector has a dimension of <span class="math inline">\(d_v\)</span>, which equals to the dimension of embedded vectors, for each unit, <span class="math inline">\(\bf v\)</span> is calculated by <span class="math display">\[\bf v=W_ve\]</span> Given that <span class="math inline">\(d_k &lt;&lt; d_v\)</span>, thus for the three matrices <span class="math inline">\({\left( { {W_v} } \right)_{ {d_v} \times {d_v} } },{\left( { {W_k} } \right)_{ {d_k} \times {d_v} }},{\left( { {W_q} } \right)_{ {d_k} \times {d_v} } }\)</span> <span class="math display">\[\operatorname{param}(W_v)&gt;&gt;\operatorname{param}(W_q) + \operatorname{param}(W_k)\]</span> Thus it's better to decompose <span class="math inline">\(W_v\)</span> into the multiplication of two low-rank matrices. Each value <span class="math inline">\(\bf v_i\)</span> is associated with corresponding key <span class="math inline">\(\bf k_i\)</span>. The output of attention for each unit is actually the weighted sum of all value vectors, serving as the variation of embedded vectors <span class="math display">\[{\mathop{\rm Attention}\nolimits} (Q,K,V) = {\mathop{\rm softmax}\nolimits} (\frac{ {Q{K^T} } }{ {\sqrt { {d_k} } } })V = {\left[ { {\mathop{\rm softmax}\nolimits} (\frac{ {Q{K^T} } }{ \sqrt {d_k}  })} \right]_{n \times n} }{V_{n \times {d_v} } } = {\left[ {\begin{array}{c}
-{\Delta {E_1} }\\
-{\Delta {E_2} }\\
-\vdots \\
-{\Delta {E_n} }
-\end{array} } \right]_{n \times {d_v} } }\]</span> Calculating <span class="math inline">\(E_i+\Delta E_i\)</span> gives the prediction of word embedding</p></li>
-</ul>
+<h2 id="maximum-likelihood-for-exponential-family">Maximum Likelihood for Exponential Family</h2>
+<p>First, we will establish an important relationship which is useful in future derivation. <span class="math display">\[
+\begin{align*}
+    p(\mathbf{x}|\boldsymbol{\eta}) &amp;= h(\mathbf{x})g(\boldsymbol{\eta})\exp \left\{ \boldsymbol{\eta}^\top \mathbf{u}(\mathbf{x}) \right\} \\
+    &amp;\Rightarrow \int h(\mathbf{x})g(\boldsymbol{\eta})\exp \left\{ \boldsymbol{\eta}^\top \mathbf{u}(\mathbf{x}) \right\} d\mathbf{x} = \int p(\mathbf{x}|\boldsymbol{\eta}) d\mathbf{x} = 1 \\
+    &amp;\Rightarrow \frac{\partial}{\partial g(\boldsymbol{\eta})} \left( \int h(\mathbf{x})g(\boldsymbol{\eta})\exp \left\{ \boldsymbol{\eta}^\top \mathbf{u}(\mathbf{x}) \right\} d\mathbf{x} \right) \\&amp;= \nabla g(\boldsymbol{\eta}) \int h(\mathbf{x}) \exp \left\{ \boldsymbol{\eta}^\top \mathbf{u}(\mathbf{x}) \right\} d\mathbf{x}  + g(\boldsymbol{\eta}) \int h(\mathbf{x}) \exp \left\{ \boldsymbol{\eta}^\top \mathbf{u}(\mathbf{x}) \right\} \mathbf{u}(\mathbf{x}) d\mathbf{x} \\
+    &amp;= 0
+\end{align*}
+\]</span> Notice that <span class="math display">\[
+\begin{align*}
+    p(\mathbf{x}|\boldsymbol{\eta}) &amp;= h(\mathbf{x})g(\boldsymbol{\eta})\exp \left\{ \boldsymbol{\eta}^\top \mathbf{u}(\mathbf{x}) \right\} \\
+    &amp;\Rightarrow \frac{p(\mathbf{x}|\boldsymbol{\eta})}{g(\boldsymbol{\eta})} = h(\mathbf{x})\exp \left\{ \boldsymbol{\eta}^\top \mathbf{u}(\mathbf{x}) \right\} \\
+    &amp;\Rightarrow \int \frac{p(\mathbf{x}|\boldsymbol{\eta})}{g(\boldsymbol{\eta})} d\mathbf{x} = \int h(\mathbf{x})\exp \left\{ \boldsymbol{\eta}^\top \mathbf{u}(\mathbf{x}) \right\} d\mathbf{x} = \frac{1}{g(\boldsymbol{\eta})}
+\end{align*}
+\]</span> and <span class="math display">\[
+\begin{align*}
+    g(\boldsymbol{\eta}) \int h(\mathbf{x}) \exp \left\{ \boldsymbol{\eta}^\top \mathbf{u}(\mathbf{x}) \right\} \mathbf{u}(\mathbf{x}) d\mathbf{x} &amp;= \int h(\mathbf{x}) g(\boldsymbol{\eta}) \exp \left\{ \boldsymbol{\eta}^\top \mathbf{u}(\mathbf{x}) \right\} \mathbf{u}(\mathbf{x}) d\mathbf{x} \\
+    &amp;= \int p(\mathbf{x}|\boldsymbol{\eta}) \mathbf{u}(\mathbf{x}) d\mathbf{x} \\
+    &amp;= \mathbb{E}\left[ \mathbf{u}(\mathbf{x}) \right]
+\end{align*}
+\]</span> Substitute the above two equations into the previous equation, we have <span class="math display">\[-\nabla\ln g(\boldsymbol{\eta})={E}[\mathbf{u}(\mathbf{x})]\]</span></p>
+<p>Then, re-consider the likelihood function of the exponential family to get the same result. Given the dataset <span class="math inline">\(\mathbf{X} = \{ \mathbf{x}_1, \dots, \mathbf{x}_N \}\)</span>, the likelihood function is <span class="math display">\[
+ p(\mathbf{X}|\boldsymbol{\eta}) = \prod_{n=1}^N p(\mathbf{x}_n|\boldsymbol{\eta}) = \left( \prod_{n=1}^N h(\mathbf{x}_n) \right) g(\boldsymbol{\eta})^N \exp \left\{ \boldsymbol{\eta}^\top \sum_{n=1}^N \mathbf{u}(\mathbf{x}_n) \right\}
+\]</span> Take the logarithm of the likelihood function and maximize it with respect to <span class="math inline">\(\boldsymbol{\eta}\)</span>, we have <span class="math display">\[
+\begin{align*}
+    \ell(\boldsymbol{\eta}) &amp;= \log p(\mathbf{X}|\boldsymbol{\eta}) \\
+    &amp;= \sum_{n=1}^N \log h(\mathbf{x}_n) + N \ln g(\boldsymbol{\eta}) + \boldsymbol{\eta}^\top \sum_{n=1}^N \mathbf{u}(\mathbf{x}_n).\\&amp;\Rightarrow
+    \frac{\partial \ell(\boldsymbol{\eta})}{\partial \boldsymbol{\eta} } = N \frac{\nabla g(\boldsymbol{\eta})}{g(\boldsymbol{\eta})} + \sum_{n=1}^N \mathbf{u}(\mathbf{x}_n) = 0.
+\\ &amp;\Rightarrow -\nabla \ln g(\boldsymbol{\eta}) = \mathbb{E}[\mathbf{u}(\mathbf{x})]\\&amp;\Rightarrow
+    -\nabla \ln g(\boldsymbol{\eta}_{\text{ML} }) = \frac{1}{N} \sum_{n=1}^N \mathbf{u}(\mathbf{x}_n).
+\end{align*}
+\]</span></p>
+<h2 id="conjugate-prior-for-exponential-family">Conjugate Prior for Exponential Family</h2>
+<p>For any member of the exponential family, there exists a conjugate prior that ensures the posterior distribution has the same form as the prior. This prior distribution can be written as: <span class="math display">\[
+p(\boldsymbol{\eta} | \boldsymbol{\chi}, \nu) = f(\boldsymbol{\chi}, \nu) g(\boldsymbol{\eta})^\nu \exp \left\{ \nu \boldsymbol{\eta}^\top \boldsymbol{\chi} \right\}
+\]</span> in which * <span class="math inline">\(\boldsymbol{\chi}\)</span> represents the value of a virtual or pseudo-observation in the prior * <span class="math inline">\(\nu\)</span> is the number of observations, which is a hyperparameter. It is often called the &quot;strength&quot; or &quot;pseudo-count&quot; of the prior, indicating the weight of prior information.</p>
+<p>In Bayesian inference, we combine the likelihood function with the prior distribution to obtain the posterior distribution. Given a dataset <span class="math inline">\(\mathbf{X}=\{\mathbf{x}_{1},\cdots,\mathbf{x}_{N}\}\)</span>, the likelihood function is <span class="math display">\[
+p(\mathbf{X}|\boldsymbol{\eta}) \propto g(\boldsymbol{\eta})^N \exp \left\{ \boldsymbol{\eta}^\top \sum_{n=1}^N \mathbf{u}(\mathbf{x}_n) \right\}
+\]</span> Combining this likelihood with the prior distribution yields the posterior distribution <span class="math display">\[
+p(\boldsymbol{\eta}|\mathbf{X}, \boldsymbol{\chi}, \nu) \propto g(\boldsymbol{\eta})^{\nu + N} \exp \left\{ \boldsymbol{\eta}^\top \left( \sum_{n=1}^N \mathbf{u}(\mathbf{x}_n) + \nu \boldsymbol{\chi} \right) \right\}
+\]</span></p>
 
     </div>
 
@@ -315,7 +358,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>Post link: </strong>
-    <a href="http://ruoshi.tech/2024/10/08/A%20Series%20of%20Attention%20Mechanisms/" title="A Series of Attention Mechanisms">http://ruoshi.tech/2024/10/08/A Series of Attention Mechanisms/</a>
+    <a href="http://ruoshi.tech/2024/11/02/PRML%20chapter2%20note%20cont/" title="PRML Chapter2 Note Cont.">http://ruoshi.tech/2024/11/02/PRML chapter2 note cont/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/en" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
@@ -326,8 +369,7 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Paper-Reading/" rel="tag"># Paper Reading</a>
-              <a href="/tags/Deep-Learning/" rel="tag"># Deep Learning</a>
+              <a href="/tags/Machine-Learning/" rel="tag"># Machine Learning</a>
           </div>
 
         
@@ -336,13 +378,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2024/10/06/hello-world/" rel="prev" title="Hello World">
-      <i class="fa fa-chevron-left"></i> Hello World
+    <a href="/2024/10/17/PRML%20chapter2%20note/" rel="prev" title="PRML Chapter2 Note">
+      <i class="fa fa-chevron-left"></i> PRML Chapter2 Note
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2024/10/12/Pytorch%20Distributed%20Training(1)--DP_DDP/" rel="next" title="Pytorch Distributed Training(1)--DP/DDP">
-      Pytorch Distributed Training(1)--DP/DDP <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -401,7 +440,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#attention-is-all-you-need"><span class="nav-number">1.</span> <span class="nav-text">Attention is all you need</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#intro-background"><span class="nav-number">1.1.</span> <span class="nav-text">Intro &amp; Background</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#scaled-dot-attention"><span class="nav-number">1.2.</span> <span class="nav-text">Scaled dot attention</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#exponential-family"><span class="nav-number">1.</span> <span class="nav-text">Exponential Family</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#maximum-likelihood-for-exponential-family"><span class="nav-number">2.</span> <span class="nav-text">Maximum Likelihood for Exponential Family</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conjugate-prior-for-exponential-family"><span class="nav-number">3.</span> <span class="nav-text">Conjugate Prior for Exponential Family</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
