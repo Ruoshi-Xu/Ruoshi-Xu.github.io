@@ -227,7 +227,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-11-02 16:05:18" itemprop="dateModified" datetime="2024-11-02T16:05:18+08:00">2024-11-02</time>
+                <time title="Modified: 2024-11-02 16:18:16" itemprop="dateModified" datetime="2024-11-02T16:18:16+08:00">2024-11-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -330,7 +330,12 @@
 <li><code>node</code>: a machine, which may contain multiple GPUs</li>
 <li><code>world_size</code>: number of processes in all nodes, ranging from 1 to <code>world_size</code><span class="math inline">\(-1\)</span></li>
 <li><code>local_rank</code>: the rank of the process in the current node. If there are 4 GPUs in one node, the <code>local_rank</code> ranges from 0 to 3</li>
-<li><code>rank</code>: the rank of the process in all nodes ### Program Revision(mp.spawn()) #### Import <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import torch.distributed as dist</span><br><span class="line">import torch.multiprocessing as mp</span><br><span class="line">from torch.cuda.amp import GradScaler</span><br><span class="line">from torch.utils.data.distributed import DistributedSampler</span><br><span class="line">from torch.nn.parallel import DistributedDataParallel as DDP</span><br></pre></td></tr></table></figure></li>
+<li><code>rank</code>: the rank of the process in all nodes</li>
+</ul>
+<h3 id="program-revisionmp.spawn">Program Revision(mp.spawn())</h3>
+<h4 id="import">Import</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import torch.distributed as dist</span><br><span class="line">import torch.multiprocessing as mp</span><br><span class="line">from torch.cuda.amp import GradScaler</span><br><span class="line">from torch.utils.data.distributed import DistributedSampler</span><br><span class="line">from torch.nn.parallel import DistributedDataParallel as DDP</span><br></pre></td></tr></table></figure>
+<ul>
 <li><code>dist</code>: communication between GPUs</li>
 <li><code>mp</code>: DDP startup</li>
 <li><code>GradScaler</code>: automatic mixed precision</li>
