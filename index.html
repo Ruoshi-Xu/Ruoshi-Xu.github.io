@@ -3,139 +3,84 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Personal website of Ruoshi Xu, an undergraduate researcher working on deep learning and computer vision.">
-  <meta name="theme-color" content="#f7f8fa">
+  <meta name="description" content="Academic homepage of Ruoshi Xu.">
+  <meta name="theme-color" content="#f4f6f8">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/icon32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/icon16.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#1f2933">
+  <link rel="mask-icon" href="/images/logo.svg" color="#273444">
   <link rel="stylesheet" href="/styles.css">
-  <title>Ruoshi Xu | Researcher</title>
+  <title>Ruoshi Xu - Homepage</title>
 </head>
 <body>
-  <header class="site-header">
-    <div class="nav-shell">
-      <a class="wordmark" href="#top" aria-label="Ruoshi Xu home">Ruoshi Xu</a>
-      <nav class="site-nav" aria-label="Primary navigation">
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a class="navbar-brand" href="#top">Ruoshi Xu</a>
+      <nav class="nav-links" aria-label="Main navigation">
+        <a class="active" href="#top">Home</a>
         <a href="#about">About</a>
-        <a href="#education">Education</a>
-        <a href="#research">Research</a>
-        <a href="#experience">Experience</a>
-        <a href="#contact">Contact</a>
+        <a href="#publications">Publications</a>
+        <a href="#news">News</a>
       </nav>
     </div>
   </header>
 
-  <main id="top">
-    <section class="hero section-shell" id="about">
-      <div class="hero-copy">
-        <p class="eyebrow">Undergraduate researcher</p>
-        <h1>Ruoshi Xu</h1>
-        <p class="hero-lede">I am an undergraduate student in Intelligence Science and Technology at Southern University of Science and Technology (SUSTech), working at the intersection of deep learning and computer vision.</p>
-        <div class="hero-links" aria-label="Profile links">
-          <a class="primary-link" href="https://github.com/Ruoshi-Xu" target="_blank" rel="noopener">GitHub <span aria-hidden="true">&#8599;</span></a>
-          <a href="mailto:xurs2022@mail.sustech.edu.cn">Email <span aria-hidden="true">&#8599;</span></a>
-        </div>
-      </div>
-      <figure class="portrait-wrap">
-        <img class="portrait" src="/photo.jpg" alt="Portrait of Ruoshi Xu">
-        <figcaption>Shenzhen, China</figcaption>
-      </figure>
-    </section>
-
-    <div class="rule" aria-hidden="true"></div>
-
-    <section class="content-grid section-shell" id="education">
-      <div class="section-label">
-        <span class="section-number">01</span>
-        <h2>Education</h2>
-      </div>
-      <div class="section-body">
-        <article class="timeline-item">
-          <div class="timeline-meta">2022 - present</div>
-          <div>
-            <h3>Southern University of Science and Technology</h3>
-            <p class="muted">B.Eng. in Intelligence Science and Technology, Department of Computer Science and Engineering</p>
-            <p class="detail">SUSTech Turing Class &middot; GPA 3.90 / 4.00 &middot; Department rank 1 / 22</p>
+  <main class="container page" id="top">
+    <div class="page-grid">
+      <aside class="sidebar">
+        <section class="card profile-card">
+          <img class="profile-photo" src="/photo.jpg" alt="Portrait of Ruoshi Xu">
+          <h1>Ruoshi Xu</h1>
+          <p class="profile-line">Southern University of Science and Technology</p>
+          <p class="profile-line">Intelligence Science and Technology</p>
+          <a class="profile-email" href="mailto:xurs2022@mail.sustech.edu.cn">xurs2022@mail.sustech.edu.cn</a>
+          <div class="social-links" aria-label="Social links">
+            <a href="https://github.com/Ruoshi-Xu" target="_blank" rel="noopener" aria-label="GitHub">GitHub</a>
+            <a href="mailto:xurs2022@mail.sustech.edu.cn" aria-label="Email">Email</a>
           </div>
-        </article>
-        <article class="timeline-item">
-          <div class="timeline-meta">2019 - 2022</div>
-          <div>
-            <h3>Jinling High School</h3>
-            <p class="muted">Nanjing, Jiangsu</p>
-            <p class="detail">College Entrance Examination: top 1%</p>
+        </section>
+      </aside>
+
+      <div class="content">
+        <section class="card card-section" id="about">
+          <h2>About Me</h2>
+          <p class="about-text">I am a student at Southern University of Science and Technology (SUSTech), studying Intelligence Science and Technology.</p>
+        </section>
+
+        <section class="card card-section">
+          <h2>Education</h2>
+          <div class="education-item">
+            <div class="education-mark" aria-hidden="true">S</div>
+            <div>
+              <div class="item-title">Southern University of Science and Technology</div>
+              <div class="item-subtitle">Intelligence Science and Technology</div>
+            </div>
           </div>
-        </article>
-      </div>
-    </section>
+          <div class="empty-line" aria-hidden="true"></div>
+        </section>
 
-    <section class="content-grid section-shell" id="research">
-      <div class="section-label">
-        <span class="section-number">02</span>
-        <h2>Research</h2>
-      </div>
-      <div class="section-body research-body">
-        <p class="section-intro">My current work is with Professor Jianguo Zhang's research group. I am interested in reliable visual learning systems and the methods that make them useful beyond curated benchmarks.</p>
-        <div class="interest-list">
-          <div><span>01</span><strong>Deep learning</strong><p>Representation learning, generative models, and efficient training workflows.</p></div>
-          <div><span>02</span><strong>Computer vision</strong><p>Image understanding, segmentation, and multimodal visual reasoning.</p></div>
-          <div><span>03</span><strong>Machine learning</strong><p>Optimization, statistical learning, and practical model evaluation.</p></div>
-        </div>
-      </div>
-    </section>
+        <section class="card card-section" id="news">
+          <h2>News</h2>
+          <div class="empty-state" aria-label="News placeholder"></div>
+        </section>
 
-    <section class="content-grid section-shell" id="experience">
-      <div class="section-label">
-        <span class="section-number">03</span>
-        <h2>Experience</h2>
-      </div>
-      <div class="section-body">
-        <article class="timeline-item">
-          <div class="timeline-meta">2023 - 2024</div>
-          <div>
-            <h3>Peer Coach, SUSTech Zhixin College</h3>
-            <p class="muted">Supported fellow students with academic planning and the transition to university study.</p>
-          </div>
-        </article>
-        <article class="timeline-item">
-          <div class="timeline-meta">2022 - 2024</div>
-          <div>
-            <h3>President and chief flute player, SUSTech Philharmonic</h3>
-            <p class="muted">Led the student orchestra and performed as principal flute.</p>
-          </div>
-        </article>
-      </div>
-    </section>
+        <section class="card card-section" id="publications">
+          <h2>Selected Publications</h2>
+          <div class="empty-state" aria-label="Publications placeholder"></div>
+        </section>
 
-    <section class="course-band">
-      <div class="section-shell course-grid">
-        <div>
-          <p class="eyebrow">Selected coursework</p>
-          <h2>Foundations with a<br>hands-on bias.</h2>
-        </div>
-        <ul class="course-list">
-          <li>Deep Learning <span>95 / 100</span></li>
-          <li>Computer Vision <span>94 / 100</span></li>
-          <li>Linear Algebra <span>91 / 100</span></li>
-          <li>Probability &amp; Statistics <span>94 / 100</span></li>
-          <li>Calculus <span>96 / 100</span></li>
-          <li>Introduction to Computer Programming <span>100 / 100</span></li>
-        </ul>
+        <section class="card card-section">
+          <h2>Experience</h2>
+          <div class="empty-state" aria-label="Experience placeholder"></div>
+        </section>
       </div>
-    </section>
-
-    <section class="contact section-shell" id="contact">
-      <p class="eyebrow">Get in touch</p>
-      <h2>Let's build something<br>worth understanding.</h2>
-      <a class="contact-email" href="mailto:xurs2022@mail.sustech.edu.cn">xurs2022@mail.sustech.edu.cn <span aria-hidden="true">&#8599;</span></a>
-    </section>
+    </div>
   </main>
 
-  <footer class="site-footer">
-    <div class="section-shell footer-inner">
+  <footer class="footer">
+    <div class="container footer-inner">
       <span>&copy; 2026 Ruoshi Xu</span>
-      <div><a href="https://github.com/Ruoshi-Xu" target="_blank" rel="noopener">GitHub</a><a href="#top">Back to top &uarr;</a></div>
+      <a href="#top">Back to top</a>
     </div>
   </footer>
 </body>
