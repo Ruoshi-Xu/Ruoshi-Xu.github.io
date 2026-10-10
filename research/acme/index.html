@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ACME: Annotation-Compatible Model-Driven Exploration for Single-Source Domain Generalization in Medical Image Segmentation.">
+  <title>ACME</title>
+  <link rel="stylesheet" href="style.css?v=20261010-4">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#top">ACME</a>
+      <nav aria-label="Page navigation">
+        <a href="#introduction">Introduction</a>
+        <a href="#method">Method</a>
+        <a href="#experiments">Experiments</a>
+        <a href="#analysis">Analysis</a>
+      </nav>
+      <a class="header-link" href="paper/main.pdf" target="_blank" rel="noreferrer">Paper <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-inner">
+        <h1>ACME: Annotation-Compatible Model-Driven Exploration for Single-Source Domain Generalization in Medical Image Segmentation</h1>
+        <div class="authors">
+          <span>Shengda Luo<sup>1</sup></span>
+          <span>Ruoshi Xu<sup>1,*</sup></span>
+          <span>Jingkun Chen<sup>2</sup></span>
+        </div>
+        <div class="affiliations">
+          <span><sup>1</sup> Chinese Medicine Guangdong Laboratory</span>
+          <span><sup>2</sup> Northwestern Polytechnical University</span>
+        </div>
+        <p class="author-note">* Co-first author.</p>
+        <div class="project-links" aria-label="Project links">
+          <a href="paper/main.pdf" target="_blank" rel="noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2h9l4 4v16H6z"></path><path d="M14 2v5h5"></path><path d="M8.5 16h7M8.5 12h7"></path></svg>PDF</a>
+          <button type="button" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-4 1.3-4-2-5.5-2.5M14.5 22v-3.9c0-1.1.1-1.5-.5-2.1 2.1-.2 4.3-1 4.3-4.8 0-1.1-.4-2.1-1.1-2.8.1-.3.5-1.4-.1-2.8 0 0-1-.3-3.1 1.1a10.7 10.7 0 0 0-5.6 0C6.3 3.3 5.3 3.6 5.3 3.6c-.6 1.4-.2 2.5-.1 2.8A4 4 0 0 0 4.1 9.2c0 3.8 2.2 4.6 4.3 4.8-.5.5-.5 1-.5 1.8V22"></path></svg>GitHub</button>
+          <span>Coming after acceptance.</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="page-shell">
+      <section id="introduction" class="section intro-section">
+        <div class="section-heading"><h2>Introduction</h2></div>
+        <div class="intro-copy">
+          <p>Single-source domain generalization aims to learn medical image segmentation models from one labeled source domain that remain reliable on unseen domains. Because target-domain data are unavailable during training, existing methods commonly improve generalization by expanding source-domain variation, with recent approaches increasingly using adaptive or adversarial search to generate difficult samples. However, for dense segmentation, this strategy raises a supervision issue. A transformed image usually inherits the source annotation, even when a strong appearance change weakens the image evidence supporting that annotation. Consequently, a high-loss sample may either expose a meaningful acquisition vulnerability or provide unreliable dense supervision. We propose ACME, an Annotation-Compatible Model-Driven Exploration framework that separates these two cases. ACME learns model-sensitive directions in a bounded acquisition space and probes them at multiple strengths to identify difficult acquisition variations. The resulting candidates are then qualified using anatomical visibility, task-semantic stability, and spatial-content correspondence. Only candidates that satisfy these criteria inherit the source annotation, and the hardest admitted candidate is used for training. If no candidate is admitted, ACME reverts to the original source image. Experiments on fundus, cardiac MRI, polyp, and prostate MRI segmentation show consistent improvements over the compared domain-generalization methods across all four settings. Mechanism analysis reveals a clear trade-off between segmentation difficulty and annotation compatibility as acquisition strength increases. This trade-off motivates selecting hard samples only when the inherited supervision remains reliable.</p>
+        </div>
+      </section>
+
+      <section id="method" class="section method-section">
+        <div class="section-kicker">02 / Method</div>
+        <div class="section-heading">
+          <h2>Probe → Qualify → <em>Learn</em></h2>
+          <p class="section-note">ACME separates the search for model failures from the decision to trust inherited supervision.</p>
+        </div>
+        <figure class="wide-figure method-figure">
+          <img src="major.png" alt="ACME framework showing model-driven probing, annotation-compatibility qualification, and learning">
+          <figcaption><strong>Figure 1.</strong> ACME explores bounded acquisition variations, filters candidates by annotation compatibility, and trains on the hardest admitted candidate.</figcaption>
+          <p class="figure-reading">The three stages have distinct roles: Probe identifies model-sensitive acquisition variations, Qualify determines which failures can inherit dense source supervision, and Learn corrects the hardest admitted vulnerability.</p>
+        </figure>
+        <div class="method-steps">
+          <article><div class="step-head"><span>01</span><h3>Probe</h3></div><p>A learnable bank of eight directions combines ten bounded acquisition factors: brightness, contrast, gamma, channel response, saturation, illumination, and blur/sharpening. Three strengths (α ∈ {0.35, 0.65, 1.00}) expose different distances along each direction.</p></article>
+          <article><div class="step-head"><span>02</span><h3>Qualify</h3></div><p>Each candidate passes anatomical visibility and EMA-teacher prediction checks first. The hardest survivors are then verified by frozen self-supervised spatial features. Candidates that fail are excluded from dense supervision.</p></article>
+          <article><div class="step-head"><span>03</span><h3>Learn</h3></div><p>The hardest admitted candidate is paired with the original source image for segmentation training. If the admissible set is empty, ACME safely falls back to the source image.</p></article>
+        </div>
+      </section>
+
+      <section id="experiments" class="section experiments-section">
+        <div class="section-heading">
+          <h2>Generalization across<br><em>four acquisition worlds.</em></h2>
+          <p class="section-note">Results are reported as DSC (%) / ASD.</p>
+        </div>
+        <div class="dataset-strip">
+          <div><strong>Fundus-DG</strong><span>ORIGA → 4 centers · 500 / 189 images</span></div>
+          <div><strong>MSCMRSeg</strong><span>C0 ↔ LGE · 36 / 45 subjects</span></div>
+          <div><strong>Polyp</strong><span>Kvasir → 3 datasets · 1,450 / 636 images</span></div>
+          <div><strong>Prostate MRI</strong><span>RUNMC → 5 centers · 21 / 86 cases</span></div>
+        </div>
+
+        <div class="table-block">
+          <div class="table-title"><span>Table 1</span><h3>Fundus-DG and MSCMRSeg</h3><p>DSC (%) / ASD across unseen datasets and centers.</p></div>
+          <div class="table-wrap"><table class="results-table wide-table"><thead><tr><th>Method</th><th>BinRushed</th><th>Drishti-GS</th><th>Magrabia</th><th>REFUGE</th><th>Fundus avg.</th><th>C0 → LGE</th><th>LGE → C0</th></tr></thead><tbody>
+            <tr><td>U-Net</td><td>54.82 / 7.07</td><td>77.99 / 1.16</td><td>61.19 / 8.10</td><td>79.49 / 1.89</td><td>68.37 / 4.56</td><td>65.97 / 6.55</td><td>76.91 / 3.41</td></tr>
+            <tr><td>AdverNoise</td><td>51.38 / 11.63</td><td>70.14 / 7.36</td><td>66.74 / 10.41</td><td>76.66 / 5.66</td><td>66.23 / 8.76</td><td>41.46 / 7.01</td><td>69.59 / 1.56</td></tr>
+            <tr><td>AdverBias</td><td>59.06 / 12.19</td><td>77.32 / 5.88</td><td>64.80 / 13.52</td><td>78.55 / 5.86</td><td>69.93 / 9.36</td><td>35.29 / 10.39</td><td>68.03 / 1.84</td></tr>
+            <tr><td>AdverHist</td><td>57.22 / 11.51</td><td>74.71 / 6.36</td><td>63.77 / 12.50</td><td>78.00 / 5.75</td><td>68.43 / 9.03</td><td>44.86 / 6.94</td><td>70.35 / 1.58</td></tr>
+            <tr><td>MixUp</td><td>63.88 / 10.69</td><td>75.30 / 6.10</td><td>67.90 / 10.73</td><td>79.42 / 5.65</td><td>71.63 / 8.29</td><td>41.24 / 7.30</td><td>69.69 / 1.62</td></tr>
+            <tr><td>RSC</td><td>53.86 / 12.29</td><td>69.96 / 7.02</td><td>67.24 / 8.07</td><td>75.52 / 5.90</td><td>66.64 / 8.32</td><td>39.07 / 8.12</td><td>72.29 / 1.44</td></tr>
+            <tr><td>AlignCE</td><td>56.05 / 10.95</td><td>74.08 / 6.48</td><td>65.16 / 11.27</td><td>78.14 / 5.84</td><td>68.36 / 8.63</td><td>38.29 / 8.32</td><td>69.93 / 1.56</td></tr>
+            <tr><td>AlignMMD</td><td>60.15 / 10.61</td><td>76.08 / 5.96</td><td>69.08 / 9.26</td><td>79.89 / 5.40</td><td>71.30 / 7.81</td><td>34.84 / 10.43</td><td>65.56 / 2.04</td></tr>
+            <tr><td>BiNorm</td><td>58.65 / 10.78</td><td>56.71 / 8.02</td><td>66.68 / 7.57</td><td>74.02 / 6.28</td><td>64.01 / 8.16</td><td>39.74 / 8.60</td><td>66.91 / 1.62</td></tr>
+            <tr><td>BNorm</td><td>39.82 / 16.41</td><td>44.47 / 8.30</td><td>49.16 / 17.93</td><td>72.50 / 7.37</td><td>51.49 / 12.50</td><td>39.12 / 7.50</td><td>69.41 / 1.60</td></tr>
+            <tr><td>CSU</td><td>62.29 / 10.07</td><td>65.67 / 7.96</td><td>67.94 / 7.44</td><td>77.45 / 5.73</td><td>68.34 / 7.80</td><td>46.46 / 5.06</td><td>69.05 / 1.59</td></tr>
+            <tr><td>DSU</td><td>59.58 / 11.63</td><td>66.90 / 7.76</td><td>69.03 / 8.81</td><td>77.16 / 5.86</td><td>68.17 / 8.52</td><td>40.96 / 7.61</td><td>69.17 / 1.66</td></tr>
+            <tr><td>INorm</td><td>37.11 / 4.58</td><td>12.65 / 8.62</td><td>45.25 / 10.96</td><td>22.83 / 4.98</td><td>29.46 / 7.28</td><td>58.40 / 6.46</td><td>67.23 / 1.82</td></tr>
+            <tr><td>pAdaIN</td><td>58.85 / 11.14</td><td>75.54 / 6.12</td><td>65.70 / 13.09</td><td>77.30 / 6.13</td><td>69.35 / 9.12</td><td>46.34 / 5.72</td><td>71.23 / 1.46</td></tr>
+            <tr><td>AmpSwap</td><td>63.56 / 4.36</td><td>78.16 / 1.13</td><td>66.13 / 4.45</td><td>81.84 / 1.45</td><td>72.41 / 2.85</td><td>70.93 / 6.48</td><td>78.74 / 3.26</td></tr>
+            <tr><td>AmpMix</td><td>65.08 / 4.32</td><td>77.06 / 1.09</td><td>68.14 / 4.29</td><td>79.50 / 1.67</td><td>72.44 / 2.84</td><td>63.89 / 6.44</td><td>80.07 / 2.46</td></tr>
+            <tr><td>FMAug</td><td>63.79 / 5.03</td><td>78.34 / 1.04</td><td>64.33 / 7.28</td><td>82.17 / 1.29</td><td>72.16 / 3.66</td><td>72.46 / 13.67</td><td>80.54 / 2.57</td></tr>
+            <tr><td>MixStyle</td><td>63.95 / 4.72</td><td>80.36 / 1.06</td><td>63.97 / 6.04</td><td>81.93 / 1.45</td><td>72.55 / 3.32</td><td>69.26 / 10.91</td><td>80.81 / 2.69</td></tr>
+            <tr><td>TriD</td><td>66.27 / 4.34</td><td>77.08 / 1.24</td><td>65.42 / 4.53</td><td>79.36 / 1.57</td><td>72.03 / 2.92</td><td>65.12 / 10.25</td><td>79.14 / 4.60</td></tr>
+            <tr><td>ConStyX</td><td>62.91 / 5.99</td><td>80.69 / 1.03</td><td>64.47 / 7.16</td><td>80.15 / 1.85</td><td>72.05 / 4.01</td><td>68.63 / 7.89</td><td>81.30 / 2.85</td></tr>
+            <tr><td>RandConv</td><td>63.75 / 4.70</td><td>79.35 / 1.13</td><td>65.61 / 5.07</td><td>81.52 / 1.46</td><td>72.56 / 3.09</td><td>71.90 / 5.65</td><td>75.17 / 4.27</td></tr>
+            <tr><td>PRandConv</td><td>44.60 / 9.84</td><td>75.23 / 1.48</td><td>53.34 / 8.68</td><td>76.61 / 2.57</td><td>62.44 / 5.64</td><td>56.61 / 8.75</td><td>75.57 / 3.38</td></tr>
+            <tr><td>StyCona</td><td>67.80 / 3.60</td><td>78.43 / 1.08</td><td>65.71 / 4.37</td><td>80.68 / 1.49</td><td>73.16 / 2.63</td><td>73.39 / 4.33</td><td>81.59 / 2.24</td></tr>
+            <tr><td>TSIAA</td><td>58.30 / 9.82</td><td>73.97 / 7.00</td><td>70.54 / 9.09</td><td>78.82 / 5.56</td><td>70.41 / 7.87</td><td>64.74 / 1.43</td><td>83.01 / 1.94</td></tr>
+            <tr class="ours"><td><strong>ACME</strong></td><td><strong>69.36 / 3.70</strong></td><td><strong>82.78 / 0.81</strong></td><td><strong>74.63 / 2.62</strong></td><td><strong>83.64 / 1.07</strong></td><td><strong>77.60 / 2.05</strong></td><td><strong>76.18 / 1.67</strong></td><td><strong>83.14 / 1.64</strong></td></tr>
+          </tbody></table></div>
+          <p class="table-reading">On Fundus-DG, ACME obtains the highest DSC on every unseen target. Relative to StyCona, macro DSC increases from 73.16% to 77.60%, while macro ASD decreases from 2.63 to 2.05. The largest DSC gain is on Magrabia, where ACME improves by 8.92 points; the other three centers also improve. ASD decreases on Drishti-GS, Magrabia, and REFUGE, with BinRushed the only small exception. On MSCMRSeg, ACME improves both directions: C0 to LGE rises from 73.39% to 76.18% DSC while ASD drops from 4.33 to 1.67, and LGE to C0 rises from 81.59% to 83.14% while ASD drops from 2.24 to 1.64.</p>
+        </div>
+
+        <div class="table-block">
+          <div class="table-title"><span>Table 2</span><h3>Polyp segmentation and prostate MRI</h3><p>DSC (%) / ASD across unseen datasets and centers.</p></div>
+          <div class="table-wrap"><table class="results-table wide-table"><thead><tr><th>Method</th><th>CVC-300</th><th>ColonDB</th><th>ETIS</th><th>Polyp avg.</th><th>BIDMC</th><th>BMC</th><th>HK</th><th>I2CVB</th><th>UCL</th><th>Prostate avg.</th></tr></thead><tbody>
+            <tr><td>Vanilla</td><td>44.20 / 88.24</td><td>39.65 / 53.79</td><td>31.30 / 89.83</td><td>38.38 / 77.29</td><td>24.00 / 15.33</td><td>59.73 / 6.86</td><td>65.19 / 5.57</td><td>51.66 / 4.86</td><td>34.49 / 9.53</td><td>47.01 / 8.43</td></tr>
+            <tr><td>RandConv</td><td>30.17 / 48.31</td><td>29.25 / 47.28</td><td>23.28 / 63.76</td><td>27.57 / 53.12</td><td>35.85 / 18.60</td><td>59.73 / 8.63</td><td>59.08 / 9.76</td><td>46.52 / 11.09</td><td>45.85 / 8.15</td><td>49.41 / 11.25</td></tr>
+            <tr><td>MixUp</td><td>45.80 / 59.54</td><td>40.22 / 49.34</td><td>31.24 / 86.33</td><td>39.09 / 65.07</td><td>27.81 / 13.41</td><td>59.88 / 7.26</td><td>66.80 / 5.81</td><td>49.87 / 5.66</td><td>38.80 / 9.05</td><td>48.63 / 8.24</td></tr>
+            <tr><td>AdverNoise</td><td>39.02 / 97.31</td><td>37.80 / 59.47</td><td>31.66 / 87.28</td><td>36.16 / 81.35</td><td>24.66 / 15.88</td><td>59.48 / 7.55</td><td>66.36 / 5.67</td><td>51.72 / 4.93</td><td>35.85 / 9.39</td><td>47.61 / 8.68</td></tr>
+            <tr><td>AdverBias</td><td>38.12 / 100.62</td><td>34.35 / 70.22</td><td>29.08 / 108.09</td><td>33.85 / 92.98</td><td>31.44 / 9.99</td><td>63.55 / 6.28</td><td>68.64 / 5.32</td><td>49.62 / 5.28</td><td>44.36 / 8.44</td><td>51.52 / 7.06</td></tr>
+            <tr><td>AdverHist</td><td>37.46 / 93.97</td><td>35.02 / 57.11</td><td>28.34 / 91.04</td><td>33.61 / 80.71</td><td>23.82 / 15.05</td><td>58.53 / 8.74</td><td>66.01 / 5.57</td><td>47.80 / 5.01</td><td>42.10 / 8.64</td><td>47.65 / 8.60</td></tr>
+            <tr><td>RSC</td><td>48.91 / 87.58</td><td>44.29 / 71.39</td><td>27.30 / 157.42</td><td>40.17 / 105.46</td><td>19.68 / 11.94</td><td>63.46 / 5.87</td><td>61.34 / 3.98</td><td>48.25 / 5.97</td><td>35.16 / 9.66</td><td>45.58 / 7.48</td></tr>
+            <tr><td>MixStyle</td><td>33.11 / 149.36</td><td>38.07 / 67.57</td><td>29.30 / 76.99</td><td>33.49 / 97.97</td><td>33.54 / 16.53</td><td>61.32 / 7.67</td><td>66.22 / 6.15</td><td>54.85 / 5.91</td><td>41.61 / 8.84</td><td>51.51 / 9.02</td></tr>
+            <tr><td>AlignCE</td><td>37.42 / 129.83</td><td>36.38 / 78.85</td><td>26.54 / 127.89</td><td>33.45 / 112.19</td><td>25.95 / 14.04</td><td>60.87 / 6.67</td><td>67.13 / 4.65</td><td>50.43 / 4.95</td><td>35.40 / 9.57</td><td>47.96 / 7.98</td></tr>
+            <tr><td>AlignMMD</td><td>21.83 / 158.46</td><td>26.10 / 81.52</td><td>28.55 / 85.25</td><td>25.49 / 108.41</td><td>24.44 / 16.90</td><td>58.80 / 8.38</td><td>68.02 / 5.15</td><td>47.37 / 6.86</td><td>26.99 / 14.67</td><td>45.12 / 10.39</td></tr>
+            <tr><td>BiNorm</td><td>41.72 / 77.83</td><td>40.45 / 61.87</td><td>29.83 / 109.18</td><td>37.33 / 82.96</td><td>14.86 / 18.89</td><td>51.22 / 8.02</td><td>63.78 / 4.91</td><td>52.17 / 4.41</td><td>34.79 / 10.76</td><td>43.36 / 9.40</td></tr>
+            <tr><td>BNorm</td><td>45.73 / 73.16</td><td>40.00 / 51.66</td><td>30.72 / 97.77</td><td>38.82 / 74.20</td><td>27.66 / 15.72</td><td>60.17 / 6.63</td><td>67.64 / 5.04</td><td>52.81 / 4.78</td><td>36.37 / 9.27</td><td>48.93 / 8.29</td></tr>
+            <tr><td>CSU</td><td>41.68 / 68.82</td><td>39.35 / 47.76</td><td>29.38 / 62.00</td><td>36.80 / 59.53</td><td>38.74 / 16.26</td><td>62.54 / 7.24</td><td>69.78 / 5.75</td><td>52.24 / 6.29</td><td>51.49 / 7.49</td><td>54.96 / 8.61</td></tr>
+            <tr><td>DSU</td><td>38.18 / 105.46</td><td>36.75 / 54.97</td><td>29.32 / 56.70</td><td>34.75 / 72.38</td><td>38.65 / 14.99</td><td>61.59 / 6.91</td><td>67.84 / 6.40</td><td>52.95 / 6.69</td><td>41.12 / 8.84</td><td>52.43 / 8.77</td></tr>
+            <tr><td>INorm</td><td>58.20 / 24.53</td><td>43.69 / 48.12</td><td>30.69 / 59.66</td><td>44.19 / 44.10</td><td>26.17 / 18.70</td><td>54.58 / 12.50</td><td>55.71 / 9.06</td><td>48.74 / 14.02</td><td>56.02 / 9.31</td><td>48.24 / 12.72</td></tr>
+            <tr><td>pAdaIN</td><td>38.38 / 117.86</td><td>38.38 / 63.73</td><td>29.15 / 69.71</td><td>35.30 / 83.77</td><td>31.95 / 17.41</td><td>59.03 / 8.02</td><td>67.03 / 5.98</td><td>53.66 / 6.87</td><td>43.23 / 9.45</td><td>50.98 / 9.55</td></tr>
+            <tr><td>TriD</td><td>33.24 / 94.03</td><td>35.06 / 53.02</td><td>26.16 / 71.55</td><td>31.48 / 72.87</td><td>32.30 / 14.00</td><td>57.31 / 9.27</td><td>67.09 / 6.71</td><td>49.26 / 7.12</td><td>48.42 / 7.95</td><td>50.88 / 9.01</td></tr>
+            <tr><td>StyCona</td><td>80.13 / 29.11</td><td>60.14 / 43.78</td><td>42.57 / 89.27</td><td>60.95 / 54.05</td><td>33.54 / 16.53</td><td>61.32 / 7.67</td><td>66.22 / 6.15</td><td>54.85 / 5.91</td><td>41.61 / 8.84</td><td>51.51 / 9.02</td></tr>
+            <tr><td>TSIAA</td><td>60.40 / 61.12</td><td>41.63 / 121.46</td><td>25.98 / 153.43</td><td>42.67 / 112.00</td><td>30.71 / 18.20</td><td>34.62 / 22.22</td><td>28.56 / 21.68</td><td>33.12 / 21.77</td><td>41.43 / 16.77</td><td>33.69 / 20.13</td></tr>
+            <tr class="ours"><td><strong>ACME</strong></td><td><strong>85.01 / 9.34</strong></td><td><strong>68.55 / 32.56</strong></td><td><strong>51.80 / 67.28</strong></td><td><strong>68.45 / 36.39</strong></td><td><strong>43.33 / 10.81</strong></td><td><strong>69.70 / 5.46</strong></td><td><strong>75.51 / 3.63</strong></td><td><strong>66.36 / 5.03</strong></td><td><strong>71.26 / 8.32</strong></td><td><strong>65.23 / 6.65</strong></td></tr>
+          </tbody></table></div>
+          <p class="table-reading">For polyp segmentation, ACME obtains the highest DSC on the unseen datasets, reaching 68.45% macro DSC versus 60.95% for StyCona, a 7.50-point gain. Its macro ASD is 36.39 compared with 44.10 for the best competing macro result; the improvement is especially clear on CVC-300 and ColonDB, while ETIS remains difficult for all methods. For prostate MRI, ACME reaches 65.23% macro DSC and obtains the highest DSC on all five target domains, with the largest gains on UCL and I2CVB. These results show that the same training principle transfers across fundus photography, cardiac MRI, endoscopy, and prostate MRI.</p>
+        </div>
+      </section>
+
+      <section class="section ablation-section">
+        <div class="section-heading"><h2>What makes the<br><em>selection work?</em></h2><p class="section-note">Both model-driven exploration and compatibility-aware selection are necessary.</p></div>
+        <div class="ablation-grid">
+          <div class="table-block compact-block"><div class="table-title"><span>Table 3</span><h3>Acquisition exploration</h3><p>Fundus-DG · DSC (%) / ASD</p></div><div class="table-wrap"><table class="results-table"><thead><tr><th>Exp.</th><th>Direction</th><th>Diversity</th><th>BinR.</th><th>Drishti</th><th>Magr.</th><th>REFUGE</th><th>Macro</th></tr></thead><tbody><tr><td>A</td><td>Fixed</td><td>–</td><td>64.74 / 6.43</td><td>81.11 / 0.96</td><td>71.97 / 3.32</td><td>81.82 / 1.98</td><td>74.91 / 3.17</td></tr><tr><td>B</td><td>Random</td><td>–</td><td>65.00 / 4.90</td><td>82.05 / 0.90</td><td>68.16 / 5.03</td><td>82.06 / 1.35</td><td>74.32 / 3.05</td></tr><tr><td>C</td><td>Model-driven</td><td>–</td><td>67.40 / 4.19</td><td>81.63 / 0.90</td><td>72.89 / 2.70</td><td>82.25 / 1.20</td><td>76.04 / 2.25</td></tr><tr class="ours"><td><strong>D</strong></td><td><strong>Model-driven</strong></td><td><strong>✓</strong></td><td><strong>69.36 / 3.70</strong></td><td><strong>82.78 / 0.81</strong></td><td><strong>74.63 / 2.62</strong></td><td><strong>83.64 / 1.07</strong></td><td><strong>77.60 / 2.05</strong></tr></tbody></table></div><p class="table-reading">Without model feedback, fixed and random directions do not reliably find the acquisition variations that expose the evolving segmenter. Model-driven directions improve macro DSC from 74.91% to 76.04% and reduce ASD from 3.17 to 2.25. Adding directional diversity further increases macro DSC to 77.60% and reduces ASD to 2.05, showing that model feedback identifies where to probe while diversity keeps the direction bank from collapsing onto redundant changes.</p></div>
+          <div class="table-block compact-block"><div class="table-title"><span>Table 4</span><h3>Qualification before selection</h3><p>Fundus-DG · DSC (%) / ASD</p></div><div class="table-wrap"><table class="results-table"><thead><tr><th>Exp.</th><th>Qualify</th><th>Selection</th><th>BinR.</th><th>Drishti</th><th>Magr.</th><th>REFUGE</th><th>Macro</th></tr></thead><tbody><tr><td>A</td><td>–</td><td>Random</td><td>65.59 / 10.94</td><td>82.12 / 4.66</td><td>68.76 / 10.86</td><td>80.50 / 7.95</td><td>74.24 / 8.60</td></tr><tr><td>B</td><td>–</td><td>Most difficult</td><td>64.84 / 11.40</td><td>81.72 / 4.63</td><td>67.25 / 10.28</td><td>80.20 / 9.18</td><td>73.50 / 8.87</td></tr><tr><td>C</td><td>✓</td><td>Random</td><td>66.95 / 9.86</td><td>82.46 / 4.47</td><td>72.81 / 7.31</td><td>82.25 / 5.46</td><td>76.12 / 6.77</td></tr><tr><td>D</td><td>✓</td><td>Easiest</td><td>68.71 / 8.23</td><td>81.97 / 4.54</td><td>69.27 / 7.62</td><td>82.33 / 5.82</td><td>75.57 / 6.55</td></tr><tr><td>E</td><td>✓</td><td>Medium</td><td>65.88 / 10.37</td><td>82.30 / 4.44</td><td>70.58 / 9.88</td><td>80.81 / 6.30</td><td>74.89 / 7.75</td></tr><tr class="ours"><td><strong>F</strong></td><td><strong>✓</strong></td><td><strong>Most difficult</strong></td><td><strong>69.36 / 3.70</strong></td><td><strong>82.78 / 0.81</strong></td><td><strong>74.63 / 2.62</strong></td><td><strong>83.64 / 1.07</strong></td><td><strong>77.60 / 2.05</strong></td></tr></tbody></table></div><p class="table-reading">Without qualification, selecting the most difficult candidate is worse than random selection: macro DSC falls from 74.24% to 73.50% and ASD increases from 8.60 to 8.87. After qualification, random selection already reaches 76.12% macro DSC, while choosing the easiest or medium candidate gives no further gain. Selecting the most difficult qualified candidate achieves 77.60% macro DSC and 2.05 ASD, demonstrating that difficulty becomes useful only after incompatible samples have been filtered out.</p></div>
+        </div>
+      </section>
+
+      <section id="analysis" class="section analysis-section">
+        <div class="section-heading"><h2>A measured frontier between<br><em>difficulty and trust.</em></h2><p class="section-note">Stronger exploration exposes harder failures, while qualification protects the label.</p></div>
+        <div class="mechanism-callout"><div><span class="callout-label">Observed trend</span><strong>α ↑</strong><p>difficulty ↑ · compatibility distances ↑ · final qualification ↓</p></div><div><span class="callout-label">Operating point</span><strong>Hardest admitted</strong><p>strong transformations stay in play when they still support the source annotation.</p></div></div>
+        <div class="table-block"><div class="table-title"><span>Table 5</span><h3>Exploration and qualification statistics</h3></div><div class="table-wrap"><table class="results-table mechanism-table"><thead><tr><th>Source</th><th>α</th><th>Difficulty</th><th>Qualified<br>cheap / final</th><th>Distances<br>sem. / anat. / spa.</th><th>Selection</th></tr></thead><tbody><tr><td>Fundus</td><td>0.35</td><td>0.1427</td><td>100.00 / 100.00</td><td>0.0040 / 0.0782 / 0.0160</td><td>3.13%</td></tr><tr><td>Fundus</td><td>0.65</td><td>0.1445</td><td>99.48 / 99.48</td><td>0.0065 / 0.1712 / 0.0477</td><td>21.88%</td></tr><tr class="ours"><td>Fundus</td><td>1.00</td><td>0.1558</td><td>86.98 / 83.85</td><td>0.0098 / 0.3279 / 0.0940</td><td><strong>75.00%</strong></td></tr><tr><td>MSCMR C0</td><td>0.35</td><td>0.3098</td><td>100.00 / 100.00</td><td>0.0004 / 0.0796 / 0.0174</td><td>25.00%</td></tr><tr><td>MSCMR C0</td><td>0.65</td><td>0.3154</td><td>96.88 / 96.88</td><td>0.0009 / 0.1620 / 0.0470</td><td>25.00%</td></tr><tr class="ours"><td>MSCMR C0</td><td>1.00</td><td>0.3392</td><td>80.21 / 80.21</td><td>0.0019 / 0.2803 / 0.0745</td><td><strong>50.00%</strong></td></tr><tr><td>MSCMR LGE</td><td>0.35</td><td>0.1974</td><td>100.00 / 98.96</td><td>0.0006 / 0.1177 / 0.0222</td><td>12.50%</td></tr><tr><td>MSCMR LGE</td><td>0.65</td><td>0.2296</td><td>91.67 / 91.67</td><td>0.0019 / 0.2843 / 0.0529</td><td>18.75%</td></tr><tr class="ours"><td>MSCMR LGE</td><td>1.00</td><td>0.2525</td><td>73.96 / 73.96</td><td>0.0028 / 0.4834 / 0.0795</td><td><strong>68.75%</strong></td></tr></tbody></table></div><p class="table-reading">The table shows a consistent strength-dependent frontier. From alpha 0.35 to 1.00, mean difficulty increases from 0.1427 to 0.1558 on Fundus, from 0.3098 to 0.3392 on C0, and from 0.1974 to 0.2525 on LGE. Compatibility distances increase at the same time, so final qualification falls from 100.00% to 83.85% on Fundus, from 100.00% to 80.21% on C0, and from 98.96% to 73.96% on LGE. Qualification does not simply select easy samples: among admitted candidates, the strongest level is selected most often, at 75.00%, 50.00%, and 68.75% for the three sources.</p></div>
+        <figure class="wide-figure"><img src="intensity.png" alt="Seven-level exploration intensity sweep showing difficulty, distances, and qualification rates"><figcaption><strong>Figure 2.</strong> Seven-level validation sweep.</figcaption><p class="figure-reading">The denser validation sweep reproduces the same pattern across seven strengths rather than only the three used during training. Difficulty and each compatibility distance rise with alpha, whereas the inexpensive and final qualification rates decline. Selection remains weighted toward moderate-to-strong admissible candidates, especially for Fundus and MSCMR C0, so the mechanism does not satisfy compatibility merely by choosing the smallest perturbation.</p></figure>
+        <figure class="wide-figure figure-3"><img src="diff-dist.png" alt="Candidate-level relationship between segmentation difficulty and annotation compatibility distances"><figcaption><strong>Figure 3.</strong> Candidate-level relation between segmentation difficulty and compatibility distances.</figcaption><p class="figure-reading">The candidate-level plots show substantial vertical dispersion at nearly every difficulty level. Samples with similar segmentation loss can have very different anatomical, task-semantic, or spatial distances, and both accepted and rejected candidates occur throughout the difficulty range. Difficulty and compatibility therefore have no strong proportional relationship: a difficult sample is neither automatically incompatible nor automatically safe to supervise. This is why the explicit qualification step is required before selecting the hardest candidate.</p></figure>
+
+        <div class="comparison-analysis">
+          <div class="section-heading"><h2>Comparison Analysis</h2><p class="section-note">Online hardness and compatibility of the augmented samples used during training.</p></div>
+          <div class="table-block"><div class="table-title"><span>Table 6</span><h3>Online hardness and compatibility</h3></div><div class="table-wrap"><table class="results-table comparison-table"><thead><tr><th>Method</th><th>Delta H online</th><th>d anat</th><th>d spat</th><th>Compatible (%)</th><th>Harder and compatible (%)</th></tr></thead><tbody><tr><td>RandConv</td><td>--</td><td>52.00</td><td>35.20</td><td>35.20</td><td>--</td></tr><tr><td>StyCona</td><td>--</td><td>70.00</td><td>42.40</td><td>36.00</td><td>--</td></tr><tr><td>TSIAA-SBF</td><td>-0.1097</td><td>41.68</td><td>61.34</td><td>29.60</td><td>4.85</td></tr><tr><td>TSIAA-IIA</td><td>-0.0449</td><td>35.46</td><td>27.09</td><td>11.37</td><td>2.55</td></tr><tr><td>AdverNoise</td><td>0.0367</td><td>91.40</td><td>68.92</td><td>68.10</td><td>63.59</td></tr><tr><td>AdverBias</td><td>0.0004</td><td>100.00</td><td>100.00</td><td>100.00</td><td>51.43</td></tr><tr><td>AdverHist</td><td>-0.0031</td><td>100.00</td><td>100.00</td><td>99.99</td><td>46.74</td></tr><tr><td>ACME</td><td>0.0662</td><td>100.00</td><td>100.00</td><td>99.49</td><td>97.76</td></tr></tbody></table></div><p class="table-reading">RandConv, StyCona, and both TSIAA streams produce many annotation-incompatible views. AdverNoise increases difficulty more reliably but reaches 63.59% jointly harder-and-compatible samples, while AdverBias and AdverHist preserve compatibility with negligible difficulty gains. ACME provides the better balance: its retained views have a mean difficulty gain of 0.0662, and 97.76% are simultaneously harder and compatible.</p></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer"><div>&copy; 2025 ACME</div></footer>
+</body>
+</html>
