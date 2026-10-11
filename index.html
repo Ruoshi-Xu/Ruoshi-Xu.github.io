@@ -16,11 +16,6 @@
   <header class="navbar">
     <div class="container nav-inner">
       <a class="navbar-brand" href="#top">Ruoshi Xu</a>
-      <nav class="nav-links" aria-label="Main navigation">
-        <a class="active" href="#top">Home</a>
-        <a href="#about">About</a>
-        <a href="#publications">Publications</a>
-      </nav>
     </div>
   </header>
 
@@ -35,6 +30,8 @@
           <a class="profile-email" href="mailto:xurs2022@mail.sustech.edu.cn" aria-label="Email Ruoshi Xu">xurs2022@mail.sustech.edu.cn</a>
           <div class="social-links" aria-label="Social links">
             <a href="https://github.com/Ruoshi-Xu" target="_blank" rel="noopener" aria-label="GitHub">GitHub</a>
+            <a href="https://scholar.google.com/citations?hl=en&amp;view_op=list_works&amp;gmla=AERr9JHZktY2_-v_KwX1InEcioUB9Ni_slFm3ucRERe9yiBZR8Y00ijrKTpAm3MZUyVSe6WJ28X-4_CF-CkkCQBvBlVF&amp;user=K_cDiXAAAAAJ" target="_blank" rel="noopener" aria-label="Google Scholar">Google Scholar</a>
+            <a href="/Resume.pdf" target="_blank" rel="noopener" aria-label="CV">CV</a>
           </div>
         </section>
       </aside>
@@ -42,35 +39,124 @@
       <div class="content">
         <section class="card card-section" id="about">
           <h2>About Me</h2>
-          <p class="about-text">Hi~</p>
+          <p class="about-text">
+            I am currently a Research Intern at Hengqin Laboratory.
+            I received my B.Eng. in Intelligence Science and Technology
+            from the Southern University of Science and Technology (SUSTech)
+            in 2026, where I was a member of the <strong>Turing Class</strong>.
+          </p>
+
+          <p class="about-text">
+            My previous research spans medical image analysis,
+            vision-language models, and generative AI. My current research interests lie in <strong>multimodal intelligence and agentic systems</strong>.
+            I am seeking PhD opportunities for Fall 2027.
+          </p>
         </section>
 
         <section class="card card-section">
           <h2>Experience</h2>
-          <div class="education-item">
-            <div class="education-mark" aria-hidden="true">S</div>
-            <div class="education-details">
-              <div class="item-title">Southern University of Science and Technology</div>
-              <div class="item-subtitle">Intelligence Science and Technology</div>
-            </div>
-            <span class="education-period">2022-2026</span>
-          </div>
+          <ul class="education-list">
+            <li class="education-item">
+              <div class="education-header">
+                <span class="education-organization">
+                  <img src="/sustech.png" alt="">
+                  <strong>Southern University of Science and Technology</strong>
+                </span>
+                <span class="education-period">2022-2026</span>
+              </div>
+              <div class="education-role">B.Eng. in Intelligence Science and Technology</div>
+            </li>
+
+            <li class="education-item">
+              <div class="education-header">
+                <span class="education-organization">
+                  <img src="/hqlab.jpg" alt="">
+                  <strong>Chinese Medicine Guangdong Laboratory (Hengqin Lab)</strong>
+                </span>
+                <span class="education-period">2026-present</span>
+              </div>
+              <div class="education-role">Research Intern (Paid)</div>
+            </li>
+          </ul>
           <div class="empty-line" aria-hidden="true"></div>
         </section>
 
-        <section class="card card-section" id="publications">
-          <h2>Publications</h2>
-          <article class="publication-item">
-            <div class="publication-year">2026</div>
-            <div class="publication-content">
-              <h3>ACME: Annotation-Compatible Model-Driven Exploration for Single-Source Domain Generalization in Medical Image Segmentation</h3>
-              <p class="publication-authors">Shengda Luo, <strong>Ruoshi Xu</strong>, Jingkun Chen</p>
-              <p class="publication-description">A framework for reliable medical image segmentation across unseen acquisition domains using model-driven exploration and compatibility-aware sample selection.</p>
-              <div class="publication-links">
-                <a href="research/acme/">Project page</a>
-                <a href="research/acme/paper/main.pdf" target="_blank" rel="noopener">PDF</a>
-              </div>
-            </div>
+  <section class="card card-section" id="publications">
+  <h2>Publications</h2>
+
+  <!-- CIRSeg -->
+  <article class="publication-item">
+    <div class="publication-year">2026</div>
+    <div class="publication-content">
+      <h3>
+        CIRSeg: Coarse-to-Fine Intensity-Robust Liver Segmentation with Source-Free Continual Test-Time Adaptation
+        <a class="publication-inline-link" href="https://papers.miccai.org/miccai-2026-sat/paper/CARE_030.pdf" target="_blank" rel="noopener">[Paper]</a>
+      </h3>
+      <p class="publication-venue">
+        <em><strong>MICCAI 2026 CARE Workshop.</strong></em>
+      </p>
+      <p class="publication-authors">
+        <strong>Ruoshi Xu</strong>, Mingqi Gao, Shengda Luo, Jingkun Chen.
+      </p>
+    </div>
+  </article>
+
+  <!-- ACME -->
+  <article class="publication-item">
+    <div class="publication-year">2026</div>
+    <div class="publication-content">
+      <h3>
+        ACME: Annotation-Compatible Model-Driven Exploration for Single-Source Domain Generalization in Medical Image Segmentation
+        <a class="publication-inline-link" href="https://ruoshi-xu.github.io/research/acme/" target="_blank" rel="noopener">[Project]</a>
+      </h3>
+      <p class="publication-venue">
+        <em>Submitted to <strong>IEEE Transactions on Medical Imaging (TMI)</strong>.</em>
+      </p>
+      <p class="publication-authors">
+        Shengda Luo, <strong>Ruoshi Xu</strong><sup>*</sup>, Jingkun Chen.
+      </p>
+    </div>
+  </article>
+
+  <!-- WorldGenBench -->
+  <article class="publication-item">
+    <div class="publication-year">2025</div>
+    <div class="publication-content">
+      <h3>
+        WorldGenBench: A World-Knowledge-Integrated Benchmark for Reasoning-Driven Text-to-Image Generation
+        <a class="publication-inline-link" href="https://arxiv.org/abs/2505.01490" target="_blank" rel="noopener">[Paper]</a>
+      </h3>
+      <p class="publication-venue">
+        <em>arXiv: 2505.01490.</em>
+      </p>
+      <p class="publication-authors">
+        <strong>Ruoshi Xu</strong><sup>*</sup>, Daoan Zhang<sup>*</sup>, &hellip;, Shengda Luo.
+      </p>
+    </div>
+  </article>
+
+  <!-- Point-VLM -->
+  <article class="publication-item">
+    <div class="publication-year">2026</div>
+    <div class="publication-content">
+      <h3>
+        Reinforcing 3D Understanding in Point-VLMs via Geometric Reward Credit Assignment
+        <a class="publication-inline-link" href="https://arxiv.org/abs/2604.21160" target="_blank" rel="noopener">[Paper]</a>
+      </h3>
+      <p class="publication-venue">
+        <em>Submitted to <strong>IEEE Transactions on Multimedia (TMM)</strong>.</em>
+      </p>
+      <p class="publication-authors">
+        Jingkun Chen, <strong>Ruoshi Xu</strong>, Mingqi Gao, Shengda Luo, Jungong Han.
+      </p>
+    </div>
+  </article>
+</section>
+
+        <section class="card card-section" id="technical-writing">
+          <h2>Technical Blog</h2>
+          <article class="writing-item">
+            <h3><a href="https://zhuanlan.zhihu.com/p/2009410859999437740" target="_blank" rel="noopener">On-Policy Distillation and Self-Distillation: Notes on Seven Papers</a> <a class="writing-link" href="https://zhuanlan.zhihu.com/p/2009410859999437740" target="_blank" rel="noopener">[Article]</a></h3>
           </article>
         </section>
       </div>
