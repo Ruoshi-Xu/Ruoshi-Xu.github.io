@@ -104,3 +104,51 @@ a:focus-visible { outline: 2px solid var(--link); outline-offset: 3px; }
   .nav-links { gap: 10px; }
   .nav-links a:nth-child(2) { display: none; }
 }
+
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Publication links in About Me */
+.about-text .pub-jump {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.about-text .pub-jump:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Keep target publications visible below navbar */
+.publication-item {
+  scroll-margin-top: 90px;
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Publication links in About Me */
+.about-text .pub-jump,
+.about-text .pub-jump strong {
+    color: #1769aa;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: rgba(23, 105, 170, 0.35);
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+    transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+/* Hover effect */
+.about-text .pub-jump:hover,
+.about-text .pub-jump:hover strong {
+    color: #0d4f82;
+    text-decoration-color: currentColor;
+}
