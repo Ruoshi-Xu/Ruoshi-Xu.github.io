@@ -30,8 +30,6 @@ figcaption strong,.table-reading strong{font-weight:inherit}
 .hero-inner{padding-bottom:48px}
 .hero h1{max-width:920px;font-size:clamp(32px,4.6vw,50px);letter-spacing:-.015em}
 .authors{margin-top:22px}.author-note{font-size:12px;color:var(--muted);margin:8px 0 0}
-.project-links{display:flex;align-items:center;gap:10px;margin-top:18px;font-size:12px}.project-links a,.project-links button{display:inline-flex;align-items:center;gap:7px;font:inherit;padding:7px 13px;border:1px solid #b9c8cf;border-radius:7px;background:#fff;color:var(--accent);text-decoration:none;line-height:1}.project-links svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.project-links button:disabled{color:#6f7b82;background:#f3f5f6;opacity:1}.project-links span{color:var(--muted);margin-left:4px}
-.header-link{display:none}
 .intro-section{padding-top:92px}.intro-copy{max-width:800px;border-top:1px solid #aebac0;padding-top:22px}.intro-copy p{margin:0;font-size:15px;line-height:1.75}
 .equation-note{align-items:center}.formula{font-size:1.1rem;min-width:255px}.intro-copy p,.method-steps p,.table-reading,.figure-reading{font-size:16px;line-height:1.72}.table-reading,.figure-reading{color:#4f5e66;max-width:900px;margin-top:15px}.comparison-analysis{margin-top:70px}.comparison-analysis .section-heading{margin-bottom:25px}.comparison-table th,.comparison-table td{white-space:normal;min-width:105px}.figure-3 img{max-width:900px;margin:0 auto}
 .section-heading .section-note{display:none}
@@ -45,7 +43,7 @@ figcaption strong,.table-reading strong{font-weight:inherit}
 .authors span:nth-child(2){color:#2565c7}.authors sup,.affiliations sup{color:inherit}
 .affiliations{justify-content:center;gap:5px 16px;color:#2565c7;font-size:12px;margin-top:8px}
 .author-note{color:#2565c7;margin-top:8px}
-.project-links{justify-content:center;margin-top:24px;gap:10px}.project-links a,.project-links button{min-width:86px;justify-content:center;padding:10px 17px;border:0;border-radius:999px;background:#303030;color:#fff;font-weight:700;font-size:13px}.project-links button:disabled{background:#303030;color:#fff}.project-links svg{width:15px;height:15px}.project-links span{display:inline;color:#555;font-size:12px;margin-left:2px}
+.availability-note{margin:24px 0 0;color:#555;font-size:13px}
 .page-shell{max-width:900px;margin:0 auto;padding:0 24px}
 .section{border:0;padding:70px 0 0;text-align:center}
 .intro-section{padding-top:18px}.section-heading{display:block;margin-bottom:28px;text-align:center}.section-heading h2,.method-section .section-heading h2::after,.experiments-section .section-heading h2::after,.ablation-section .section-heading h2::after,.analysis-section .section-heading h2::after{font-size:30px;font-weight:700;color:#111;letter-spacing:0}
