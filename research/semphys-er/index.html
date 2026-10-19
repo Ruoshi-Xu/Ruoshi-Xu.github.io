@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="SemPhys-ER: semantic-physical expert routing for RGB-IR exposure correction.">
+  <title>SemPhys-ER</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header class="hero">
+      <h1>Beyond Cross-Spectral Complementarity: Semantic-Physical Interaction for RGB-IR Exposure Correction</h1>
+      <div class="authors">
+        <span>Ruoshi Xu<sup>2</sup></span>
+        <span>Shengda Luo<sup>2</sup></span>
+        <span>Jingchao Peng<sup>3</sup></span>
+        <span>Jingkun Chen<sup>1</sup></span>
+      </div>
+      <div class="affiliations">
+        <span><sup>1</sup> Northwestern Polytechnical University</span>
+        <span><sup>2</sup> Chinese Medicine Guangdong Laboratory</span>
+        <span><sup>3</sup> Huawei Research</span>
+      </div>
+      <p class="status">Manuscript in revision.</p>
+    </header>
+
+    <div class="page-shell">
+      <section class="section intro-section" id="introduction">
+        <h2>Introduction</h2>
+        <p>Extreme under- and overexposure destroys reliable visible measurements through noise-floor responses, saturation, and clipping, making RGB correction severely ill-posed. Registered infrared (IR) images alleviate this physical observation deficiency by providing scene-aligned cross-spectral evidence. However, existing fusion mechanisms do not adapt the contributions of spatial, frequency, and cross-modal cues to scene content, while IR structure alone cannot determine the missing visible color and appearance. We propose SemPhys-ER, a semantic-physical expert routing framework that uses learned context to organize, rather than replace, sensor-grounded evidence. At each encoder stage, SemPhys-ER constructs spatial, frequency, and cross-modal expert banks for RGB and IR. Frozen multi-level SigLIP features condition a semantic consistency router to predict spatially varying expert weights, followed by gated semantic fusion for visible-appearance reconstruction. On HDRT, SemPhys-ER achieves the best performance across all reported metrics, reaching 27.29 dB average PSNR and 0.8895 average SSIM. It outperforms the previous state-of-the-art RGB-IR method by 2.58/2.44 dB PSNR under low-/high-exposure conditions. Controlled ablations show that semantic priors remain beneficial after strong physical fusion, complement rather than replace aligned IR observations, and are most effective when coupled with physical-expert routing. On LLVIP, SemPhys-ER ranks first on seven of nine no-reference quality metrics, further supporting its cross-dataset perceptual generalization.</p>
+        <figure class="intro-figure">
+          <img src="img_res_fig1.png" alt="Comparison of RGB-only correction, Fourier RGB-IR fusion, and SemPhys-ER on a night scene" loading="lazy">
+          <figcaption><strong>Figure 1.</strong> Frequency-phase RGB-IR fusion recovers details missed by RGB-only correction but retains appearance artifacts. SemPhys-ER recovers physically supported details with a more plausible visible appearance.</figcaption>
+        </figure>
+      </section>
+
+      <section class="section" id="method">
+        <h2>Method</h2>
+        <p>At each encoder stage, separate RGB and IR streams construct spatial, frequency, and cross-modal experts. A semantic consistency router, conditioned on frozen multi-level SigLIP features, predicts spatially varying weights for these experts. Gated semantic fusion then adds contextual information after the physical evidence has been organized.</p>
+        <figure>
+          <img src="semphys-er arch.png" alt="SemPhys-ER architecture with RGB and infrared branches, physical experts, semantic router, and multi-scale semantic features" loading="lazy">
+          <figcaption><strong>Figure 2.</strong> SemPhys-ER routes complementary physical experts using semantic and cross-modal consistency cues before decoding the corrected RGB image.</figcaption>
+        </figure>
+      </section>
+
+      <section class="section" id="experiments">
+        <h2>Experiments</h2>
+        <div class="table-block">
+          <div class="table-title"><span>Table 1</span><h3>HDRT quantitative comparison</h3></div>
+          <div class="table-wrap"><table class="results-table"><thead><tr><th>Method</th><th>LE PSNR &#8593;</th><th>HE PSNR &#8593;</th><th>LE SSIM &#8593;</th><th>HE SSIM &#8593;</th><th>Avg. PSNR &#8593;</th><th>Avg. SSIM &#8593;</th><th>LE LPIPS &#8595;</th><th>HE LPIPS &#8595;</th><th>LE VSIerr &#8595;</th><th>HE VSIerr &#8595;</th><th>LE EE &#8595;</th><th>HE EE &#8595;</th></tr></thead><tbody>
+            <tr><td>Uncorrected</td><td>10.83</td><td>7.87</td><td>0.3560</td><td>0.5122</td><td>9.35</td><td>0.4341</td><td>0.3755</td><td>0.3844</td><td>0.2623</td><td>0.3815</td><td>0.2634</td><td>0.3850</td></tr>
+            <tr><td>SM-RGB</td><td>20.98</td><td>18.47</td><td>0.7996</td><td>0.7805</td><td>19.73</td><td>0.7901</td><td>0.2120</td><td>0.2435</td><td>0.0678</td><td>0.0870</td><td>0.0650</td><td>0.0834</td></tr>
+            <tr><td>RetinexNet</td><td>12.31</td><td>10.20</td><td>0.5600</td><td>0.4653</td><td>11.25</td><td>0.5126</td><td>0.5367</td><td>0.5920</td><td>0.2204</td><td>0.2888</td><td>0.2250</td><td>0.2882</td></tr>
+            <tr><td>Zero-DCE</td><td>19.35</td><td>6.25</td><td>0.7982</td><td>0.4615</td><td>12.80</td><td>0.6299</td><td>0.1791</td><td>0.4707</td><td>0.0858</td><td>0.4595</td><td>0.0842</td><td>0.4560</td></tr>
+            <tr><td>ECMEIQ</td><td>17.36</td><td>16.20</td><td>0.5840</td><td>0.5863</td><td>16.78</td><td>0.5852</td><td>0.5139</td><td>0.5517</td><td>0.1176</td><td>0.1282</td><td>0.1123</td><td>0.1179</td></tr>
+            <tr><td>CoTF</td><td>21.06</td><td>19.57</td><td>0.8433</td><td>0.8215</td><td>20.32</td><td>0.8324</td><td>0.2644</td><td>0.2777</td><td>0.0671</td><td>0.0806</td><td>0.0327</td><td>0.0537</td></tr>
+            <tr><td>CGNet</td><td>21.89</td><td>17.04</td><td>0.8223</td><td>0.7475</td><td>19.46</td><td>0.7849</td><td>0.2001</td><td>0.2869</td><td>0.0667</td><td>0.1092</td><td>0.0654</td><td>0.1064</td></tr>
+            <tr><td>RECNet</td><td>16.65</td><td>15.35</td><td>0.6596</td><td>0.6418</td><td>16.00</td><td>0.6507</td><td>0.3731</td><td>0.3957</td><td>0.1292</td><td>0.1510</td><td>0.1268</td><td>0.1483</td></tr>
+            <tr><td>Naive-Fuse</td><td>21.08</td><td>19.38</td><td>0.7941</td><td>0.7761</td><td>20.23</td><td>0.7851</td><td>0.1908</td><td>0.2280</td><td>0.0653</td><td>0.0819</td><td>0.0642</td><td>0.0801</td></tr>
+            <tr><td>HDRTNet</td><td>19.68</td><td>20.34</td><td>0.7782</td><td>0.7937</td><td>20.01</td><td>0.7859</td><td>0.2449</td><td>0.2235</td><td>0.0673</td><td>0.0712</td><td>0.0655</td><td>0.0689</td></tr>
+            <tr><td>SFAF-MA</td><td>25.61</td><td>21.54</td><td>0.8353</td><td>0.8081</td><td>23.57</td><td>0.8217</td><td>0.1185</td><td>0.1698</td><td>0.0434</td><td>0.0647</td><td>0.0413</td><td>0.0621</td></tr>
+            <tr><td>DFNet</td><td>24.93</td><td>20.60</td><td>0.8373</td><td>0.8081</td><td>22.77</td><td>0.8227</td><td>0.2566</td><td>0.2618</td><td>0.0464</td><td>0.0702</td><td>0.0439</td><td>0.0678</td></tr>
+            <tr><td>IVFuseNet</td><td>22.37</td><td>19.75</td><td>0.7503</td><td>0.7240</td><td>21.06</td><td>0.7371</td><td>0.4161</td><td>0.4253</td><td>0.0579</td><td>0.0799</td><td>0.0481</td><td>0.0754</td></tr>
+            <tr><td>UnTrack</td><td>23.32</td><td>21.89</td><td>0.6712</td><td>0.6625</td><td>22.61</td><td>0.6669</td><td>0.5314</td><td>0.5446</td><td>0.0499</td><td>0.0578</td><td>0.0476</td><td>0.0548</td></tr>
+            <tr><td>GMMT</td><td>24.15</td><td>18.59</td><td>0.8224</td><td>0.6787</td><td>21.37</td><td>0.7505</td><td>0.2673</td><td>0.3687</td><td>0.0529</td><td>0.1052</td><td>0.0509</td><td>0.1024</td></tr>
+            <tr><td>Chen et al. (2026)</td><td>26.89</td><td>22.67</td><td>0.8601</td><td>0.8383</td><td>24.78</td><td>0.8492</td><td>0.1117</td><td>0.1645</td><td>0.0374</td><td>0.0530</td><td>0.0353</td><td>0.0501</td></tr>
+            <tr class="ours"><td>SemPhys-ER</td><td>29.47</td><td>25.11</td><td>0.8966</td><td>0.8823</td><td>27.2897</td><td>0.8895</td><td>0.0927</td><td>0.1227</td><td>0.0249</td><td>0.0373</td><td>0.0228</td><td>0.0346</td></tr>
+          </tbody></table></div>
+          <p class="table-reading">This comparison tests correction fidelity, perceptual similarity, and exposure error under both HDRT exposure conditions. SemPhys-ER leads on every reported metric; versus the strongest prior RGB-IR method, its PSNR gains are 2.58 dB for low exposure and 2.44 dB for high exposure.</p>
+        </div>
+
+        <div class="table-block">
+          <div class="table-title"><span>Table 2</span><h3>Complementarity of IR and semantic features</h3></div>
+          <div class="table-wrap"><table class="results-table"><thead><tr><th>Setting</th><th>LE PSNR</th><th>HE PSNR</th><th>LE SSIM</th><th>HE SSIM</th></tr></thead><tbody>
+            <tr><td>RGB only</td><td>26.33</td><td>20.68</td><td>0.8700</td><td>0.8059</td></tr>
+            <tr><td>RGB + IR</td><td>26.89</td><td>22.67</td><td>0.8601</td><td>0.8383</td></tr>
+            <tr><td>RGB + SigLIP</td><td>29.12</td><td>24.65</td><td>0.8859</td><td>0.8721</td></tr>
+            <tr class="ours"><td>RGB + IR + SigLIP</td><td>29.15</td><td>25.13</td><td>0.8948</td><td>0.8782</td></tr>
+          </tbody></table></div>
+          <p class="table-reading">This controlled ablation asks whether semantic priors replace the aligned IR observation. Combining IR with SigLIP improves all four metrics over RGB + SigLIP, showing that the two sources provide complementary evidence.</p>
+        </div>
+
+        <div class="table-block">
+          <div class="table-title"><span>Table 3</span><h3>Semantic injection strategy</h3></div>
+          <div class="table-wrap"><table class="results-table"><thead><tr><th>Gate</th><th>LE PSNR</th><th>HE PSNR</th><th>LE SSIM</th><th>HE SSIM</th></tr></thead><tbody>
+            <tr class="ours"><td>Scalar gate</td><td>29.15</td><td>25.13</td><td>0.8948</td><td>0.8782</td></tr>
+            <tr><td>Position-wise gate</td><td>27.71</td><td>22.84</td><td>0.8800</td><td>0.8469</td></tr>
+            <tr><td>RGB dynamic gate</td><td>27.77</td><td>23.15</td><td>0.8840</td><td>0.8503</td></tr>
+          </tbody></table></div>
+          <p class="table-reading">This table tests how to inject semantic features while keeping the features and fusion operation fixed. Scalar gating leads on all four metrics, supporting a simple global rescaling of the pretrained representation.</p>
+        </div>
+
+        <div class="table-block">
+          <div class="table-title"><span>Table 4</span><h3>Multi-scale features and semantic consistency routing</h3></div>
+          <div class="table-wrap"><table class="results-table"><thead><tr><th>Setting</th><th>Multi-scale</th><th>SCR</th><th>LE PSNR</th><th>HE PSNR</th><th>LE SSIM</th><th>HE SSIM</th></tr></thead><tbody>
+            <tr><td>Single Scale</td><td>&ndash;</td><td>&ndash;</td><td>29.15</td><td>25.13</td><td>0.8948</td><td>0.8782</td></tr>
+            <tr><td>+ Multi-Scale</td><td>Yes</td><td>&ndash;</td><td>29.13</td><td>24.77</td><td>0.8949</td><td>0.8752</td></tr>
+            <tr><td>+ SCR</td><td>&ndash;</td><td>Yes</td><td>28.71</td><td>24.86</td><td>0.8939</td><td>0.8726</td></tr>
+            <tr class="ours"><td>SemPhys-ER</td><td>Yes</td><td>Yes</td><td>29.47</td><td>25.11</td><td>0.8966</td><td>0.8823</td></tr>
+          </tbody></table></div>
+          <p class="table-reading">This ablation tests whether multi-scale semantics and the router work together. Either component alone gives mixed or weaker results; their combination gives the best LE PSNR and both SSIM scores.</p>
+        </div>
+
+        <div class="table-block">
+          <div class="table-title"><span>Table 5</span><h3>Choice of frozen visual encoder</h3></div>
+          <div class="table-wrap"><table class="results-table"><thead><tr><th>Encoder</th><th>Params</th><th>LE PSNR</th><th>HE PSNR</th><th>LE SSIM</th><th>HE SSIM</th></tr></thead><tbody>
+            <tr><td>Chen et al. (2026)</td><td>&ndash;</td><td>26.89</td><td>22.67</td><td>0.8601</td><td>0.8383</td></tr>
+            <tr class="ours"><td>SigLIP</td><td>92.9M</td><td>29.15</td><td>25.13</td><td>0.8948</td><td>0.8782</td></tr>
+            <tr><td>CLIP-DataComp</td><td>86.2M</td><td>28.57</td><td>23.68</td><td>0.8927</td><td>0.8616</td></tr>
+            <tr><td>DINOv2-base</td><td>86.6M</td><td>28.58</td><td>24.25</td><td>0.8876</td><td>0.8571</td></tr>
+            <tr><td>SDXL VAE</td><td>34.2M</td><td>28.34</td><td>24.08</td><td>0.8900</td><td>0.8617</td></tr>
+            <tr><td>FLUX VAE</td><td>34.3M</td><td>28.35</td><td>24.12</td><td>0.8918</td><td>0.8637</td></tr>
+            <tr><td>UniTok (UMM)</td><td>820.3M</td><td>28.62</td><td>24.82</td><td>0.8904</td><td>0.8743</td></tr>
+            <tr><td>TokenFlow (UMM)</td><td>376.6M</td><td>28.32</td><td>24.36</td><td>0.8929</td><td>0.8696</td></tr>
+          </tbody></table></div>
+          <p class="table-reading">This controlled comparison tests which frozen visual representation best supports correction. SigLIP has the highest PSNR and SSIM under both exposure conditions in this configuration, so it is used for SemPhys-ER.</p>
+        </div>
+
+        <div class="table-block">
+          <div class="table-title"><span>Table 6</span><h3>LLVIP cross-dataset image quality</h3></div>
+          <div class="table-wrap"><table class="results-table"><thead><tr><th>Metric</th><th>GMMT</th><th>UnTrack</th><th>Chen et al.</th><th>SemPhys-ER</th></tr></thead><tbody>
+            <tr><td>TOPIQ-NR &#8593;</td><td>0.3807</td><td>0.1708</td><td>0.3761</td><td class="best">0.4560</td></tr>
+            <tr><td>BRISQUE &#8595;</td><td>22.7110</td><td>65.7148</td><td class="best">6.3658</td><td>6.8320</td></tr>
+            <tr><td>NIQE &#8595;</td><td>3.7265</td><td>8.4106</td><td>4.5644</td><td class="best">3.3087</td></tr>
+            <tr><td>PIQE &#8595;</td><td>36.2788</td><td>86.7685</td><td>31.6935</td><td class="best">27.2184</td></tr>
+            <tr><td>MANIQA &#8593;</td><td>0.2372</td><td>0.1417</td><td class="best">0.2663</td><td>0.2596</td></tr>
+            <tr><td>MUSIQ &#8593;</td><td>46.4331</td><td>26.9121</td><td>43.4319</td><td class="best">53.3595</td></tr>
+            <tr><td>MUSIQ-SPAQ &#8593;</td><td>47.7885</td><td>32.6238</td><td>28.6569</td><td class="best">50.6600</td></tr>
+            <tr><td>CLIPIQA+ &#8593;</td><td>0.3857</td><td>0.1978</td><td>0.3138</td><td class="best">0.3908</td></tr>
+            <tr><td>LIQE-Mix &#8593;</td><td>1.8753</td><td>1.0169</td><td>1.4359</td><td class="best">2.3345</td></tr>
+          </tbody></table></div>
+          <p class="table-reading">This table tests perceptual transfer to a different real-world RGB-IR dataset without paired normal-exposure targets. SemPhys-ER ranks first on seven of nine no-reference metrics and second on BRISQUE and MANIQA. These scores indicate perceptual preference, not reference-level reconstruction fidelity.</p>
+        </div>
+      </section>
+
+      <section class="section" id="visual-results">
+        <h2>Visual Cases</h2>
+        <figure>
+          <img src="hdrt_vis_cases.png" alt="HDRT comparison across low- and high-exposure scenes, including SemPhys-ER outputs" loading="lazy">
+          <figcaption><strong>Figure 3.</strong> HDRT visual cases. Paired normal-exposure targets allow direct comparison of exposure, color, structure, and artifacts.</figcaption>
+        </figure>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">SemPhys-ER &middot; Manuscript in revision</footer>
+</body>
+</html>
